@@ -13,8 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!product) {
     container.innerHTML = `
       <div class="text-center py-5">
-        <h2>Product Not Found</h2>
-        <a href="products.html" class="btn btn-premium mt-3">Back to Products</a>
+        <h2 class="fw-bold text-navy mb-3">Product Not Found</h2>
+        <p class="text-muted fs-5 mb-4">Please return to Auctions</p>
+        <a href="live-auctions.html" class="btn btn-premium px-4 py-2">BACK TO AUCTIONS</a>
       </div>
     `;
     return;

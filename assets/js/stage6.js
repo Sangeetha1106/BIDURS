@@ -3,7 +3,6 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  initWantedProducts();
   initChat();
   initReviews();
   initContactForm();
@@ -42,99 +41,6 @@ function showDemoToast(message, type = 'success') {
   toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
 }
 
-// -----------------------------------------
-// WANTED PRODUCTS LOGIC
-// -----------------------------------------
-function initWantedProducts() {
-  const container = document.getElementById('wanted-list-container');
-  const form = document.getElementById('wanted-form');
-  
-  if (container) {
-    renderWantedProducts();
-  }
-
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      const title = document.getElementById('wp-title').value;
-      const budget = document.getElementById('wp-budget').value;
-      
-      if (!title || !budget) return;
-
-      const newProduct = {
-        title,
-        category: document.getElementById('wp-category').value,
-        budget: parseInt(budget),
-        condition: document.getElementById('wp-condition').value,
-        desc: document.getElementById('wp-desc').value,
-        date: new Date().toLocaleDateString(),
-        status: 'Under Review',
-        id: 'PK-' + Math.floor(1000 + Math.random() * 9000)
-      };
-
-      const existing = JSON.parse(localStorage.getItem('wantedProducts') || '[]');
-      existing.unshift(newProduct);
-      localStorage.setItem('wantedProducts', JSON.stringify(existing));
-
-      showDemoToast('Wanted Product request submitted successfully!');
-      form.reset();
-      
-      // Close modal if exists
-      const modalEl = document.getElementById('wantedModal');
-      if (modalEl) {
-        bootstrap.Modal.getInstance(modalEl).hide();
-      }
-      
-      renderWantedProducts();
-    });
-  }
-}
-
-function renderWantedProducts() {
-  const container = document.getElementById('wanted-list-container');
-  if (!container) return;
-
-  const defaultMock = [
-    { title: 'Sony A7IV Camera Body Only', category: 'Cameras', budget: 180000, condition: 'Like New', desc: 'Looking for a gently used Sony A7IV for wedding photography.', date: 'Today', status: 'Open', id: 'CUST-8821' },
-    { title: 'MacBook Pro M3 Max 64GB', category: 'Laptops', budget: 320000, condition: 'Brand New', desc: 'Need maximum specs for video editing. Sealed box preferred.', date: 'Yesterday', status: 'Matched', id: 'CUST-1092' },
-    { title: 'Samsung Galaxy S24 Ultra', category: 'Mobile Phones', budget: 95000, condition: 'Any', desc: 'Titanium grey, minimum 512GB storage.', date: '02 Sep 2026', status: 'Open', id: 'CUST-4410' }
-  ];
-
-  const custom = JSON.parse(localStorage.getItem('wantedProducts') || '[]');
-  const combined = [...custom, ...defaultMock];
-
-  container.innerHTML = combined.map(p => {
-    let badge = 'bg-primary';
-    if (p.status === 'Matched') badge = 'bg-success';
-    if (p.status === 'Under Review') badge = 'bg-warning text-dark';
-    if (p.status === 'Closed') badge = 'bg-secondary';
-    
-    return `
-      <div class="col-12 col-md-6 col-xl-4">
-        <div class="card border-0 shadow-sm rounded-4 h-100">
-          <div class="card-body p-4">
-            <div class="d-flex justify-content-between align-items-start mb-3">
-              <span class="badge ${badge} px-2 py-1">${p.status}</span>
-              <span class="text-muted small">${p.date}</span>
-            </div>
-            <h5 class="fw-bold text-navy mb-1">${p.title}</h5>
-            <p class="small text-muted mb-3"><i class="bi bi-tag-fill me-1"></i> ${p.category} | ${p.condition}</p>
-            <p class="text-secondary small mb-4 line-clamp-2">${p.desc}</p>
-            
-            <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
-              <div>
-                <div class="small text-muted">Max Budget</div>
-                <div class="fw-bold text-gold fs-5">₹${p.budget.toLocaleString('en-IN')}</div>
-              </div>
-              <button class="btn btn-outline-premium btn-sm">View Request</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
 
 // -----------------------------------------
 // CHAT LOGIC

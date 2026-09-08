@@ -21,28 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const categoryFilter = document.getElementById('category-filter');
   const statusFilter = document.getElementById('status-filter');
   const sortFilter = document.getElementById('sort-filter');
+  const sortFilterRight = document.getElementById('sort-filter-right');
   const countEl = document.getElementById('product-count');
   const clearBtn = document.getElementById('clear-filters-btn');
 
   function renderGrid() {
-    const searchQuery = window.filterUtils.FilterState.searchQuery || '';
-
-    // Search-first behavior for All Products page
-    if (pageType === 'all' && searchQuery.trim() === '') {
-      if (countEl) countEl.textContent = '';
-      gridContainer.innerHTML = `
-        <div class="col-12 text-center py-5">
-          <i class="bi bi-search fs-1 text-muted mb-3 d-block"></i>
-          <h4>Search for a product to get started</h4>
-        </div>
-      `;
-      return;
-    }
-
     const filtered = window.filterUtils.applyFilters(window.mockProductsData, window.filterUtils.FilterState);
     
     if (countEl) {
-      countEl.textContent = `${filtered.length} product${filtered.length !== 1 ? 's' : ''} found`;
+      countEl.textContent = `${filtered.length} products found`;
     }
 
     if (filtered.length === 0) {
@@ -50,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="col-12 text-center py-5">
           <i class="bi bi-search fs-1 text-muted mb-3 d-block"></i>
           <h4>No products found</h4>
-          <p class="text-muted">Try searching with a different product name or brand.</p>
+          <p class="text-muted">Try changing your filters or search criteria.</p>
           <button class="btn btn-outline-premium mt-3" onclick="resetFilters()">Clear Filters</button>
         </div>
       `;
@@ -64,37 +51,59 @@ document.addEventListener('DOMContentLoaded', () => {
       
       const priceLabel = isUpcoming ? 'Starting Bid' : 'Current Bid';
       const priceValue = isUpcoming ? p.startingBid : p.currentBid;
+      const primaryAction = isUpcoming ? 'Place Bid' : 'Join Auction';
       
+      let badgeClass = 'badge-closed';
+      if (p.status === 'LIVE') badgeClass = 'badge-live bg-danger text-white border-0';
+      if (p.status === 'UPCOMING') badgeClass = 'badge-upcoming bg-warning text-dark border-0';
+      if (p.status === 'ENDING SOON') badgeClass = 'badge-ending text-white border-0';
+
+      let catIcon = 'bi-box';
+      if (p.category === 'Mobiles') catIcon = 'bi-phone';
+      if (p.category === 'Laptops') catIcon = 'bi-laptop';
+      if (p.category === 'Cameras') catIcon = 'bi-camera';
+      if (p.category === 'Gaming') catIcon = 'bi-controller';
+      if (p.category === 'Tablets') catIcon = 'bi-tablet';
+      if (p.category === 'Accessories') catIcon = 'bi-headphones';
+      if (p.category === 'Smart Watches') catIcon = 'bi-smartwatch';
+      
+      const timerIconClass = isUpcoming ? 'bi-calendar-event' : 'bi-clock';
+      const timerColorClass = isUpcoming ? 'text-secondary' : 'text-danger';
+
       return `
-        <div class="col-12 col-md-6 col-lg-3 mb-4">
-          <div class="product-card">
-            <div class="product-img-wrapper">
-              ${window.utils.getStatusBadge(p.status)}
-              <img src="${p.image}" alt="${p.name}">
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4 d-flex align-items-stretch">
+          <div class="product-card w-100 border rounded-3 bg-white d-flex flex-column" style="overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s;">
+            <div class="product-img-wrapper position-relative bg-light" style="height: 200px; display: flex; align-items: center; justify-content: center; padding: 1rem;">
+              <span class="badge ${badgeClass} position-absolute" style="top: 12px; left: 12px; font-size: 0.75rem; padding: 0.4rem 0.6rem; border-radius: 4px;">${p.status}</span>
+              <button class="wishlist-icon position-absolute bg-transparent border-0 text-muted" title="Add to Wishlist" style="top: 12px; right: 12px; font-size: 1.2rem;"><i class="bi bi-heart"></i></button>
+              <img src="${p.image}" alt="${p.name}" style="object-fit: contain; width: 100%; height: 100%;">
             </div>
-            <div class="product-details">
-              <div class="product-meta">
-                <span>${p.category}</span>
+            <div class="product-details d-flex flex-column p-3 flex-grow-1">
+              <h3 class="product-title text-truncate fw-bold text-dark mb-1" title="${p.name}" style="font-size:1rem;">${p.name}</h3>
+              <div class="product-meta mb-3 text-muted" style="font-size:0.85rem;">
+                <span><i class="bi ${catIcon} me-1"></i> ${p.category}</span>
+              </div>
+              
+              <div class="mb-1 text-muted small">
+                Market Price: <span class="text-decoration-line-through">${window.utils.formatCurrency(p.marketPrice)}</span>
+              </div>
+              <div class="mb-3 small">
+                ${priceLabel}: <span class="fw-bold text-primary" style="font-size:1.1rem;">${window.utils.formatCurrency(priceValue)}</span>
+              </div>
+              
+              <div class="mb-4">
                 ${!isEnded ? `
-                  <span class="${isUpcoming ? 'text-primary' : 'text-danger'} fw-bold" style="font-size:0.8rem;">
-                    <i class="bi ${isUpcoming ? 'bi-calendar-event' : 'bi-clock'}"></i> 
+                  <span class="fw-bold small ${timerColorClass}">
+                    <i class="bi ${timerIconClass} me-1"></i> 
+                    ${isUpcoming ? 'Starts on: ' : 'Ends in: '}
                     <span data-countdown="${targetTime}" data-status="${p.status}">Loading...</span>
                   </span>
-                ` : '<span class="text-muted fw-bold">Ended</span>'}
+                ` : '<span class="text-muted fw-bold small"><i class="bi bi-clock-history me-1"></i> Ended</span>'}
               </div>
-              <h3 class="product-title" style="font-size:1rem;">${p.name}</h3>
-              <div class="d-flex justify-content-between align-items-end mt-auto pt-3">
-                <div>
-                  <div class="text-muted small text-decoration-line-through">Retail: ${window.utils.formatCurrency(p.marketPrice)}</div>
-                  <div class="text-muted small">${priceLabel}</div>
-                  <div class="bid-price">${window.utils.formatCurrency(priceValue)}</div>
-                </div>
-              </div>
-              <div class="d-flex justify-content-between align-items-center mt-3 border-top pt-2">
-                 <div class="text-muted small">
-                  <i class="bi bi-people-fill"></i> ${p.bidders} Bidders
-                 </div>
-                 <a href="${(p.status === 'LIVE' || p.status === 'ENDING SOON') ? 'live-auction.html' : 'product-details.html'}?id=${p.id}" class="btn btn-premium btn-sm">${(p.status === 'LIVE' || p.status === 'ENDING SOON') ? 'View Auction' : 'View Details'}</a>
+              
+              <div class="d-flex gap-2 mt-auto pt-2">
+                 <a href="product-details.html?id=${p.id}" class="btn btn-outline-primary btn-sm flex-fill fw-semibold py-2">View Details</a>
+                 <a href="product-details.html?id=${p.id}" class="btn btn-primary btn-sm flex-fill fw-semibold py-2 ${isEnded ? 'disabled' : ''}">${primaryAction}</a>
               </div>
             </div>
           </div>
@@ -104,10 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Re-initialize timers for newly rendered elements
     if (window.timerUtils) {
-      // Clear previous interval if needed, or just let it handle elements dynamically
-      // A more robust timer.js would track the interval. Here we just re-call it.
-      // We will modify timer.js to run once globally, but since we recreate DOM, 
-      // the global interval will just pick up new elements on next tick.
+      window.timerUtils.initTimers();
     }
   }
 
@@ -136,6 +142,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if (sortFilter) {
     sortFilter.addEventListener('change', (e) => {
       window.filterUtils.FilterState.sortBy = e.target.value;
+      if (sortFilterRight) sortFilterRight.value = e.target.value;
+      renderGrid();
+    });
+  }
+  
+  if (sortFilterRight) {
+    sortFilterRight.addEventListener('change', (e) => {
+      window.filterUtils.FilterState.sortBy = e.target.value;
+      if (sortFilter) sortFilter.value = e.target.value;
       renderGrid();
     });
   }
@@ -156,6 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (searchInput) searchInput.value = '';
     if (categoryFilter) categoryFilter.value = 'All';
     if (sortFilter) sortFilter.value = 'Newest';
+    if (sortFilterRight) sortFilterRight.value = 'Newest';
     
     renderGrid();
   };

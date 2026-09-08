@@ -35,27 +35,41 @@
       </button>
     </div>
 
-    <div class="row mb-4 g-3 bg-white p-3 rounded-4 shadow-sm border">
-      <div class="col-md-4">
-        <input type="text" class="form-control" placeholder="Search wanted products...">
+    <div class="row mb-4 g-3 bg-white p-3 rounded-4 shadow-sm border align-items-center">
+      <div class="col-lg-3 col-md-6">
+        <input type="text" id="wp-search-input" class="form-control" placeholder="Search wanted products...">
       </div>
-      <div class="col-md-3">
-        <select class="form-select">
-          <option>All Categories</option>
-          <option>Mobile Phones</option>
-          <option>Laptops</option>
-          <option>Cameras</option>
+      <div class="col-lg-2 col-md-6">
+        <select id="wp-category-filter" class="form-select">
+          <option value="All Categories">All Categories</option>
+          <option value="Mobile Phones">Mobile Phones</option>
+          <option value="Laptops">Laptops</option>
+          <option value="Cameras">Cameras</option>
+          <option value="Tablets">Tablets</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Accessories">Accessories</option>
+          <option value="Smart Devices">Smart Devices</option>
         </select>
       </div>
-      <div class="col-md-3">
-        <select class="form-select">
-          <option>All Statuses</option>
-          <option>Open</option>
-          <option>Matched</option>
+      <div class="col-lg-2 col-md-6">
+        <select id="wp-status-filter" class="form-select">
+          <option value="All Statuses">All Statuses</option>
+          <option value="Open">Open</option>
+          <option value="Matched">Matched</option>
+          <option value="Closed">Closed</option>
         </select>
       </div>
-      <div class="col-md-2">
-        <button class="btn btn-outline-secondary w-100">Filter</button>
+      <div class="col-lg-2 col-md-6">
+        <select id="wp-sort-filter" class="form-select">
+          <option value="Newest First">Newest First</option>
+          <option value="Oldest First">Oldest First</option>
+          <option value="Lowest Budget">Lowest Budget</option>
+          <option value="Highest Budget">Highest Budget</option>
+        </select>
+      </div>
+      <div class="col-lg-3 col-md-12 d-flex gap-2">
+        <button id="wp-filter-btn" class="btn btn-outline-premium flex-fill">Filter</button>
+        <button id="wp-clear-btn" class="btn btn-light flex-fill text-muted">Clear</button>
       </div>
     </div>
 
@@ -131,6 +145,8 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/auth.js"></script>
+  <script src="../assets/data/wanted-products.js"></script>
   <script src="../assets/js/stage6.js"></script>
+  <script src="../assets/js/wanted-products.js"></script>
 </body>
 </html>
