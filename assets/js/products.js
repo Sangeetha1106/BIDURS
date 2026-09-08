@@ -25,10 +25,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const clearBtn = document.getElementById('clear-filters-btn');
 
   function renderGrid() {
+    const searchQuery = window.filterUtils.FilterState.searchQuery || '';
+
+    // Search-first behavior for All Products page
+    if (pageType === 'all' && searchQuery.trim() === '') {
+      if (countEl) countEl.textContent = '';
+      gridContainer.innerHTML = `
+        <div class="col-12 text-center py-5">
+          <i class="bi bi-search fs-1 text-muted mb-3 d-block"></i>
+          <h4>Search for a product to get started</h4>
+        </div>
+      `;
+      return;
+    }
+
     const filtered = window.filterUtils.applyFilters(window.mockProductsData, window.filterUtils.FilterState);
     
     if (countEl) {
-      countEl.textContent = `Showing ${filtered.length} product${filtered.length !== 1 ? 's' : ''}`;
+      countEl.textContent = `${filtered.length} product${filtered.length !== 1 ? 's' : ''} found`;
     }
 
     if (filtered.length === 0) {
@@ -36,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="col-12 text-center py-5">
           <i class="bi bi-search fs-1 text-muted mb-3 d-block"></i>
           <h4>No products found</h4>
-          <p class="text-muted">Try adjusting your filters or search query.</p>
+          <p class="text-muted">Try searching with a different product name or brand.</p>
           <button class="btn btn-outline-premium mt-3" onclick="resetFilters()">Clear Filters</button>
         </div>
       `;

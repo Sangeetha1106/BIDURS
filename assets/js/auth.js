@@ -128,55 +128,99 @@ function updateFooter() {
   const rootPath = window.location.pathname.includes('/pages/') ? '../index.html' : 'index.html';
 
   footerContainer.innerHTML = `
-    <footer class="footer mt-auto py-5 bg-navy text-white">
+    <style>
+      .footer-link:hover { color: #ffd700 !important; text-decoration: underline !important; }
+      .bg-navy-darker { background-color: #0a1128 !important; }
+    </style>
+    <footer class="footer mt-auto pt-5 pb-2 bg-navy text-white">
       <div class="container">
+        
+        <!-- Subscription CTA -->
+        <div class="row bg-navy-darker rounded-4 p-4 align-items-center mb-5 mx-0 border border-secondary border-opacity-25 shadow-sm">
+          <div class="col-lg-8 mb-3 mb-lg-0 text-center text-lg-start">
+            <h5 class="fw-bold text-white mb-1">Ready to participate in auctions?</h5>
+            <p class="text-white-50 small mb-0">Subscribe and participate in upcoming e-Auctions.</p>
+          </div>
+          <div class="col-lg-4 text-center text-lg-end">
+            <a href="${basePath}subscription.html" class="btn btn-premium px-4 py-2 fw-semibold">View Subscription</a>
+          </div>
+        </div>
+
+        <!-- 4-Column Layout -->
         <div class="row g-4">
-          <div class="col-lg-4">
+          <!-- Column 1: Brand -->
+          <div class="col-12 col-md-6 col-lg-3">
+            <h5 class="fw-bold text-white mb-1">FIXURs</h5>
             <h4 class="fw-bold text-white mb-3">PICKURS<span class="text-gold">.in</span></h4>
-            <p class="text-white-50 small mb-4">India's premier product-based live e-auction platform. Experience transparent bidding on premium electronics and appliances.</p>
+            <p class="text-white-50 small mb-4 pe-lg-3">An online e-Auction and bidding platform where customers can discover products, participate in auctions, place bids and win products.</p>
             <div class="d-flex gap-3">
-              <a href="#" class="text-white-50 text-decoration-none"><i class="bi bi-facebook fs-5"></i></a>
-              <a href="#" class="text-white-50 text-decoration-none"><i class="bi bi-twitter-x fs-5"></i></a>
-              <a href="#" class="text-white-50 text-decoration-none"><i class="bi bi-instagram fs-5"></i></a>
+              <a href="#" class="text-white-50 footer-link"><i class="bi bi-facebook fs-5"></i></a>
+              <a href="#" class="text-white-50 footer-link"><i class="bi bi-twitter-x fs-5"></i></a>
+              <a href="#" class="text-white-50 footer-link"><i class="bi bi-instagram fs-5"></i></a>
+              <a href="#" class="text-white-50 footer-link"><i class="bi bi-linkedin fs-5"></i></a>
             </div>
           </div>
-          <div class="col-6 col-lg-2 offset-lg-1">
-            <h6 class="fw-bold text-white mb-3">Quick Links</h6>
+          
+          <!-- Column 2: Quick Links -->
+          <div class="col-12 col-md-6 col-lg-3">
+            <h6 class="fw-bold text-gold mb-4 text-uppercase">Quick Links</h6>
             <ul class="list-unstyled small">
-              <li class="mb-2"><a href="${rootPath}" class="text-white-50 text-decoration-none">Home</a></li>
-              <li class="mb-2"><a href="${basePath}about.html" class="text-white-50 text-decoration-none">About Us</a></li>
-              <li class="mb-2"><a href="${basePath}how-it-works.html" class="text-white-50 text-decoration-none">How It Works</a></li>
-              <li class="mb-2"><a href="${basePath}reviews.html" class="text-white-50 text-decoration-none">Winner Reviews</a></li>
+              <li class="mb-3"><a href="${rootPath}" class="text-white-50 text-decoration-none footer-link">Home</a></li>
+              <li class="mb-3"><a href="${basePath}about.html" class="text-white-50 text-decoration-none footer-link">About Us</a></li>
+              <li class="mb-3"><a href="${basePath}how-it-works.html" class="text-white-50 text-decoration-none footer-link">How It Works</a></li>
+              <li class="mb-3"><a href="${basePath}products.html" class="text-white-50 text-decoration-none footer-link">Products</a></li>
+              <li class="mb-3"><a href="${basePath}live-auctions.html" class="text-white-50 text-decoration-none footer-link">Live Auctions</a></li>
+              <li class="mb-3"><a href="${basePath}upcoming-auctions.html" class="text-white-50 text-decoration-none footer-link">Upcoming Auctions</a></li>
+              <li class="mb-3"><a href="${basePath}wanted-products.html" class="text-white-50 text-decoration-none footer-link">Wanted Products</a></li>
             </ul>
           </div>
-          <div class="col-6 col-lg-2">
-            <h6 class="fw-bold text-white mb-3">Auctions</h6>
+          
+          <!-- Column 3: Auction -->
+          <div class="col-12 col-md-6 col-lg-3">
+            <h6 class="fw-bold text-gold mb-4 text-uppercase">Auction</h6>
             <ul class="list-unstyled small">
-              <li class="mb-2"><a href="${basePath}products.html" class="text-white-50 text-decoration-none">All Products</a></li>
-              <li class="mb-2"><a href="${basePath}live-auctions.html" class="text-white-50 text-decoration-none">Live Auctions</a></li>
-              <li class="mb-2"><a href="${basePath}upcoming-auctions.html" class="text-white-50 text-decoration-none">Upcoming Auctions</a></li>
-              <li class="mb-2"><a href="${basePath}wanted-products.html" class="text-white-50 text-decoration-none">Wanted Products</a></li>
+              <li class="mb-3"><a href="${basePath}live-auctions.html" class="text-white-50 text-decoration-none footer-link">Live Auctions</a></li>
+              <li class="mb-3"><a href="${basePath}upcoming-auctions.html" class="text-white-50 text-decoration-none footer-link">Upcoming Auctions</a></li>
+              <li class="mb-3"><a href="${basePath}my-bids.html" class="text-white-50 text-decoration-none footer-link">My Bids</a></li>
+              <li class="mb-3"><a href="${basePath}won-auctions.html" class="text-white-50 text-decoration-none footer-link">Won Auctions</a></li>
+              <li class="mb-3"><a href="${basePath}watchlist.html" class="text-white-50 text-decoration-none footer-link">Watchlist</a></li>
+              <li class="mb-3"><a href="${basePath}subscription.html" class="text-white-50 text-decoration-none footer-link">Subscription</a></li>
+              <li class="mb-3"><a href="${basePath}reviews.html" class="text-white-50 text-decoration-none footer-link">Reviews</a></li>
             </ul>
           </div>
-          <div class="col-lg-3">
-            <h6 class="fw-bold text-white mb-3">Support</h6>
-            <ul class="list-unstyled small">
-              <li class="mb-2"><a href="${basePath}faq.html" class="text-white-50 text-decoration-none">FAQ</a></li>
-              <li class="mb-2"><a href="${basePath}terms.html" class="text-white-50 text-decoration-none">Terms & Conditions</a></li>
-              <li class="mb-2"><a href="${basePath}contact.html" class="text-white-50 text-decoration-none">Contact Us</a></li>
+          
+          <!-- Column 4: Support & Contact -->
+          <div class="col-12 col-md-6 col-lg-3">
+            <h6 class="fw-bold text-gold mb-4 text-uppercase">Support</h6>
+            <ul class="list-unstyled small mb-4">
+              <li class="mb-3"><a href="${basePath}faq.html" class="text-white-50 text-decoration-none footer-link">FAQ</a></li>
+              <li class="mb-3"><a href="${basePath}contact.html" class="text-white-50 text-decoration-none footer-link">Contact Us</a></li>
+              <li class="mb-3"><a href="${basePath}terms.html" class="text-white-50 text-decoration-none footer-link">Terms & Conditions</a></li>
+              <li class="mb-3"><span class="text-secondary" style="cursor: not-allowed;" title="Placeholder">Privacy Policy</span></li>
+            </ul>
+            
+            <h6 class="fw-bold text-gold mb-3 text-uppercase">Contact Us</h6>
+            <ul class="list-unstyled small text-white-50">
+              <li class="mb-2 d-flex align-items-center"><i class="bi bi-envelope text-primary me-2"></i> support@yourdomain.com</li>
+              <li class="mb-2 d-flex align-items-center"><i class="bi bi-telephone text-primary me-2"></i> +91 XXXXX XXXXX</li>
+              <li class="mb-2 d-flex align-items-center"><i class="bi bi-geo-alt text-primary me-2"></i> India</li>
             </ul>
           </div>
         </div>
-        <hr class="border-secondary opacity-25 my-4">
-        <div class="row align-items-center">
-          <div class="col-md-6 text-center text-md-start">
-            <p class="mb-0 small text-white-50">&copy; 2026 PICKURS.in. All rights reserved.</p>
-          </div>
-          <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
-            <div class="small text-white-50">Frontend Demo Project</div>
+
+        <!-- Footer Bottom: Note & Copyright -->
+        <div class="mt-5 pt-4 border-top border-secondary border-opacity-25">
+          <p class="small text-white-50 fst-italic mb-3 text-center">
+            * Auction schedules, availability and bidding status may be subject to change due to technical issues or unforeseen circumstances.
+          </p>
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-center pb-3">
+            <p class="mb-2 mb-md-0 small text-white-50">&copy; 2026 FIXURs / PICKURS.in. All Rights Reserved.</p>
+            <div class="small text-gold fw-semibold">e-Auction & Bidding Platform</div>
           </div>
         </div>
+        
       </div>
     </footer>
   `;
 }
+
