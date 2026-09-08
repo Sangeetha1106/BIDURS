@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subscription | PICKURS.in</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-light" data-dashboard-page="subscription">
+
+  <nav class="navbar navbar-expand-lg sticky-top bg-white">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="../index.html">PICKURS<span>.in</span></a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto"></ul>
+        <div class="d-flex gap-2 ms-auto"></div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <div class="row g-4">
+      <div class="col-lg-3" id="dashboard-sidebar"></div>
+      
+      <div class="col-lg-9">
+        <div class="mb-4">
+          <h2 class="fw-bold text-navy mb-0">Choose Your Auction Subscription</h2>
+          <p class="text-muted">Unlock full access to live bidding.</p>
+        </div>
+
+        <!-- Dynamic Subscription Status -->
+        <div id="sub-status-container" class="mb-4"></div>
+
+        <div class="row justify-content-center">
+          <div class="col-md-8 col-lg-6">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden position-relative">
+              <div class="bg-navy p-4 text-center text-white position-relative">
+                <i class="bi bi-star-fill text-gold position-absolute opacity-25" style="font-size: 6rem; right: -10px; top: -10px;"></i>
+                <h4 class="fw-bold mb-1 position-relative z-1">PICKURS Membership</h4>
+                <span class="badge bg-gold text-navy position-relative z-1">Most Popular</span>
+              </div>
+              <div class="card-body p-5">
+                <div class="text-center border-bottom pb-4 mb-4">
+                  <div class="text-muted small text-uppercase fw-bold mb-1">Validity: 1 Month</div>
+                  <div class="display-3 fw-bold text-navy mb-0" id="sub-price-display">₹999</div>
+                </div>
+                
+                <ul class="list-unstyled mb-5">
+                  <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> Participate in eligible auctions</li>
+                  <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> Place bids in real-time</li>
+                  <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> Track active bids</li>
+                  <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> View auction results</li>
+                  <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> Track winning auctions</li>
+                </ul>
+
+                <button class="btn btn-premium w-100 py-3 fw-bold fs-5 shadow" id="btn-subscribe" onclick="triggerSubscriptionModal()">SUBSCRIBE NOW</button>
+                <div class="text-center mt-3 small text-muted">
+                  <i class="bi bi-info-circle me-1"></i> Subscription validity: 1 month
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal fade" id="subModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+        <div class="modal-header bg-navy text-white border-0 py-3">
+          <h5 class="modal-title fw-bold">Confirm Subscription</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4 text-center">
+          <div id="sub-loading" class="d-none py-4">
+            <div class="spinner-border text-gold mb-3" role="status"></div>
+            <h5 class="fw-bold text-navy">Processing Activation...</h5>
+          </div>
+          
+          <div id="sub-confirm">
+            <p class="mb-4">Please confirm your subscription details.</p>
+            <div class="bg-light rounded p-3 text-start mb-4">
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Plan:</span>
+                <span class="fw-bold text-navy">PICKURS 1 Month Membership</span>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span class="text-muted">Amount:</span>
+                <span class="fw-bold text-gold fs-5" id="modal-price-display">₹999</span>
+              </div>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-secondary w-50" data-bs-dismiss="modal">CANCEL</button>
+              <button class="btn btn-premium w-50 fw-bold" onclick="processMockSubscription()">CONFIRM</button>
+            </div>
+          </div>
+          
+          <div id="sub-success" class="d-none py-4">
+            <i class="bi bi-check-circle-fill text-success display-1 mb-3"></i>
+            <h4 class="fw-bold text-navy mb-2">Subscription Activated</h4>
+            <p class="text-muted mb-0">Validity: 30 days | Status: <span class="badge bg-success">ACTIVE</span></p>
+            <button class="btn btn-outline-premium mt-4 px-4" onclick="window.location.reload()">Return to Dashboard</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/subscription.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
+  <script>
+    let modalInstance;
+    document.addEventListener('DOMContentLoaded', () => {
+      // Setup dynamic pricing
+      const priceStr = window.utils.formatCurrency(window.subUtils.SUB_PRICE);
+      document.getElementById('sub-price-display').textContent = priceStr;
+      document.getElementById('modal-price-display').textContent = priceStr;
+
+      renderSubscriptionStatus();
+    });
+
+    function renderSubscriptionStatus() {
+      const status = window.subUtils.getSubscriptionStatus();
+      const container = document.getElementById('sub-status-container');
+      const btn = document.getElementById('btn-subscribe');
+      
+      let html = '';
+      if (status === 'ACTIVE') {
+        const exp = window.subUtils.calculateSubscriptionExpiry();
+        if (exp.status === 'EXPIRING SOON') {
+          html = `<div class="alert alert-warning border-0 fw-bold shadow-sm"><i class="bi bi-exclamation-triangle-fill me-2"></i> Your subscription is <span class="badge bg-warning text-dark">EXPIRING SOON</span>. ${exp.days} Days Remaining.</div>`;
+        } else {
+          html = `<div class="alert alert-success border-0 fw-bold shadow-sm"><i class="bi bi-check-circle-fill me-2"></i> Your subscription is <span class="badge bg-success">ACTIVE</span>. ${exp.days} Days Remaining.</div>`;
+        }
+        btn.textContent = "EXTEND SUBSCRIPTION";
+      } else if (status === 'EXPIRED') {
+        html = `<div class="alert alert-secondary border-0 fw-bold shadow-sm"><i class="bi bi-x-circle-fill me-2"></i> Your subscription has <span class="badge bg-secondary">EXPIRED</span>. Please renew.</div>`;
+      } else if (status === 'SUSPENDED') {
+        html = `<div class="alert alert-danger border-0 fw-bold shadow-sm"><i class="bi bi-slash-circle-fill me-2"></i> SUBSCRIPTION SUSPENDED. Your subscription has been suspended according to company norms. <span class="badge bg-danger">SUSPENDED</span></div>`;
+        btn.disabled = true;
+      }
+      
+      container.innerHTML = html;
+    }
+
+    function triggerSubscriptionModal() {
+      modalInstance = new bootstrap.Modal(document.getElementById('subModal'));
+      modalInstance.show();
+    }
+
+    function processMockSubscription() {
+      document.getElementById('sub-confirm').classList.add('d-none');
+      document.getElementById('sub-loading').classList.remove('d-none');
+      
+      setTimeout(() => {
+        window.subUtils.activateSubscription();
+        document.getElementById('sub-loading').classList.add('d-none');
+        document.getElementById('sub-success').classList.remove('d-none');
+      }, 1500);
+    }
+  </script>
+  <div id="global-footer"></div>
+</body>
+</html>

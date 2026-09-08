@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTP Verification | PICKURS.in</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .otp-input {
+      width: 45px;
+      height: 55px;
+      font-size: 24px;
+      text-align: center;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-weight: bold;
+      color: #0a192f;
+    }
+    .otp-input:focus {
+      border-color: #d4af37;
+      outline: none;
+      box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="../index.html">PICKURS<span>.in</span></a>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+          <div class="bg-navy p-4 text-center">
+            <h2 class="text-white fw-bold mb-0">Verify OTP</h2>
+            <p class="text-white-50 mb-0">Enter the 6-digit code sent to your mobile</p>
+          </div>
+          <div class="card-body p-4 p-md-5 text-center">
+            
+            <div id="otpError" class="alert alert-danger d-none small fw-bold mb-4"></div>
+            <div id="otpSuccess" class="alert alert-success d-none small fw-bold mb-4">Verification Successful! Redirecting...</div>
+            
+            <form id="otpForm" onsubmit="handleOtp(event)">
+              <div class="d-flex justify-content-between mb-4">
+                <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 'otp2')" id="otp1">
+                <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 'otp3')" onkeydown="moveToPrev(event, this, 'otp1')" id="otp2">
+                <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 'otp4')" onkeydown="moveToPrev(event, this, 'otp2')" id="otp3">
+                <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 'otp5')" onkeydown="moveToPrev(event, this, 'otp3')" id="otp4">
+                <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 'otp6')" onkeydown="moveToPrev(event, this, 'otp4')" id="otp5">
+                <input type="text" class="otp-input" maxlength="1" onkeydown="moveToPrev(event, this, 'otp5')" id="otp6">
+              </div>
+
+              <button type="submit" class="btn btn-premium w-100 py-3 fw-bold fs-5 shadow-sm mb-3">VERIFY OTP</button>
+              
+              <button type="button" class="btn btn-link text-muted text-decoration-none small p-0" onclick="alert('Mock OTP sent! Try 123456')">Resend OTP</button>
+            </form>
+          </div>
+        </div>
+        <div class="alert alert-secondary mt-4 small border-0 text-center">
+          <i class="bi bi-info-circle me-1"></i> Demo Hint: Use <strong>123456</strong> as the OTP.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/auth.js"></script>
+  <script>
+    function moveToNext(current, nextFieldId) {
+      if (current.value.length === 1) {
+        document.getElementById(nextFieldId).focus();
+      }
+    }
+    
+    function moveToPrev(e, current, prevFieldId) {
+      if (e.key === 'Backspace' && current.value === '') {
+        document.getElementById(prevFieldId).focus();
+      }
+    }
+
+    function handleOtp(e) {
+      e.preventDefault();
+      const code = [1,2,3,4,5,6].map(i => document.getElementById(`otp${i}`).value).join('');
+      const errorDiv = document.getElementById('otpError');
+      const successDiv = document.getElementById('otpSuccess');
+      
+      if (code !== '123456') {
+        errorDiv.textContent = "Invalid OTP. Please try again.";
+        errorDiv.classList.remove('d-none');
+        successDiv.classList.add('d-none');
+        return;
+      }
+      
+      errorDiv.classList.add('d-none');
+      successDiv.classList.remove('d-none');
+      
+      setTimeout(() => {
+        window.mockLogin();
+      }, 1500);
+    }
+  </script>
+  <div id="global-footer"></div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Works | PICKURS.in</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .step-circle {
+      width: 60px;
+      height: 60px;
+      background-color: #07152F;
+      color: #F5B51B;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      margin: 0 auto 20px;
+      border: 4px solid #fff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .timeline-card {
+      transition: transform 0.3s ease;
+    }
+    .timeline-card:hover {
+      transform: translateY(-5px);
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+  <nav class="navbar navbar-expand-lg sticky-top bg-white">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="../index.html">PICKURS<span>.in</span></a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto"></ul>
+        <div class="d-flex gap-2 ms-auto"></div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h1 class="display-5 fw-bold text-navy">How It Works</h1>
+      <div class="divider mx-auto bg-gold my-3" style="width: 60px; height: 4px; border-radius: 2px;"></div>
+      <p class="lead text-muted">Master the live auction process in 5 simple steps.</p>
+    </div>
+
+    <div class="row g-4 position-relative z-1">
+      <!-- Line behind circles for desktop -->
+      <div class="d-none d-lg-block position-absolute" style="top: 30px; left: 10%; right: 10%; height: 2px; background-color: #e2e8f0; z-index: -1;"></div>
+
+      <div class="col-12 col-lg text-center timeline-card">
+        <div class="step-circle">1</div>
+        <h5 class="fw-bold text-navy">Register</h5>
+        <p class="small text-muted px-2">Create your free account using your mobile number and email.</p>
+      </div>
+
+      <div class="col-12 col-lg text-center timeline-card">
+        <div class="step-circle">2</div>
+        <h5 class="fw-bold text-navy">Subscribe</h5>
+        <p class="small text-muted px-2">Activate your 1-month membership to unlock live bidding privileges.</p>
+      </div>
+
+      <div class="col-12 col-lg text-center timeline-card">
+        <div class="step-circle">3</div>
+        <h5 class="fw-bold text-navy">Browse</h5>
+        <p class="small text-muted px-2">Explore our collection of premium electronics and upcoming auctions.</p>
+      </div>
+
+      <div class="col-12 col-lg text-center timeline-card">
+        <div class="step-circle">4</div>
+        <h5 class="fw-bold text-navy">Join & Bid</h5>
+        <p class="small text-muted px-2">Enter the live room and place bids before the timer reaches zero.</p>
+      </div>
+
+      <div class="col-12 col-lg text-center timeline-card">
+        <div class="step-circle"><i class="bi bi-trophy-fill"></i></div>
+        <h5 class="fw-bold text-navy">Win & Pay</h5>
+        <p class="small text-muted px-2">If you have the highest bid when time is up, complete payment to claim your item!</p>
+      </div>
+    </div>
+
+    <div class="text-center mt-5 pt-4">
+      <a href="register.html" class="btn btn-premium btn-lg px-5 fw-bold">START NOW</a>
+    </div>
+  </div>
+
+  <div id="global-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/auth.js"></script>
+</body>
+</html>

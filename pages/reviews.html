@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Winner Reviews | PICKURS.in</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-light">
+
+  <nav class="navbar navbar-expand-lg sticky-top bg-white">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="../index.html">PICKURS<span>.in</span></a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto"></ul>
+        <div class="d-flex gap-2 ms-auto"></div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h1 class="display-5 fw-bold text-navy">Winner Reviews</h1>
+      <div class="divider mx-auto bg-gold my-3" style="width: 60px; height: 4px; border-radius: 2px;"></div>
+      <p class="lead text-muted">Hear from our successful auction winners.</p>
+      <button class="btn btn-outline-premium mt-3" data-bs-toggle="modal" data-bs-target="#reviewModal">
+        <i class="bi bi-pencil-square me-2"></i> Write a Review
+      </button>
+    </div>
+
+    <div class="row g-4">
+      <!-- Mock Review 1 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <div class="d-flex align-items-center">
+                <div class="bg-navy text-white rounded-circle d-flex align-items-center justify-content-center me-3 fw-bold fs-5" style="width: 50px; height: 50px;">AK</div>
+                <div>
+                  <h6 class="mb-0 fw-bold text-navy">Aarav K.</h6>
+                  <small class="text-muted">Winner ID: W-1092</small>
+                </div>
+              </div>
+              <div class="text-gold"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            </div>
+            <div class="bg-light p-2 rounded small mb-3 border">
+              <span class="text-muted">Won:</span> <strong class="text-navy">Sony PlayStation 5</strong><br>
+              <span class="text-muted">Winning Bid:</span> <strong class="text-gold">₹38,500</strong>
+            </div>
+            <p class="text-secondary mb-3">"Incredible experience! The bidding was intense but fair. The countdown timer works perfectly without lag. Received the PS5 in sealed condition exactly as described."</p>
+            <div class="text-muted small">September 1, 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mock Review 2 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <div class="d-flex align-items-center">
+                <div class="bg-navy text-white rounded-circle d-flex align-items-center justify-content-center me-3 fw-bold fs-5" style="width: 50px; height: 50px;">SM</div>
+                <div>
+                  <h6 class="mb-0 fw-bold text-navy">Sarah M.</h6>
+                  <small class="text-muted">Winner ID: W-3321</small>
+                </div>
+              </div>
+              <div class="text-gold"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i></div>
+            </div>
+            <div class="bg-light p-2 rounded small mb-3 border">
+              <span class="text-muted">Won:</span> <strong class="text-navy">MacBook Pro M3 Max</strong><br>
+              <span class="text-muted">Winning Bid:</span> <strong class="text-gold">₹1,95,000</strong>
+            </div>
+            <p class="text-secondary mb-3">"A very professional platform. I saved over ₹50k on market price! The only reason for 4.5 stars is the strict payment deadline, but it makes sense to keep auctions moving."</p>
+            <div class="text-muted small">August 28, 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mock Review 3 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <div class="d-flex align-items-center">
+                <div class="bg-navy text-white rounded-circle d-flex align-items-center justify-content-center me-3 fw-bold fs-5" style="width: 50px; height: 50px;">RP</div>
+                <div>
+                  <h6 class="mb-0 fw-bold text-navy">Rahul P.</h6>
+                  <small class="text-muted">Winner ID: W-8812</small>
+                </div>
+              </div>
+              <div class="text-gold"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            </div>
+            <div class="bg-light p-2 rounded small mb-3 border">
+              <span class="text-muted">Won:</span> <strong class="text-navy">iPhone 15 Pro Max</strong><br>
+              <span class="text-muted">Winning Bid:</span> <strong class="text-gold">₹84,500</strong>
+            </div>
+            <p class="text-secondary mb-3">"I posted this on the Wanted Products page and 2 weeks later they hosted a live auction for it. Secured it at a fantastic price. Customer support was very helpful during the payment process."</p>
+            <div class="text-muted small">August 15, 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Review Modal -->
+  <div class="modal fade" id="reviewModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg rounded-4">
+        <div class="modal-header bg-navy text-white border-0 py-3">
+          <h5 class="modal-title fw-bold">Write a Review</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form id="review-form">
+            <div class="mb-3 text-center">
+              <label class="form-label text-muted fw-bold d-block">Rating</label>
+              <div class="fs-2 text-warning cursor-pointer">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-muted small fw-bold">PRODUCT WON</label>
+              <select class="form-select" required>
+                <option value="" disabled selected>Select an auction you won</option>
+                <option>Sony PlayStation 5</option>
+                <option>Apple iPhone 15</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="form-label text-muted small fw-bold">REVIEW TEXT</label>
+              <textarea class="form-control" rows="4" required placeholder="Share your bidding experience..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-premium w-100 py-2 fw-bold">SUBMIT REVIEW</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="global-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/stage6.js"></script>
+</body>
+</html>

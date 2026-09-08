@@ -1,0 +1,12 @@
+{
+  "name": "pickurs",
+  "version": "1.0.0",
+  "description": "PICKURS.in E-Auction Frontend Demo",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | PICKURS.in</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-light">
+
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="../index.html">PICKURS<span>.in</span></a>
+      <div class="d-flex gap-2 ms-auto">
+        <a href="login.html" class="btn btn-outline-premium">Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+          <div class="bg-navy p-4 text-center">
+            <h2 class="text-white fw-bold mb-0">Create an Account</h2>
+            <p class="text-white-50 mb-0">Join India's premium e-auction platform</p>
+          </div>
+          <div class="card-body p-4 p-md-5">
+            <form id="registerForm" onsubmit="handleRegister(event)">
+              <div id="registerError" class="alert alert-danger d-none small fw-bold"></div>
+              
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="nameInput" placeholder="John Doe">
+                <label for="nameInput">Full Name</label>
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="email" class="form-control" id="emailInput" placeholder="name@example.com">
+                    <label for="emailInput">Email Address</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="tel" class="form-control" id="mobileInput" placeholder="9876543210">
+                    <label for="mobileInput">Mobile Number</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="passwordInput" placeholder="Password">
+                <label for="passwordInput">Password (Min 8 characters)</label>
+              </div>
+
+              <div class="form-floating mb-4">
+                <input type="password" class="form-control" id="confirmPasswordInput" placeholder="Confirm Password">
+                <label for="confirmPasswordInput">Confirm Password</label>
+              </div>
+
+              <div class="form-check mb-4">
+                <input class="form-check-input" type="checkbox" id="termsCheck">
+                <label class="form-check-label small" for="termsCheck">
+                  I accept the <a href="#" class="text-navy">Terms & Conditions</a> and <a href="#" class="text-navy">Privacy Policy</a>
+                </label>
+              </div>
+
+              <button type="submit" class="btn btn-premium w-100 py-3 fw-bold fs-5 shadow-sm">CREATE ACCOUNT</button>
+            </form>
+            
+            <div class="text-center mt-4">
+              <span class="text-muted small">Already have an account? </span>
+              <a href="login.html" class="text-navy fw-bold text-decoration-none small">LOGIN</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script>
+    function handleRegister(e) {
+      e.preventDefault();
+      const name = document.getElementById('nameInput').value;
+      const email = document.getElementById('emailInput').value;
+      const mobile = document.getElementById('mobileInput').value;
+      const pass = document.getElementById('passwordInput').value;
+      const confirmPass = document.getElementById('confirmPasswordInput').value;
+      const terms = document.getElementById('termsCheck').checked;
+      const errorDiv = document.getElementById('registerError');
+      
+      if (!name || !email || !mobile || !pass || !confirmPass) {
+        errorDiv.textContent = "Please fill out all required fields.";
+        errorDiv.classList.remove('d-none');
+        return;
+      }
+
+      if (pass.length < 8) {
+        errorDiv.textContent = "Password must be at least 8 characters long.";
+        errorDiv.classList.remove('d-none');
+        return;
+      }
+
+      if (pass !== confirmPass) {
+        errorDiv.textContent = "Passwords do not match.";
+        errorDiv.classList.remove('d-none');
+        return;
+      }
+
+      if (!terms) {
+        errorDiv.textContent = "You must accept the Terms & Conditions.";
+        errorDiv.classList.remove('d-none');
+        return;
+      }
+      
+      errorDiv.classList.add('d-none');
+      // Route to OTP verification demo
+      window.location.href = 'otp-verification.html';
+    }
+  </script>
+  <div id="global-footer"></div>
+</body>
+</html>

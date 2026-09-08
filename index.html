@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PICKURS.in - Premium e-Auction & Live Bidding</title>
+  <meta name="description" content="Join PICKURS.in for live e-Auctions of premium electronics, mobiles, and more. Bid smartly and win big!">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">PICKURS<span>.in</span></a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-toggle="target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="pages/products.html">All Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="pages/live-auctions.html">Live Auctions</a></li>
+          <li class="nav-item"><a class="nav-link" href="pages/upcoming-auctions.html">Upcoming</a></li>
+          <li class="nav-item"><a class="nav-link" href="#how-it-works">How It Works</a></li>
+        </ul>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-premium">Login</button>
+          <button class="btn btn-premium">Register</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-5 mb-lg-0 z-1">
+          <span class="badge bg-gold text-navy mb-3 px-3 py-2 rounded-pill fw-bold">Live Bidding Platform</span>
+          <h1 class="hero-title">Bid Smart.<br>Win <span>Premium</span> Products.</h1>
+          <p class="hero-subtitle">Join India\'s most trusted e-Auction platform. Win flagship phones, laptops, and electronics at unbelievable prices.</p>
+          <div class="d-flex gap-3">
+            <a href="pages/live-auctions.html" class="btn btn-premium btn-lg">View Live Auctions <i class="bi bi-arrow-right ms-2"></i></a>
+            <button class="btn btn-outline-light btn-lg border-2">How it Works</button>
+          </div>
+          <div class="mt-4 pt-3 d-flex align-items-center gap-4 text-white-50">
+            <div><h4 class="text-white mb-0">10k+</h4><small>Active Bidders</small></div>
+            <div><h4 class="text-white mb-0">₹5Cr+</h4><small>Value Saved</small></div>
+            <div><h4 class="text-white mb-0">100%</h4><small>Genuine</small></div>
+          </div>
+        </div>
+        <div class="col-lg-6 position-relative z-1">
+          <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=800&auto=format&fit=crop" alt="Premium Products" class="img-fluid rounded-4 shadow-lg border border-secondary border-opacity-25">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Categories -->
+  <section class="section-padding bg-white">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-end mb-4">
+        <h2 class="section-title mb-0 text-start">Browse Categories</h2>
+        <a href="pages/products.html" class="text-royal text-decoration-none fw-semibold">View All <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="row" id="categories-container">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Auctions -->
+  <section id="live" class="section-padding">
+    <div class="container">
+      <div class="text-center mb-5">
+        <span class="text-danger fw-bold text-uppercase tracking-wide"><i class="bi bi-circle-fill small me-1"></i> Happening Now</span>
+        <h2 class="section-title mt-2">Live Auctions</h2>
+      </div>
+      <div class="row" id="live-auctions-container">
+        <!-- Rendered via JS -->
+      </div>
+      <div class="text-center mt-5">
+        <a href="pages/live-auctions.html" class="btn btn-outline-premium px-5 py-2">Load More Live Auctions</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section id="how-it-works" class="section-padding bg-navy text-white">
+    <div class="container">
+      <h2 class="section-title text-white">How To Play & Win</h2>
+      <div class="row g-4 mt-4">
+        <div class="col-md-4 text-center">
+          <div class="bg-white bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
+            <i class="bi bi-person-plus-fill fs-2 text-gold"></i>
+          </div>
+          <h3 class="h4 text-white">1. Register & Buy Bids</h3>
+          <p class="text-white-50">Create your free account and purchase a bid pack to participate in live auctions.</p>
+        </div>
+        <div class="col-md-4 text-center">
+          <div class="bg-white bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
+            <i class="bi bi-gavel fs-2 text-gold"></i>
+          </div>
+          <h3 class="h4 text-white">2. Place Your Bids</h3>
+          <p class="text-white-50">Find your desired product and place single bids or use auto-bidder to stay ahead.</p>
+        </div>
+        <div class="col-md-4 text-center">
+          <div class="bg-white bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
+            <i class="bi bi-trophy-fill fs-2 text-gold"></i>
+          </div>
+          <h3 class="h4 text-white">3. Win & Pay</h3>
+          <p class="text-white-50">If you are the last bidder when the timer hits zero, you win! Pay the final auction price.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Upcoming Auctions -->
+  <section id="upcoming" class="section-padding bg-white">
+    <div class="container">
+      <div class="text-center mb-5">
+        <span class="text-royal fw-bold text-uppercase tracking-wide">Don\'t Miss Out</span>
+        <h2 class="section-title mt-2">Upcoming Auctions</h2>
+      </div>
+      <div class="row" id="upcoming-auctions-container">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Wanted Products (Request a product) -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="bg-gold rounded-4 p-5 position-relative overflow-hidden shadow-lg">
+        <div class="row align-items-center position-relative z-1">
+          <div class="col-lg-8 mb-4 mb-lg-0">
+            <h2 class="text-navy fw-bold h1">Wanted Products</h2>
+            <p class="text-navy fs-5 opacity-75 mb-0">Can\'t find what you are looking for? Let us know and we might list it in our next auction!</p>
+          </div>
+          <div class="col-lg-4 text-lg-end">
+            <button class="btn btn-navy bg-navy text-white btn-lg px-5 border-0">Request Product</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Winner Reviews -->
+  <section class="section-padding bg-white">
+    <div class="container">
+      <h2 class="section-title">Hear From Our Winners</h2>
+      <div class="row" id="reviews-container">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Terms & Trust -->
+  <section class="py-5 border-top border-bottom bg-light">
+    <div class="container">
+      <div class="row text-center g-4">
+        <div class="col-6 col-md-3">
+          <i class="bi bi-shield-check fs-1 text-navy mb-2"></i>
+          <h5 class="h6 fw-bold">100% Genuine</h5>
+          <p class="small text-muted mb-0">Brand new sealed products</p>
+        </div>
+        <div class="col-6 col-md-3">
+          <i class="bi bi-truck fs-1 text-navy mb-2"></i>
+          <h5 class="h6 fw-bold">Fast Delivery</h5>
+          <p class="small text-muted mb-0">Pan India express shipping</p>
+        </div>
+        <div class="col-6 col-md-3">
+          <i class="bi bi-credit-card-2-front fs-1 text-navy mb-2"></i>
+          <h5 class="h6 fw-bold">Secure Payments</h5>
+          <p class="small text-muted mb-0">Encrypted transactions</p>
+        </div>
+        <div class="col-6 col-md-3">
+          <i class="bi bi-headset fs-1 text-navy mb-2"></i>
+          <h5 class="h6 fw-bold">24/7 Support</h5>
+          <p class="small text-muted mb-0">We are here to help</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div id="global-footer"></div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JS -->
+  <script src="assets/data/products.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/timer.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

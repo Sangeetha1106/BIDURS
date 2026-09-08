@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | PICKURS.in</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-light" data-dashboard-page="dashboard">
+
+  <nav class="navbar navbar-expand-lg sticky-top bg-white">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="../index.html">PICKURS<span>.in</span></a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <!-- Populated by auth.js -->
+        </ul>
+        <div class="d-flex gap-2 ms-auto">
+          <!-- Populated by auth.js -->
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <div class="row g-4">
+      
+      <!-- Sidebar -->
+      <div class="col-lg-3" id="dashboard-sidebar">
+        <!-- Rendered via JS -->
+      </div>
+      
+      <!-- Main Content -->
+      <div class="col-lg-9">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 class="fw-bold text-navy mb-0">Dashboard Overview</h2>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+              <div class="card-body p-4 text-center">
+                <div class="fs-1 fw-bold text-navy mb-1">04</div>
+                <div class="text-muted small text-uppercase fw-bold">Active Bids</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+              <div class="card-body p-4 text-center">
+                <div class="fs-1 fw-bold text-success mb-1">02</div>
+                <div class="text-muted small text-uppercase fw-bold">Auctions Won</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+              <div class="card-body p-4 text-center">
+                <div class="fs-1 fw-bold text-danger mb-1">03</div>
+                <div class="text-muted small text-uppercase fw-bold">Outbid</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+              <div class="card-body p-4 text-center">
+                <div class="fs-1 fw-bold text-navy mb-1">08</div>
+                <div class="text-muted small text-uppercase fw-bold">Watchlist</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <!-- Active Bids Table -->
+          <div class="col-12 col-xl-8">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+              <div class="card-header bg-white border-bottom-0 p-4 pb-0 d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold text-navy mb-0">Your Active Bids</h5>
+                <a href="my-bids.html" class="small text-decoration-none text-navy fw-semibold">View All</a>
+              </div>
+              <div class="card-body p-4">
+                <div class="table-responsive">
+                  <table class="table align-middle text-nowrap">
+                    <thead>
+                      <tr>
+                        <th class="text-muted small border-0 pb-3">Product</th>
+                        <th class="text-muted small border-0 pb-3">Your Bid</th>
+                        <th class="text-muted small border-0 pb-3">Current Bid</th>
+                        <th class="text-muted small border-0 pb-3">Status</th>
+                        <th class="text-muted small border-0 pb-3 text-end">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="dash-active-bids">
+                      <!-- Rendered via JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subscription Card -->
+          <div class="col-12 col-xl-4" id="dash-sub-card">
+            <!-- Rendered via JS -->
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4">
+              <div class="card-header bg-white border-bottom-0 p-4 pb-0">
+                <h5 class="fw-bold text-navy mb-0">Recent Activity</h5>
+              </div>
+              <div class="card-body p-4">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item px-0 py-3 border-light d-flex align-items-start">
+                    <i class="bi bi-hammer text-gold fs-5 me-3 mt-1"></i>
+                    <div>
+                      <h6 class="mb-1 text-navy">You placed a bid on iPhone 15 Pro</h6>
+                      <small class="text-muted">2 minutes ago</small>
+                    </div>
+                  </li>
+                  <li class="list-group-item px-0 py-3 border-light d-flex align-items-start">
+                    <i class="bi bi-exclamation-triangle text-danger fs-5 me-3 mt-1"></i>
+                    <div>
+                      <h6 class="mb-1 text-navy">You were outbid on MacBook Pro</h6>
+                      <small class="text-muted">10 minutes ago</small>
+                    </div>
+                  </li>
+                  <li class="list-group-item px-0 py-3 border-light d-flex align-items-start">
+                    <i class="bi bi-trophy text-success fs-5 me-3 mt-1"></i>
+                    <div>
+                      <h6 class="mb-1 text-navy">You won Sony Camera auction</h6>
+                      <small class="text-muted">1 hour ago</small>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="global-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/data/products.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/subscription.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
+</body>
+</html>
