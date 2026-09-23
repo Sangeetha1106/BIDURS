@@ -1,4 +1,4 @@
-// Utility functions for PICKURS.in
+// Utility functions for BIDURS
 
 /**
  * Formats a number to Indian Rupee currency string

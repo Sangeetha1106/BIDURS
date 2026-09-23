@@ -35,22 +35,23 @@ function renderDashboardSidebar() {
   ];
 
   const html = `
-    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4 sticky-md-top" style="top: 100px;">
-      <div class="bg-navy p-4 text-center text-white">
-        <div class="bg-white text-navy rounded-circle d-inline-flex align-items-center justify-content-center mb-3 fw-bold fs-3" style="width: 70px; height: 70px;">
-          JD
-        </div>
-        <h5 class="mb-0 fw-bold">John Doe</h5>
-        <p class="small text-white-50 mb-0">ID: PK-2456</p>
+    <div class="glass sticky-md-top overflow-hidden" style="top:90px;border-radius:var(--radius-lg);">
+      <div class="dash-sidebar-header">
+        <div class="dash-avatar">JD</div>
+        <h5 class="mb-0 fw-bold text-white" style="font-family:var(--font-heading);">John Doe</h5>
+        <p class="small mb-1" style="color:rgba(255,255,255,0.5);">ID: ER-2456</p>
+        <span class="badge" style="background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.4);color:#86efac;font-size:0.72rem;">Active Member</span>
       </div>
-      <div class="list-group list-group-flush py-2">
+      <div class="py-2">
         ${links.map(link => `
-          <a href="${link.url}" class="list-group-item list-group-item-action border-0 px-4 py-3 ${currentPath === link.url ? 'active bg-light text-navy fw-bold border-start border-4 border-gold' : 'text-secondary'}">
-            <i class="bi ${link.icon} me-3 ${currentPath === link.url ? 'text-gold' : ''}"></i> ${link.name}
+          <a href="${link.url}" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex align-items-center gap-3 ${currentPath === link.url ? 'active' : ''}">
+            <i class="bi ${link.icon} fs-6"></i>
+            <span style="font-size:0.92rem;font-weight:500;">${link.name}</span>
           </a>
         `).join('')}
-        <a href="#" onclick="window.mockLogout(event)" class="list-group-item list-group-item-action border-0 px-4 py-3 text-danger mt-3">
-          <i class="bi bi-box-arrow-right me-3"></i> Logout
+        <a href="#" onclick="window.mockLogout(event)" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex align-items-center gap-3 mt-1" style="color:#fca5a5!important;border-top:1px solid var(--glass-border)!important;">
+          <i class="bi bi-box-arrow-right fs-6"></i>
+          <span style="font-size:0.92rem;font-weight:500;">Logout</span>
         </a>
       </div>
     </div>
@@ -70,7 +71,7 @@ function populateDashboardStats() {
         <div class="card border-0 shadow-sm rounded-4 h-100 bg-navy text-white">
           <div class="card-body p-4 position-relative overflow-hidden">
             <i class="bi bi-star-fill text-gold position-absolute opacity-25" style="font-size: 8rem; right: -20px; top: -20px;"></i>
-            <h6 class="text-white-50 text-uppercase fw-bold mb-3">PICKURS Membership</h6>
+            <h6 class="text-white-50 text-uppercase fw-bold mb-3">BIDURS Membership</h6>
             <div class="d-flex justify-content-between align-items-end mb-4 position-relative z-1">
               <div>
                 <span class="badge bg-success mb-2 px-3 py-2">ACTIVE</span>
@@ -86,7 +87,7 @@ function populateDashboardStats() {
         <div class="card border-0 shadow-sm rounded-4 h-100 bg-light">
           <div class="card-body p-4 text-center">
             <i class="bi bi-star text-muted fs-1 mb-2"></i>
-            <h6 class="text-navy text-uppercase fw-bold mb-2">PICKURS Membership</h6>
+            <h6 class="text-navy text-uppercase fw-bold mb-2">BIDURS Membership</h6>
             <span class="badge bg-secondary mb-3">NOT SUBSCRIBED</span>
             <p class="small text-muted mb-3">Subscribe to participate in exclusive live auctions.</p>
             <a href="subscription.html" class="btn btn-premium btn-sm w-100">Subscribe Now</a>

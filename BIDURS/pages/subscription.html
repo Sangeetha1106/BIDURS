@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+  <title>Subscription | BidURS</title>
+  <meta name="description" content="Subscribe to BidURS and unlock access to live premium product auctions.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-dashboard-page="subscription">
+
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="../index.html">
+        <img src="../assets/images/favicon.png" alt="BIDURS Logo">
+        BIDURS
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto"></ul>
+        <div class="d-flex gap-2"></div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <div class="row g-4">
+      <div class="col-lg-3" id="dashboard-sidebar"></div>
+
+      <div class="col-lg-9">
+        <div class="mb-5">
+          <h2 class="fw-bold text-white mb-1" style="font-family:var(--font-heading);">Choose Your Auction <span style="background:var(--grad-orange);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Subscription</span></h2>
+          <p style="color:var(--blue-gray);">Unlock full access to live bidding on premium products.</p>
+        </div>
+
+        <!-- Dynamic Subscription Status -->
+        <div id="sub-status-container" class="mb-4"></div>
+
+        <!-- Plan Card -->
+        <div class="row justify-content-center">
+          <div class="col-md-8 col-lg-6">
+            <div class="sub-plan-card">
+              <div class="sub-plan-header position-relative">
+                <i class="bi bi-star-fill position-absolute opacity-10" style="font-size:7rem;right:-15px;top:-15px;color:var(--yellow);"></i>
+                <div class="position-relative z-1">
+                  <span class="badge rounded-pill mb-3 px-3 py-2" style="background:rgba(249,115,22,0.3);border:1px solid rgba(249,115,22,0.5);color:var(--orange-light);font-size:0.82rem;">
+                    <i class="bi bi-fire me-1"></i> Most Popular
+                  </span>
+                  <h4 class="fw-bold text-white mb-0" style="font-family:var(--font-heading);">BidURS Membership</h4>
+                </div>
+              </div>
+              <div class="p-5">
+                <div class="text-center pb-4 mb-4" style="border-bottom:1px solid var(--glass-border);">
+                  <div style="color:var(--blue-gray);font-size:0.8rem;text-transform:uppercase;font-weight:600;letter-spacing:0.08em;margin-bottom:0.5rem;">Validity: 1 Month</div>
+                  <div class="sub-price" id="sub-price-display">₹999</div>
+                </div>
+                <ul class="sub-feature-list list-unstyled mb-5">
+                  <li><i class="bi bi-check-circle-fill"></i> Participate in eligible auctions</li>
+                  <li><i class="bi bi-check-circle-fill"></i> Place bids in real-time</li>
+                  <li><i class="bi bi-check-circle-fill"></i> Track active bids &amp; history</li>
+                  <li><i class="bi bi-check-circle-fill"></i> View auction results</li>
+                  <li><i class="bi bi-check-circle-fill"></i> Access Won Auctions dashboard</li>
+                </ul>
+                <button class="btn btn-premium w-100 py-3 fw-bold fs-5" id="btn-subscribe" onclick="triggerSubscriptionModal()">
+                  <i class="bi bi-bolt-fill me-2"></i>SUBSCRIBE NOW
+                </button>
+                <div class="text-center mt-3 small" style="color:var(--blue-gray);">
+                  <i class="bi bi-shield-check me-1" style="color:var(--success);"></i> Secure &amp; encrypted payment
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CONFIRMATION MODAL ══ -->
+  <div class="modal fade" id="subModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" style="font-family:var(--font-heading);">
+            <i class="bi bi-bolt-fill me-2" style="color:var(--orange);"></i>Confirm Subscription
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4 text-center">
+          <div id="sub-loading" class="d-none py-4">
+            <div class="spinner-border text-gold mb-3" role="status"></div>
+            <h5 class="fw-bold text-white" style="font-family:var(--font-heading);">Processing Activation...</h5>
+          </div>
+
+          <div id="sub-confirm">
+            <p style="color:var(--blue-gray-lt);" class="mb-4">Please confirm your subscription details before proceeding.</p>
+            <div class="p-4 mb-4 rounded-3 text-start" style="background:rgba(255,255,255,0.05);border:1px solid var(--glass-border-blue);">
+              <div class="d-flex justify-content-between mb-3">
+                <span style="color:var(--blue-gray);">Plan:</span>
+                <span class="fw-bold text-white">BidURS 1 Month Membership</span>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span style="color:var(--blue-gray);">Amount:</span>
+                <span class="fw-bold fs-5" style="color:var(--orange);" id="modal-price-display">₹999</span>
+              </div>
+            </div>
+            <div class="d-flex gap-3">
+              <button class="btn btn-glass w-50" data-bs-dismiss="modal">CANCEL</button>
+              <button class="btn btn-premium w-50 fw-bold" onclick="processMockSubscription()">CONFIRM &amp; PAY</button>
+            </div>
+          </div>
+
+          <div id="sub-success" class="d-none py-3">
+            <div class="payment-success-icon mx-auto">
+              <i class="bi bi-check-lg"></i>
+            </div>
+            <h4 class="fw-bold text-white mb-2" style="font-family:var(--font-heading);">Subscription Activated!</h4>
+            <p style="color:var(--blue-gray-lt);" class="mb-3">Validity: 30 days &nbsp;|&nbsp; Status: <span class="badge bg-success">ACTIVE</span></p>
+            <button class="btn btn-outline-royal px-4" onclick="window.location.reload()">Return to Dashboard</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="global-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/subscription.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
+  <script>
+    let modalInstance;
+    document.addEventListener('DOMContentLoaded', () => {
+      const priceStr = window.utils.formatCurrency(window.subUtils.SUB_PRICE);
+      document.getElementById('sub-price-display').textContent = priceStr;
+      document.getElementById('modal-price-display').textContent = priceStr;
+      renderSubscriptionStatus();
+    });
+
+    function renderSubscriptionStatus() {
+      const status = window.subUtils.getSubscriptionStatus();
+      const container = document.getElementById('sub-status-container');
+      const btn = document.getElementById('btn-subscribe');
+      let html = '';
+      if (status === 'ACTIVE') {
+        const exp = window.subUtils.calculateSubscriptionExpiry();
+        if (exp.status === 'EXPIRING SOON') {
+          html = `<div class="alert alert-warning fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Your subscription is <span class="badge bg-warning text-dark">EXPIRING SOON</span>. ${exp.days} Days Remaining.</div>`;
+        } else {
+          html = `<div class="alert alert-success fw-bold"><i class="bi bi-check-circle-fill me-2"></i>Your subscription is <span class="badge bg-success">ACTIVE</span>. ${exp.days} Days Remaining.</div>`;
+        }
+        btn.innerHTML = '<i class="bi bi-arrow-repeat me-2"></i>EXTEND SUBSCRIPTION';
+      } else if (status === 'EXPIRED') {
+        html = `<div class="alert alert-secondary fw-bold"><i class="bi bi-x-circle-fill me-2"></i>Your subscription has <span class="badge bg-secondary">EXPIRED</span>. Please renew.</div>`;
+      } else if (status === 'SUSPENDED') {
+        html = `<div class="alert alert-danger fw-bold"><i class="bi bi-slash-circle-fill me-2"></i>SUBSCRIPTION <span class="badge bg-danger">SUSPENDED</span> — Contact support for assistance.</div>`;
+        btn.disabled = true;
+      }
+      container.innerHTML = html;
+    }
+
+    function triggerSubscriptionModal() {
+      modalInstance = new bootstrap.Modal(document.getElementById('subModal'));
+      modalInstance.show();
+    }
+
+    function processMockSubscription() {
+      document.getElementById('sub-confirm').classList.add('d-none');
+      document.getElementById('sub-loading').classList.remove('d-none');
+      setTimeout(() => {
+        window.subUtils.activateSubscription();
+        document.getElementById('sub-loading').classList.add('d-none');
+        document.getElementById('sub-success').classList.remove('d-none');
+      }, 1500);
+    }
+  </script>
+</body>
+</html>

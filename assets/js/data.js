@@ -1,6 +1,6 @@
-// Mock Data for PICKURS.in
+// Mock Data for BIDURS (Categories & Reviews)
 
-const mockProducts = {
+const mockData = {
   liveAuctions: [
     {
       id: 'L001',

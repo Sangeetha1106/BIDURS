@@ -3,75 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login | PICKURS.in</title>
-  
+  <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+  <title>Login | BIDURS</title>
+  <meta name="description" content="Login to your BIDURS account and start bidding on premium products.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-  
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body class="bg-light">
+<body>
 
+  <!-- ══ NAVBAR ══ -->
   <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="../index.html">PICKURS<span>.in</span></a>
+      <a class="navbar-brand fw-bold" href="../index.html">
+        <img src="../assets/images/favicon.png" alt="BIDURS Logo">
+        BIDURS
+      </a>
       <div class="d-flex gap-2 ms-auto">
         <a href="register.html" class="btn btn-outline-premium">Register</a>
       </div>
     </div>
   </nav>
 
-  <div class="container py-5">
-    <div class="row justify-content-center">
-      <div class="col-md-6 col-lg-5">
-        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
-          <div class="bg-navy p-4 text-center">
-            <h2 class="text-white fw-bold mb-0">Welcome Back</h2>
-            <p class="text-white-50 mb-0">Login to your premium bidding account</p>
-          </div>
-          <div class="card-body p-4 p-md-5">
-            <form id="loginForm" onsubmit="handleLogin(event)">
-              <div id="loginError" class="alert alert-danger d-none small fw-bold"></div>
-              
-              <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="emailInput" placeholder="name@example.com">
-                <label for="emailInput">Email or Mobile Number</label>
-              </div>
-              
-              <div class="input-group mb-3">
-                <div class="form-floating flex-grow-1">
-                  <input type="password" class="form-control border-end-0" id="passwordInput" placeholder="Password">
-                  <label for="passwordInput">Password</label>
-                </div>
-                <button class="btn btn-outline-secondary bg-white border border-start-0" type="button" id="togglePassword">
-                  <i class="bi bi-eye"></i>
-                </button>
-              </div>
+  <!-- ══ AUTH WRAPPER ══ -->
+  <div class="auth-wrapper">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+          <div class="auth-card animate-fade-up">
 
-              <div class="d-flex justify-content-between align-items-center mb-4">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="rememberMe">
-                  <label class="form-check-label small" for="rememberMe">Remember Me</label>
-                </div>
-                <a href="forgot-password.html" class="small text-decoration-none text-navy fw-bold">Forgot Password?</a>
+            <!-- Card Header -->
+            <div class="auth-card-header">
+              <div style="width:64px;height:64px;background:rgba(255,255,255,0.15);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.25);">
+                <i class="bi bi-person-fill" style="font-size:1.75rem;color:white;"></i>
               </div>
-
-              <button type="submit" class="btn btn-premium w-100 py-3 fw-bold fs-5 shadow-sm">LOGIN</button>
-            </form>
-            
-            <div class="text-center mt-4">
-              <span class="text-muted small">Don't have an account? </span>
-              <a href="register.html" class="text-navy fw-bold text-decoration-none small">REGISTER</a>
+              <h2 class="text-white fw-bold mb-1" style="font-family:var(--font-heading);">Welcome Back</h2>
+              <p class="mb-0" style="color:rgba(255,255,255,0.6);font-size:0.9rem;">Login to your premium bidding account</p>
             </div>
+
+            <!-- Card Body -->
+            <div class="auth-card-body">
+              <form id="loginForm" onsubmit="handleLogin(event)">
+                <div id="loginError" class="alert alert-danger d-none small fw-bold mb-4"></div>
+
+                <div class="mb-3">
+                  <label class="form-label">Email or Mobile Number</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    <input type="text" class="form-control" id="emailInput" placeholder="your@email.com">
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Password</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                    <input type="password" class="form-control border-end-0" id="passwordInput" placeholder="Enter your password">
+                    <button class="btn" type="button" id="togglePassword" style="background:rgba(255,255,255,0.07);border:1px solid var(--glass-border-blue);border-left:none;color:var(--bright-blue);">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                    <label class="form-check-label small" for="rememberMe">Remember Me</label>
+                  </div>
+                  <a href="forgot-password.html" class="small text-decoration-none" style="color:var(--bright-blue);">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-premium w-100 py-3 fw-bold fs-5">
+                  <i class="bi bi-box-arrow-in-right me-2"></i>LOGIN
+                </button>
+              </form>
+
+              <div class="text-center mt-4 pt-3" style="border-top:1px solid var(--glass-border);">
+                <span style="color:var(--blue-gray);font-size:0.88rem;">Don't have an account? </span>
+                <a href="register.html" class="fw-bold text-decoration-none" style="color:var(--orange);">REGISTER FREE</a>
+              </div>
+
+              <div class="alert alert-info mt-4 small mb-0" style="font-size:0.82rem;">
+                <i class="bi bi-info-circle me-1"></i> Frontend Demo: Any credentials will simulate a successful login.
+              </div>
+            </div>
+
           </div>
-        </div>
-        
-        <div class="alert alert-secondary mt-4 small border-0 text-center">
-          <i class="bi bi-info-circle me-1"></i> Frontend Demo: Any credentials will simulate a successful login.
         </div>
       </div>
     </div>
@@ -97,22 +117,11 @@
     function handleLogin(e) {
       e.preventDefault();
       const email = document.getElementById('emailInput').value;
-      const pass = document.getElementById('passwordInput').value;
+      const pass  = document.getElementById('passwordInput').value;
       const errorDiv = document.getElementById('loginError');
-      
-      if (!email) {
-        errorDiv.textContent = "Please enter your email or mobile number.";
-        errorDiv.classList.remove('d-none');
-        return;
-      }
-      if (!pass) {
-        errorDiv.textContent = "Please enter your password.";
-        errorDiv.classList.remove('d-none');
-        return;
-      }
-      
+      if (!email) { errorDiv.textContent = 'Please enter your email or mobile number.'; errorDiv.classList.remove('d-none'); return; }
+      if (!pass)  { errorDiv.textContent = 'Please enter your password.'; errorDiv.classList.remove('d-none'); return; }
       errorDiv.classList.add('d-none');
-      // Using mock login from auth.js
       window.mockLogin();
     }
   </script>

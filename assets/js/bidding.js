@@ -19,8 +19,23 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  // If opening live auction room for an UPCOMING product, redirect or show message
+  if (product.status === 'UPCOMING') {
+    const timeFormatted = window.auctionEngine ? window.auctionEngine.formatAuctionTime(product.startTime) : 'Soon';
+    container.innerHTML = `
+      <div class="text-center py-5">
+        <i class="bi bi-clock-history fs-1 text-gold mb-3 d-block"></i>
+        <h2 class="text-navy fw-bold mb-2">Auction Not Live Yet</h2>
+        <p class="text-muted fs-5 mb-4">This product is scheduled for auction at <strong>${timeFormatted}</strong>.</p>
+        <a href="product-details.html?id=${product.id}" class="btn btn-outline-premium me-2">View Details & Remind Me</a>
+        <a href="live-auctions.html" class="btn btn-premium">Current Live Auction</a>
+      </div>
+    `;
+    return;
+  }
+
   // Set document title
-  document.title = `Live: ${product.name} | PICKURS.in`;
+  document.title = `Live: ${product.name} | BIDURS`;
 
   // State
   let currentBid = product.currentBid;

@@ -1,0 +1,12 @@
+{
+  "name": "bidurs",
+  "version": "1.0.0",
+  "description": "BidURS.in E-Auction Frontend Demo",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,7 +1,7 @@
 {
-  "name": "pickurs",
+  "name": "bidurs",
   "version": "1.0.0",
-  "description": "PICKURS.in E-Auction Frontend Demo",
+  "description": "BIDURS E-Auction Frontend Demo",
   "main": "index.js",
   "scripts": {
     "start": "npx serve ."

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+  <title>Dashboard | BidURS</title>
+  <meta name="description" content="Your BidURS dashboard — track active bids, won auctions, subscription status and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-dashboard-page="dashboard">
+
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="../index.html">
+        <img src="../assets/images/favicon.png" alt="BIDURS Logo">
+        BIDURS
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto"></ul>
+        <div class="d-flex gap-2"></div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <div class="row g-4">
+
+      <!-- ══ SIDEBAR ══ -->
+      <div class="col-lg-3" id="dashboard-sidebar"></div>
+
+      <!-- ══ MAIN CONTENT ══ -->
+      <div class="col-lg-9">
+
+        <!-- Dashboard Banner -->
+        <div class="rounded-4 overflow-hidden mb-4" style="box-shadow:var(--shadow-md);border:1px solid var(--glass-border-blue);">
+          <img src="../assets/images/dashboard-banner.png" alt="Premium Dashboard Banner" class="w-100 object-fit-cover" style="height:200px;object-fit:cover;">
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 class="fw-bold text-white mb-0" style="font-family:var(--font-heading);">Dashboard <span style="background:var(--grad-orange);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Overview</span></h2>
+          <span class="badge rounded-pill px-3 py-2" style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);color:#86efac;font-size:0.8rem;">
+            <i class="bi bi-circle-fill me-1" style="font-size:0.5rem;"></i> Online
+          </span>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-md-3">
+            <div class="glass p-4 text-center" style="border-radius:var(--radius-lg);transition:var(--t-normal);" onmouseover="this.style.boxShadow='var(--glow-blue)'" onmouseout="this.style.boxShadow=''">
+              <div class="fs-1 fw-bold mb-1" style="color:var(--bright-blue);font-family:var(--font-heading);">04</div>
+              <div style="color:var(--blue-gray);font-size:0.75rem;text-transform:uppercase;font-weight:600;letter-spacing:0.06em;">Active Bids</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="glass p-4 text-center" style="border-radius:var(--radius-lg);transition:var(--t-normal);" onmouseover="this.style.boxShadow='var(--glow-orange)'" onmouseout="this.style.boxShadow=''">
+              <div class="fs-1 fw-bold mb-1" style="color:var(--success);font-family:var(--font-heading);">02</div>
+              <div style="color:var(--blue-gray);font-size:0.75rem;text-transform:uppercase;font-weight:600;letter-spacing:0.06em;">Auctions Won</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="glass p-4 text-center" style="border-radius:var(--radius-lg);transition:var(--t-normal);" onmouseover="this.style.boxShadow='0 0 20px rgba(239,68,68,0.4)'" onmouseout="this.style.boxShadow=''">
+              <div class="fs-1 fw-bold mb-1" style="color:var(--live-red);font-family:var(--font-heading);">03</div>
+              <div style="color:var(--blue-gray);font-size:0.75rem;text-transform:uppercase;font-weight:600;letter-spacing:0.06em;">Outbid</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="glass p-4 text-center" style="border-radius:var(--radius-lg);transition:var(--t-normal);" onmouseover="this.style.boxShadow='var(--glow-blue)'" onmouseout="this.style.boxShadow=''">
+              <div class="fs-1 fw-bold mb-1" style="color:var(--yellow);font-family:var(--font-heading);">08</div>
+              <div style="color:var(--blue-gray);font-size:0.75rem;text-transform:uppercase;font-weight:600;letter-spacing:0.06em;">Watchlist</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <!-- Active Bids Table -->
+          <div class="col-12 col-xl-8">
+            <div class="glass h-100" style="border-radius:var(--radius-lg);">
+              <div class="p-4 pb-0 d-flex justify-content-between align-items-center" style="border-bottom:1px solid var(--glass-border);">
+                <h5 class="fw-bold mb-3" style="color:var(--bright-blue);font-family:var(--font-heading);">
+                  <i class="bi bi-gavel me-2"></i>Your Active Bids
+                </h5>
+                <a href="my-bids.html" class="small text-decoration-none mb-3" style="color:var(--orange);">View All →</a>
+              </div>
+              <div class="p-4">
+                <div class="table-responsive">
+                  <table class="table align-middle text-nowrap mb-0">
+                    <thead>
+                      <tr>
+                        <th>Product</th>
+                        <th>Your Bid</th>
+                        <th>Current Bid</th>
+                        <th>Status</th>
+                        <th class="text-end">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="dash-active-bids"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subscription Card -->
+          <div class="col-12 col-xl-4" id="dash-sub-card"></div>
+
+          <!-- Recent Activity -->
+          <div class="col-12">
+            <div class="glass" style="border-radius:var(--radius-lg);">
+              <div class="p-4 pb-0" style="border-bottom:1px solid var(--glass-border);">
+                <h5 class="fw-bold mb-3" style="color:var(--bright-blue);font-family:var(--font-heading);">
+                  <i class="bi bi-activity me-2"></i>Recent Activity
+                </h5>
+              </div>
+              <div class="p-4">
+                <ul class="list-unstyled mb-0">
+                  <li class="d-flex align-items-start pb-3 mb-3" style="border-bottom:1px solid var(--glass-border);">
+                    <div style="width:36px;height:36px;background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:1rem;">
+                      <i class="bi bi-hammer" style="color:var(--orange);"></i>
+                    </div>
+                    <div>
+                      <h6 class="mb-1 text-white" style="font-size:0.9rem;">You placed a bid on iPhone 15 Pro</h6>
+                      <small style="color:var(--blue-gray);">2 minutes ago</small>
+                    </div>
+                  </li>
+                  <li class="d-flex align-items-start pb-3 mb-3" style="border-bottom:1px solid var(--glass-border);">
+                    <div style="width:36px;height:36px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:1rem;">
+                      <i class="bi bi-exclamation-triangle" style="color:var(--live-red);"></i>
+                    </div>
+                    <div>
+                      <h6 class="mb-1 text-white" style="font-size:0.9rem;">You were outbid on MacBook Pro</h6>
+                      <small style="color:var(--blue-gray);">10 minutes ago</small>
+                    </div>
+                  </li>
+                  <li class="d-flex align-items-start">
+                    <div style="width:36px;height:36px;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:1rem;">
+                      <i class="bi bi-trophy" style="color:var(--success);"></i>
+                    </div>
+                    <div>
+                      <h6 class="mb-1 text-white" style="font-size:0.9rem;">You won Sony Camera auction</h6>
+                      <small style="color:var(--blue-gray);">1 hour ago</small>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="global-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/data/products.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/subscription.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
+</body>
+</html>

@@ -3,86 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Live Auctions | PICKURS.in</title>
-  
+  <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+  <title>Live Auctions | BIDURS</title>
+  <meta name="description" content="Participate in BIDURS live auctions. Bid in real-time on premium electronics and win at unbelievable prices.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-  
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body data-page-type="live">
 
-  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="../index.html">PICKURS<span>.in</span></a>
-      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-toggle="target="#navbarNav">
+      <a class="navbar-brand fw-bold" href="../index.html">
+        <img src="../assets/images/favicon.png" alt="BIDURS Logo">
+        BIDURS
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="products.html">All Products</a></li>
-          <li class="nav-item"><a class="nav-link active" href="live-auctions.html">Live Auctions</a></li>
-          <li class="nav-item"><a class="nav-link" href="upcoming-auctions.html">Upcoming</a></li>
-        </ul>
-        <div class="d-flex gap-2">
-          <button class="btn btn-outline-premium">Login</button>
-          <button class="btn btn-premium">Register</button>
-        </div>
+        <ul class="navbar-nav mx-auto"></ul>
+        <div class="d-flex gap-2"></div>
       </div>
     </div>
   </nav>
 
-  <!-- Page Header -->
-  <div class="bg-danger bg-gradient py-5 text-white">
-    <div class="container text-center">
-      <h1 class="fw-bold mb-3"><i class="bi bi-broadcast"></i> Live Auctions</h1>
-      <p class="lead text-white-50">Bid in real-time. Highest bidder when the timer ends wins!</p>
+  <!-- ══ LIVE HEADER ══ -->
+  <div class="page-hero live-header">
+    <div class="container text-center position-relative z-1">
+      <span class="badge rounded-pill px-3 py-2 mb-3 fw-bold animate-fade-up" style="background:rgba(239,68,68,0.25);border:1px solid rgba(239,68,68,0.6);color:#fca5a5;font-size:0.82rem;">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ef4444;margin-right:6px;animation:pulse-live 1.5s infinite;"></span>
+        LIVE NOW
+      </span>
+      <h1 class="hero-title mb-3 animate-fade-up delay-1">
+        <i class="bi bi-broadcast me-3" style="color:#ef4444;"></i>Live <span>Auctions</span>
+      </h1>
+      <p class="hero-subtitle mx-auto animate-fade-up delay-2" style="font-size:1rem;">
+        Bid in real-time. The highest bidder when the timer ends wins the auction!
+      </p>
     </div>
   </div>
 
   <div class="container py-5">
-    <div class="row g-4 mb-5 justify-content-center">
-       <div class="col-md-8 col-lg-6">
-          <div class="input-group input-group-lg shadow-sm">
-            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
-            <input type="text" id="search-input" class="form-control border-start-0 border-end-0" placeholder="Search live auctions...">
-            <select id="category-filter" class="form-select border-start-0" style="max-width: 150px;">
-              <option value="All">All Categories</option>
-              <option value="Mobiles">Mobiles</option>
-              <option value="Laptops">Laptops</option>
-              <option value="Electronics">Electronics</option>
-            </select>
-          </div>
-       </div>
-       <div class="col-md-4 col-lg-3">
-          <select id="sort-filter" class="form-select form-select-lg shadow-sm">
-            <option value="Ending Soon">Sort: Ending Soon</option>
-            <option value="Lowest Current Bid">Sort: Lowest Bid</option>
-            <option value="Highest Current Bid">Sort: Highest Bid</option>
+
+    <!-- Search & Filter Bar -->
+    <div class="row g-3 mb-5 justify-content-center align-items-center">
+      <div class="col-md-8 col-lg-7">
+        <div class="input-group input-group-lg search-filter-group shadow-sm">
+          <span class="input-group-text"><i class="bi bi-search fs-5"></i></span>
+          <input type="text" id="search-input" class="form-control" placeholder="Search live auctions...">
+          <select id="category-filter" class="form-select">
+            <option value="All">All Categories</option>
+            <option value="Mobiles">Mobiles</option>
+            <option value="Laptops">Laptops</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Cameras">Cameras</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Tablets">Tablets</option>
           </select>
-       </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-lg-3">
+        <select id="sort-filter" class="form-select form-select-lg sort-filter-select shadow-sm">
+          <option value="Ending Soon">Sort: Ending Soon</option>
+          <option value="Lowest Current Bid">Sort: Lowest Bid</option>
+          <option value="Highest Current Bid">Sort: Highest Bid</option>
+        </select>
+      </div>
     </div>
-    
+
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h4 class="mb-0 fw-bold" id="product-count">Loading...</h4>
+      <h4 class="mb-0 fw-bold text-navy" id="product-count" style="font-family:var(--font-heading);">Loading...</h4>
     </div>
-    <div class="row" id="products-grid">
+
+    <div class="row g-4" id="products-grid">
       <!-- Rendered via JS -->
+    </div>
+
+    <div class="text-center mt-5 d-none" id="load-more-container">
+      <button class="btn btn-outline-premium btn-lg px-5 py-3 fw-bold rounded-pill shadow-sm" id="load-more-btn">
+        Load More Live Auctions <i class="bi bi-arrow-down-circle ms-2"></i>
+      </button>
     </div>
   </div>
 
-  <!-- Footer -->
   <div id="global-footer"></div>
 
-  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/data/products.js"></script>
+  <script src="../assets/data/auction-schedule.js"></script>
+  <script src="../assets/js/auction-engine.js"></script>
   <script src="../assets/js/utils.js"></script>
   <script src="../assets/js/timer.js"></script>
   <script src="../assets/js/filters.js"></script>

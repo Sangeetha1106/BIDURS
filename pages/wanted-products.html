@@ -3,17 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wanted Products | PICKURS.in</title>
+  <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+  <title>Wanted Products | BIDURS</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body class="bg-light">
+<body class="bg-dark">
 
   <nav class="navbar navbar-expand-lg sticky-top bg-white">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="../index.html">PICKURS<span>.in</span></a>
+      <a class="navbar-brand fw-bold" href="../index.html">
+        <img src="../assets/images/favicon.png" alt="BIDURS Logo">
+        BIDURS
+      </a>
       <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -24,18 +28,22 @@
     </div>
   </nav>
 
-  <div class="container py-5">
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
-      <div>
-        <h1 class="display-6 fw-bold text-navy mb-1">Wanted Products</h1>
-        <p class="text-muted mb-0">Browse items requested by our community or post your own.</p>
+  <div class="hero-section py-5 text-white border-bottom">
+    <div class="container position-relative z-1">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+        <div>
+          <h1 class="hero-title mb-1">Wanted <gold>Products</gold></h1>
+          <p class="hero-subtitle mb-0">Browse items requested by our community or post your own.</p>
+        </div>
+        <button class="btn btn-premium btn-lg shadow-sm" data-bs-toggle="modal" data-bs-target="#wantedModal">
+          <i class="bi bi-plus-lg me-2"></i> Post Request
+        </button>
       </div>
-      <button class="btn btn-premium btn-lg shadow-sm" data-bs-toggle="modal" data-bs-target="#wantedModal">
-        <i class="bi bi-plus-lg me-2"></i> Post Request
-      </button>
     </div>
+  </div>
 
-    <div class="row mb-4 g-3 bg-white p-3 rounded-4 shadow-sm border align-items-center">
+  <div class="container py-5">
+    <div class="filter-sidebar row mb-4 g-3 p-3 rounded-4 shadow-sm align-items-center">
       <div class="col-lg-3 col-md-6">
         <input type="text" id="wp-search-input" class="form-control" placeholder="Search wanted products...">
       </div>
@@ -68,8 +76,8 @@
         </select>
       </div>
       <div class="col-lg-3 col-md-12 d-flex gap-2">
-        <button id="wp-filter-btn" class="btn btn-outline-premium flex-fill">Filter</button>
-        <button id="wp-clear-btn" class="btn btn-light flex-fill text-muted">Clear</button>
+        <button id="wp-filter-btn" class="btn btn-royal flex-fill">Filter</button>
+        <button id="wp-clear-btn" class="btn btn-outline-premium flex-fill">Clear</button>
       </div>
     </div>
 

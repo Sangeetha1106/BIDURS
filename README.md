@@ -1,7 +1,7 @@
-# PICKURS.in - Live E-Auction Platform (Frontend Demo)
+# BIDURS - Live E-Auction Platform (Frontend Demo)
 
 ## Overview
-PICKURS.in is a premium, product-based live e-auction platform. This project is a **Frontend-Only Prototype** designed to demonstrate the user interface, design system, and user flows of the application. 
+BIDURS is a premium, product-based live e-auction platform. This project is a **Frontend-Only Prototype** designed to demonstrate the user interface, design system, and user flows of the application. 
 
 This repository contains the complete frontend architecture built using pure HTML, CSS, JavaScript, and Bootstrap 5.
 
