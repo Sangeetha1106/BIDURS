@@ -19,7 +19,7 @@
   <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
       <a class="navbar-brand fw-bold" href="../index.html">
-        <img src="../assets/images/favicon.png" alt="BIDURS Logo">
+        <img src="../images/logo1.png" alt="BIDURS Logo">
         BIDURS
       </a>
       <div class="d-flex gap-2 ms-auto">
@@ -116,13 +116,35 @@
 
     function handleLogin(e) {
       e.preventDefault();
-      const email = document.getElementById('emailInput').value;
-      const pass  = document.getElementById('passwordInput').value;
+      const inputVal = document.getElementById('emailInput').value.trim();
+      const pass  = document.getElementById('passwordInput').value.trim();
       const errorDiv = document.getElementById('loginError');
-      if (!email) { errorDiv.textContent = 'Please enter your email or mobile number.'; errorDiv.classList.remove('d-none'); return; }
-      if (!pass)  { errorDiv.textContent = 'Please enter your password.'; errorDiv.classList.remove('d-none'); return; }
+
+      if (!inputVal) {
+        errorDiv.textContent = 'Please enter your Email, Mobile Number, or Customer Login ID.';
+        errorDiv.classList.remove('d-none');
+        return;
+      }
+      if (!pass) {
+        errorDiv.textContent = 'Please enter your password.';
+        errorDiv.classList.remove('d-none');
+        return;
+      }
+
       errorDiv.classList.add('d-none');
-      window.mockLogin();
+
+      let userId = 'CUST-2456';
+      let email = inputVal;
+      let name = inputVal.includes('@') ? inputVal.split('@')[0] : inputVal;
+
+      if (inputVal.toUpperCase().startsWith('CUST-') || inputVal.toUpperCase().startsWith('W-')) {
+        userId = inputVal.toUpperCase();
+      } else {
+        userId = 'CUST-' + Math.floor(1000 + Math.random() * 9000);
+      }
+
+      const userData = { email, userId, name };
+      window.mockLogin(null, userData);
     }
   </script>
 </body>

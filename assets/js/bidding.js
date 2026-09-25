@@ -6,14 +6,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('live-auction-container');
   if (!container || !window.mockProductsData) return;
 
-  const productId = parseInt(window.utils.getQueryParam('id'));
-  const product = window.mockProductsData.find(p => p.id === productId);
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  const rawIdParam = window.utils ? window.utils.getQueryParam('id') : new URLSearchParams(window.location.search).get('id');
+  const fullPathWithQuery = 'live-auction.html' + (rawIdParam ? `?id=${rawIdParam}` : '');
+
+  if (!isLoggedIn) {
+    window.location.href = 'login.html?redirect=' + encodeURIComponent(fullPathWithQuery);
+    return;
+  }
+
+  let product = (window.utils && window.utils.findProductById) 
+    ? window.utils.findProductById(rawIdParam) 
+    : (window.mockProductsData ? window.mockProductsData.find(p => String(p.id) === String(rawIdParam)) : null);
+
+  // Fallback: If no ID specified, load current live auction product
+  if (!product && (!rawIdParam || rawIdParam === 'null' || rawIdParam === 'undefined')) {
+    const liveSlot = window.auctionEngine ? window.auctionEngine.getCurrentAuction() : null;
+    product = (liveSlot && liveSlot.product) ? liveSlot.product : (window.mockProductsData ? window.mockProductsData[0] : null);
+  }
 
   if (!product) {
     container.innerHTML = `
       <div class="text-center py-5">
-        <h2>Auction Not Found</h2>
-        <a href="live-auctions.html" class="btn btn-premium mt-3">Back to Live Auctions</a>
+        <i class="bi bi-exclamation-triangle fs-1 text-warning mb-3 d-block"></i>
+        <h2 class="fw-bold text-navy mb-2">Auction Not Found</h2>
+        <p class="text-muted mb-4">The auction product you requested does not exist or has been removed.</p>
+        <a href="live-auctions.html" class="btn btn-premium px-4 py-2 fw-bold">Back to Live Auctions</a>
       </div>
     `;
     return;
@@ -63,8 +81,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const targetTime = product.endTime;
     
     // Status text based on state
+    const subStatus = window.subUtils ? window.subUtils.getSubscriptionStatus() : (localStorage.getItem('subState') || 'NOT_SUBSCRIBED');
     let stateHtml = '';
-    if (bidderState === 'LEADING') {
+    if (subStatus === 'SUSPENDED') {
+      stateHtml = `<div class="alert alert-danger border-0 py-2 small fw-bold"><i class="bi bi-slash-circle-fill me-1"></i> Your subscription is SUSPENDED. Bidding is disabled per company rules.</div>`;
+    } else if (subStatus === 'NOT_SUBSCRIBED') {
+      stateHtml = `<div class="alert alert-warning border-0 py-2 small fw-bold"><i class="bi bi-star-fill text-gold me-1"></i> Subscription required to participate in live auctions. <a href="subscription.html" class="text-dark fw-bold text-decoration-underline ms-1">Subscribe Now</a></div>`;
+    } else if (bidderState === 'LEADING') {
       stateHtml = `<div class="alert alert-success border-0 py-2 small fw-bold"><i class="bi bi-star-fill me-1"></i> You are currently the highest bidder.</div>`;
     } else if (bidderState === 'OUTBID') {
       stateHtml = `<div class="alert alert-danger border-0 py-2 small fw-bold"><i class="bi bi-exclamation-triangle-fill me-1"></i> Another bidder has placed a higher bid.</div>`;
@@ -196,29 +219,54 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Ended State Container (Hidden by default) -->
           <div id="ended-state-ui" class="d-none">
              <div class="bg-navy rounded-4 p-5 text-center text-white mb-4 shadow-lg">
-                <i class="bi bi-check-circle-fill text-gold display-1 mb-3"></i>
-                <h2 class="fw-bold mb-2">AUCTION COMPLETED</h2>
+                <span class="badge bg-danger rounded-pill px-3 py-2 text-uppercase fw-bold mb-3" style="letter-spacing:1px;">
+                  <i class="bi bi-flag-fill me-1"></i> Auction Ended
+                </span>
+                <h2 class="fw-bold mb-2" style="font-family:var(--font-heading);">AUCTION ENDED</h2>
+                <p class="text-white-50 small mb-4">Bidding for this item has officially closed.</p>
+
                 <hr class="border-secondary opacity-25 my-4">
-                <div class="text-white-50 mb-1 text-uppercase small fw-bold">Winner</div>
-                <div class="fs-4 text-white mb-3" id="winner-name">Bidder #2456</div>
-                <div class="text-white-50 mb-1 text-uppercase small fw-bold">Winning Bid</div>
-                <div class="display-4 fw-bold text-gold mb-4" id="winner-bid">₹0</div>
                 
-                <div class="bg-white bg-opacity-10 rounded-3 p-3 mb-4 d-inline-block text-start text-md-center w-100">
-                  <div class="text-white-50 text-uppercase small fw-bold mb-1">Payment Deadline</div>
-                  <div class="fs-5 font-monospace">23:59:59</div>
+                <div class="row g-3 mb-4">
+                  <div class="col-6 text-center text-md-start">
+                    <div class="text-white-50 text-uppercase small fw-bold mb-1">Highest Bidder / Winner</div>
+                    <div class="fs-5 text-white fw-bold" id="winner-name"><i class="bi bi-person-check-fill text-gold me-1"></i> Bidder #2456</div>
+                  </div>
+                  <div class="col-6 text-center text-md-end">
+                    <div class="text-white-50 text-uppercase small fw-bold mb-1">Winning Bid Amount</div>
+                    <div class="fs-3 fw-bold text-gold" id="winner-bid">₹0</div>
+                  </div>
                 </div>
+
+                <!-- Payment Deadline Section -->
+                <div class="bg-white bg-opacity-10 rounded-3 p-4 mb-4 text-start">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-white fw-bold"><i class="bi bi-clock-history text-gold me-2"></i>Payment Deadline</span>
+                    <span class="badge bg-warning text-dark fw-bold">Action Required</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-white-50 small">Time remaining to complete payment:</span>
+                    <span class="fs-4 font-monospace text-gold fw-bold" id="payment-deadline-timer">23:59:59</span>
+                  </div>
+                </div>
+
+                <!-- Pay Now Button -->
+                <a href="payment-status.html?id=${product.id}" class="btn btn-premium btn-lg w-100 fw-bold py-3 mb-3 shadow" id="btn-pay-now">
+                  <i class="bi bi-credit-card-2-front me-2"></i>PAY NOW
+                </a>
                 
-                <button class="btn btn-outline-light w-100">VIEW AUCTION RESULT</button>
+                <a href="auction-result.html?id=${product.id}" class="btn btn-outline-light w-100 py-2">
+                  <i class="bi bi-trophy me-1"></i> VIEW AUCTION RESULT
+                </a>
              </div>
              
              <!-- Next Highest Fallback UI -->
              <div class="alert alert-warning border-warning border-opacity-50 bg-light rounded-4 p-4 shadow-sm">
                 <h6 class="fw-bold text-dark"><i class="bi bi-exclamation-circle-fill text-warning me-2"></i>WINNER PAYMENT NOT COMPLETED</h6>
-                <p class="small text-muted mb-3">The product may be offered to the next highest eligible bidder according to company rules if the primary winner fails to complete payment.</p>
+                <p class="small text-muted mb-3">If the highest bidder fails to pay within the deadline, the product will be offered to the next highest eligible bidder according to company rules.</p>
                 <div class="d-flex justify-content-between align-items-center bg-white p-2 rounded border">
                   <div>
-                    <span class="small text-muted d-block">Next Eligible</span>
+                    <span class="small text-muted d-block">Next Eligible Bidder</span>
                     <strong class="text-navy" id="fallback-bidder">Bidder #7821</strong>
                   </div>
                   <div class="text-end">
@@ -351,6 +399,21 @@ document.addEventListener('DOMContentLoaded', () => {
   function validateAndPlaceBid() {
     const errorMsg = document.getElementById('bid-error-msg');
     
+    const subStatus = window.subUtils ? window.subUtils.getSubscriptionStatus() : (localStorage.getItem('subState') || 'NOT_SUBSCRIBED');
+    if (subStatus === 'SUSPENDED') {
+      errorMsg.textContent = "Your subscription is SUSPENDED due to company rules or payment failures. Bidding disabled.";
+      errorMsg.classList.remove('d-none');
+      showToast("Subscription Suspended: Bidding Disabled.", 'danger');
+      return;
+    }
+
+    if (subStatus === 'NOT_SUBSCRIBED') {
+      errorMsg.textContent = "An active subscription is required to participate in live auctions. Please subscribe.";
+      errorMsg.classList.remove('d-none');
+      showToast("Subscription required to place bids.", 'warning');
+      return;
+    }
+
     if (userBidInput < minimumNextBid) {
       errorMsg.textContent = "Your bid must be higher than the current highest bid.";
       errorMsg.classList.remove('d-none');
@@ -385,19 +448,43 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function addBidHistory(amount) {
-    // Generate a random ID for the mock user
-    const myId = Math.floor(1000 + Math.random() * 9000).toString();
+    const currentUserId = localStorage.getItem('userId') || 'CUST-2456';
     
     bidHistory.unshift({
-      bidderId: myId + ' (You)',
+      bidderId: currentUserId + ' (You)',
       amount: amount,
       timeStr: 'Just now'
     });
 
-    // Update previous "Just now" to "X sec ago" for realism (skipped complex time tracking for demo)
     if (bidHistory.length > 1 && bidHistory[1].timeStr === 'Just now') {
       bidHistory[1].timeStr = 'Few seconds ago';
     }
+
+    // Save bid to customer-specific localStorage storage
+    const customerBidsKey = `bids_${currentUserId}`;
+    let userBids = [];
+    try {
+      userBids = JSON.parse(localStorage.getItem(customerBidsKey)) || [];
+    } catch (e) {
+      userBids = [];
+    }
+
+    const newBidRecord = {
+      id: 'BID-' + Date.now(),
+      productId: product.id,
+      productName: product.name,
+      productImage: product.image,
+      bidAmount: amount,
+      bidTime: new Date().toISOString(),
+      timeStr: 'Just now',
+      status: 'LEADING',
+      currentBid: amount
+    };
+
+    // Remove older bid for same product if exists, or append
+    userBids = userBids.filter(b => b.productId !== product.id);
+    userBids.unshift(newBidRecord);
+    localStorage.setItem(customerBidsKey, JSON.stringify(userBids));
 
     renderBidHistory();
   }
@@ -463,7 +550,32 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('fallback-bidder').textContent = 'Bidder #' + bidHistory[1].bidderId;
         document.getElementById('fallback-amount').textContent = window.utils.formatCurrency(bidHistory[1].amount);
       }
+
+      // Start 24h Payment Deadline Countdown Timer
+      startPaymentDeadlineTimer();
     }
+  }
+
+  function startPaymentDeadlineTimer() {
+    const deadlineEl = document.getElementById('payment-deadline-timer');
+    if (!deadlineEl) return;
+    
+    // Set 24 hours deadline from now for demo
+    const deadlineTime = new Date().getTime() + (24 * 60 * 60 * 1000);
+    
+    const pInterval = setInterval(() => {
+      const now = new Date().getTime();
+      const dist = deadlineTime - now;
+      if (dist <= 0) {
+        clearInterval(pInterval);
+        deadlineEl.textContent = "00:00:00 (EXPIRED)";
+        return;
+      }
+      const hrs = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+      const mins = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+      const secs = Math.floor((dist % (1000 * 60)) / 1000).toString().padStart(2, '0');
+      deadlineEl.textContent = `${hrs}:${mins}:${secs}`;
+    }, 1000);
   }
 
   function showToast(message, type = 'success') {

@@ -18,7 +18,7 @@
   <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
       <a class="navbar-brand fw-bold" href="../index.html">
-        <img src="../assets/images/favicon.png" alt="BIDURS Logo">
+        <img src="../images/logo1.png" alt="BIDURS Logo">
         BIDURS
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -45,9 +45,15 @@
           <img src="../assets/images/dashboard-banner.png" alt="Premium Dashboard Banner" class="w-100 object-fit-cover" style="height:200px;object-fit:cover;">
         </div>
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <h2 class="fw-bold text-white mb-0" style="font-family:var(--font-heading);">Dashboard <span style="background:var(--grad-orange);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Overview</span></h2>
-          <span class="badge rounded-pill px-3 py-2" style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);color:#86efac;font-size:0.8rem;">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-2">
+          <div>
+            <h2 class="fw-bold text-navy mb-1" style="font-family:var(--font-heading);">Welcome back, <span id="dash-user-name-display" style="background:var(--grad-orange);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Customer</span></h2>
+            <div class="small text-secondary d-flex gap-3 font-monospace fw-semibold">
+              <span><i class="bi bi-person-badge text-gold me-1"></i> ID: <strong class="text-navy" id="dash-user-id-display">--</strong></span>
+              <span><i class="bi bi-envelope text-gold me-1"></i> Email: <strong class="text-navy" id="dash-user-email-display">--</strong></span>
+            </div>
+          </div>
+          <span class="badge rounded-pill px-3 py-2 align-self-start align-self-md-center" style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);color:#86efac;font-size:0.8rem;">
             <i class="bi bi-circle-fill me-1" style="font-size:0.5rem;"></i> Online
           </span>
         </div>
@@ -56,25 +62,25 @@
         <div class="row g-3 mb-4">
           <div class="col-6 col-md-3">
             <div class="glass p-4 text-center" style="border-radius:var(--radius-lg);transition:var(--t-normal);" onmouseover="this.style.boxShadow='var(--glow-blue)'" onmouseout="this.style.boxShadow=''">
-              <div class="fs-1 fw-bold mb-1" style="color:var(--bright-blue);font-family:var(--font-heading);">04</div>
+              <div class="fs-1 fw-bold mb-1" id="stat-active-bids" style="color:var(--bright-blue);font-family:var(--font-heading);">04</div>
               <div style="color:var(--blue-gray);font-size:0.75rem;text-transform:uppercase;font-weight:600;letter-spacing:0.06em;">Active Bids</div>
             </div>
           </div>
           <div class="col-6 col-md-3">
             <div class="glass p-4 text-center" style="border-radius:var(--radius-lg);transition:var(--t-normal);" onmouseover="this.style.boxShadow='var(--glow-orange)'" onmouseout="this.style.boxShadow=''">
-              <div class="fs-1 fw-bold mb-1" style="color:var(--success);font-family:var(--font-heading);">02</div>
+              <div class="fs-1 fw-bold mb-1" id="stat-auctions-won" style="color:var(--success);font-family:var(--font-heading);">02</div>
               <div style="color:var(--blue-gray);font-size:0.75rem;text-transform:uppercase;font-weight:600;letter-spacing:0.06em;">Auctions Won</div>
             </div>
           </div>
           <div class="col-6 col-md-3">
             <div class="glass p-4 text-center" style="border-radius:var(--radius-lg);transition:var(--t-normal);" onmouseover="this.style.boxShadow='0 0 20px rgba(239,68,68,0.4)'" onmouseout="this.style.boxShadow=''">
-              <div class="fs-1 fw-bold mb-1" style="color:var(--live-red);font-family:var(--font-heading);">03</div>
+              <div class="fs-1 fw-bold mb-1" id="stat-outbid" style="color:var(--live-red);font-family:var(--font-heading);">03</div>
               <div style="color:var(--blue-gray);font-size:0.75rem;text-transform:uppercase;font-weight:600;letter-spacing:0.06em;">Outbid</div>
             </div>
           </div>
           <div class="col-6 col-md-3">
             <div class="glass p-4 text-center" style="border-radius:var(--radius-lg);transition:var(--t-normal);" onmouseover="this.style.boxShadow='var(--glow-blue)'" onmouseout="this.style.boxShadow=''">
-              <div class="fs-1 fw-bold mb-1" style="color:var(--yellow);font-family:var(--font-heading);">08</div>
+              <div class="fs-1 fw-bold mb-1" id="stat-watchlist" style="color:var(--yellow);font-family:var(--font-heading);">08</div>
               <div style="color:var(--blue-gray);font-size:0.75rem;text-transform:uppercase;font-weight:600;letter-spacing:0.06em;">Watchlist</div>
             </div>
           </div>

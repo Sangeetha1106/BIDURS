@@ -110,12 +110,21 @@ function initProductsPage() {
       const timerIconClass = isUpcoming ? 'bi-calendar-event' : 'bi-clock-fill';
       const timerColorClass = isUpcoming ? 'text-navy' : (isEnded ? 'text-muted' : 'text-danger');
 
+      const currentUserId = localStorage.getItem('userId') || 'CUST-2456';
+      let userWatchlist = [];
+      try {
+        userWatchlist = JSON.parse(localStorage.getItem(`watchlist_${currentUserId}`)) || [];
+      } catch (e) {
+        userWatchlist = [];
+      }
+      const isSaved = userWatchlist.some(wId => wId === p.id);
+
       return `
         <div class="col-12 col-md-6 col-xl-4 mb-4">
           <div class="product-card" style="background:#FFFFFF !important; border:1.5px solid var(--border-light); border-radius:16px;">
             <div class="product-img-wrapper" style="height:210px; background:#F8FCFF;">
               <span class="auction-badge ${badgeClass}">${p.status}</span>
-              <button class="wishlist-icon" aria-label="Add to watchlist"><i class="bi bi-heart"></i></button>
+              <button class="wishlist-icon ${isSaved ? 'text-danger' : ''}" aria-label="Add to watchlist" onclick="window.toggleWatchlist(event, ${p.id})"><i class="bi ${isSaved ? 'bi-heart-fill' : 'bi-heart'}"></i></button>
               <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='${fallbackImg}';">
             </div>
             <div class="product-details p-3">
@@ -259,6 +268,35 @@ function initProductsPage() {
     window.timerUtils.initTimers();
   }
 }
+
+window.toggleWatchlist = function(e, productId) {
+  if (e) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+  const currentUserId = localStorage.getItem('userId') || 'CUST-2456';
+  const key = `watchlist_${currentUserId}`;
+  let userWatchlist = [];
+  try {
+    userWatchlist = JSON.parse(localStorage.getItem(key)) || [];
+  } catch (err) {
+    userWatchlist = [];
+  }
+
+  const index = userWatchlist.indexOf(productId);
+  if (index > -1) {
+    userWatchlist.splice(index, 1);
+  } else {
+    userWatchlist.push(productId);
+  }
+  localStorage.setItem(key, JSON.stringify(userWatchlist));
+
+  // Re-render grid if products page
+  if (typeof initProductsPage === 'function') {
+    const gridContainer = document.getElementById('products-grid');
+    if (gridContainer) initProductsPage();
+  }
+};
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initProductsPage);

@@ -26,7 +26,7 @@
 
     return schedule
       .map((slot) => {
-        const product = products.find((p) => p.id === slot.productId) || null;
+        const product = products.find((p) => parseInt(p.id, 10) === parseInt(slot.productId, 10)) || null;
         const startMs = parseScheduleDateTime(slot.date, slot.startTime).getTime();
         const endMs = startMs + slot.durationMinutes * 60 * 1000;
 

@@ -6,9 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('product-details-container');
   if (!container || !window.mockProductsData) return;
 
-  const productId = parseInt(window.utils ? window.utils.getQueryParam('id') : new URLSearchParams(window.location.search).get('id')) || 1;
-  
-  const product = window.mockProductsData ? window.mockProductsData.find(p => p.id === productId) || window.mockProductsData[0] : null;
+  const rawIdParam = window.utils ? window.utils.getQueryParam('id') : new URLSearchParams(window.location.search).get('id');
+  const product = (window.utils && window.utils.findProductById) 
+    ? window.utils.findProductById(rawIdParam) 
+    : (window.mockProductsData ? window.mockProductsData.find(p => String(p.id) === String(rawIdParam)) : null);
 
   if (!product) {
     container.innerHTML = `

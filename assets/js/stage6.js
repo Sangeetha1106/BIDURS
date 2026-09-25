@@ -50,46 +50,81 @@ function initChat() {
   const chatInput = document.getElementById('chat-input');
   const chatBody = document.getElementById('chat-body');
 
-  if (chatForm && chatInput && chatBody) {
-    chatForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const msg = chatInput.value.trim();
-      if (!msg) return;
+  if (!chatForm || !chatInput || !chatBody) return;
 
-      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const currentUserId = localStorage.getItem('userId') || 'CUST-2456';
 
-      // Append my message
-      const html = `
-        <div class="d-flex justify-content-end mb-3">
-          <div class="text-end">
-            <div class="bg-navy text-white rounded-4 px-4 py-2 d-inline-block shadow-sm">
-              ${msg}
-            </div>
-            <div class="small text-muted mt-1">${time}</div>
-          </div>
-        </div>
-      `;
-      chatBody.insertAdjacentHTML('beforeend', html);
-      chatInput.value = '';
-      chatBody.scrollTop = chatBody.scrollHeight;
+  // Load chat history from localStorage if available
+  const getChatHistory = () => {
+    try {
+      return JSON.parse(localStorage.getItem('bidurs_chat_history')) || [
+        { sender: 'agent', text: 'Welcome to BIDURS support! How can I assist you with your recent auction or wanted product request?', time: '10:42 AM' }
+      ];
+    } catch(e) {
+      return [{ sender: 'agent', text: 'Welcome to BIDURS support! How can I assist you with your recent auction or wanted product request?', time: '10:42 AM' }];
+    }
+  };
 
-      // Mock auto reply
-      setTimeout(() => {
-        const replyHtml = `
-          <div class="d-flex justify-content-start mb-3">
-            <div>
-              <div class="bg-light text-dark border rounded-4 px-4 py-2 d-inline-block shadow-sm">
-                Thank you for your message. An agent will review this shortly. (Demo Auto-Reply)
+  const renderMessages = () => {
+    const history = getChatHistory();
+    chatBody.innerHTML = `<div class="text-center mb-4"><span class="badge bg-secondary opacity-50">Demo Customer Chat • Logged in as: ${currentUserId}</span></div>` +
+      history.map(m => {
+        if (m.sender === 'user') {
+          return `
+            <div class="d-flex justify-content-end mb-3">
+              <div class="text-end">
+                <div class="bg-navy text-white rounded-4 px-4 py-2 d-inline-block shadow-sm">
+                  ${m.text}
+                </div>
+                <div class="small text-muted mt-1"><i class="bi bi-person me-1"></i>${currentUserId} • ${m.time}</div>
               </div>
-              <div class="small text-muted mt-1">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
             </div>
-          </div>
-        `;
-        chatBody.insertAdjacentHTML('beforeend', replyHtml);
-        chatBody.scrollTop = chatBody.scrollHeight;
-      }, 1500);
-    });
-  }
+          `;
+        } else {
+          return `
+            <div class="d-flex justify-content-start mb-3">
+              <div>
+                <div class="bg-light text-dark border rounded-4 px-4 py-2 d-inline-block shadow-sm">
+                  ${m.text}
+                </div>
+                <div class="small text-muted mt-1"><i class="bi bi-headset me-1"></i>Support Agent • ${m.time}</div>
+              </div>
+            </div>
+          `;
+        }
+      }).join('');
+    chatBody.scrollTop = chatBody.scrollHeight;
+  };
+
+  renderMessages();
+
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const msg = chatInput.value.trim();
+    if (!msg) return;
+
+    const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const history = getChatHistory();
+    
+    // Add user message
+    history.push({ sender: 'user', text: msg, time: timeStr });
+    localStorage.setItem('bidurs_chat_history', JSON.stringify(history));
+    chatInput.value = '';
+    renderMessages();
+
+    // Mock agent auto-reply
+    setTimeout(() => {
+      const replyTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const currentHistory = getChatHistory();
+      currentHistory.push({
+        sender: 'agent',
+        text: `Thank you, ${currentUserId}! We have received your query: "${msg}". Our support team will respond shortly. (Demo Chat Response)`,
+        time: replyTime
+      });
+      localStorage.setItem('bidurs_chat_history', JSON.stringify(currentHistory));
+      renderMessages();
+    }, 1400);
+  });
 }
 
 // -----------------------------------------

@@ -189,15 +189,17 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (!title || !budget) return;
 
+      const currentUserId = localStorage.getItem('userId') || (localStorage.getItem('userEmail') ? localStorage.getItem('userEmail').split('@')[0] : 'CUST-2456');
+
       const newProduct = {
         id: 'PK-' + Math.floor(1000 + Math.random() * 9000),
         productName: title,
-        brand: "Unknown", // Can be added to form if needed
+        brand: "Unknown",
         category: document.getElementById('wp-category').value,
         maxBudget: parseInt(budget),
         condition: document.getElementById('wp-condition').value,
         description: document.getElementById('wp-desc').value,
-        requestedBy: "You (Customer)",
+        requestedBy: currentUserId,
         requestedDate: "Today",
         status: 'Open'
       };

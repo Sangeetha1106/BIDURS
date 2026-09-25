@@ -9,7 +9,8 @@ const PROTECTED_PAGES = [
   'watchlist.html',
   'profile.html',
   'subscription.html',
-  'payment-status.html'
+  'payment-status.html',
+  'live-auction.html'
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -23,8 +24,8 @@ function initAuth() {
   const currentPage = window.location.pathname.split('/').pop();
 
   if (!isLoggedIn && PROTECTED_PAGES.includes(currentPage)) {
-    // Redirect to login if on protected page
-    window.location.href = 'login.html?redirect=' + currentPage;
+    const fullPathWithQuery = currentPage + window.location.search;
+    window.location.href = 'login.html?redirect=' + encodeURIComponent(fullPathWithQuery);
   }
 }
 
@@ -39,6 +40,11 @@ function updateNavbar() {
   const rootPath = window.location.pathname.includes('/pages/') ? '../index.html' : 'index.html';
 
   if (isLoggedIn) {
+    const userId = localStorage.getItem('userId') || 'CUST-2456';
+    const userEmail = localStorage.getItem('userEmail') || 'customer@bidurs.in';
+    const userName = localStorage.getItem('userName') || 'Customer';
+    const userIdDisplay = userId || (userEmail.includes('@') ? userEmail.split('@')[0] : userEmail);
+
     navLinksContainer.innerHTML = `
       <li class="nav-item"><a class="nav-link" href="${rootPath}">Home</a></li>
       <li class="nav-item dropdown">
@@ -64,12 +70,17 @@ function updateNavbar() {
     `;
 
     authButtonsContainer.innerHTML = `
+      <a href="${basePath}chat.html" class="btn btn-outline-premium" title="Customer Chat"><i class="bi bi-chat-dots-fill me-1" style="color:var(--bright-blue);"></i> Chat</a>
       <div class="dropdown">
-        <button class="btn btn-outline-premium dropdown-toggle" type="button" data-bs-toggle="dropdown">
-          <i class="bi bi-person-circle me-1"></i> My Account
+        <button class="btn btn-outline-premium dropdown-toggle text-truncate" type="button" data-bs-toggle="dropdown" style="max-width: 190px;">
+          <i class="bi bi-person-circle me-1 text-gold"></i> ${userIdDisplay}
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item" href="${basePath}profile.html"><i class="bi bi-person me-2" style="color:var(--bright-blue);"></i>My Profile</a></li>
+          <li class="px-3 py-2 border-bottom">
+            <div class="fw-bold text-white small">${userName}</div>
+            <div class="small text-gold font-monospace">ID: ${userIdDisplay}</div>
+          </li>
+          <li><a class="dropdown-item mt-1" href="${basePath}profile.html"><i class="bi bi-person me-2" style="color:var(--bright-blue);"></i>My Profile</a></li>
           <li><a class="dropdown-item" href="${basePath}watchlist.html"><i class="bi bi-heart me-2" style="color:var(--bright-blue);"></i>Watchlist</a></li>
           <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item" href="#" onclick="mockLogout(event)" style="color:#fca5a5;"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
@@ -104,15 +115,26 @@ function updateNavbar() {
     authButtonsContainer.innerHTML = `
       <a href="${basePath}login.html" class="btn btn-outline-premium">Login</a>
       <a href="${basePath}register.html" class="btn btn-premium">Register</a>
+      <a href="${basePath}subscription.html" class="btn btn-outline-premium"><i class="bi bi-star-fill text-gold me-1"></i>Subscription</a>
     `;
   }
 }
 
-window.mockLogin = function(e) {
-  if(e) e.preventDefault();
+window.mockLogin = function(e, userData) {
+  if (e && e.preventDefault) e.preventDefault();
   localStorage.setItem('isLoggedIn', 'true');
+
+  if (userData) {
+    if (userData.email) localStorage.setItem('userEmail', userData.email);
+    if (userData.userId) localStorage.setItem('userId', userData.userId);
+    if (userData.name) localStorage.setItem('userName', userData.name);
+  } else if (!localStorage.getItem('userId')) {
+    localStorage.setItem('userId', 'CUST-2456');
+    localStorage.setItem('userEmail', 'customer2456@bidurs.in');
+    localStorage.setItem('userName', 'Customer #2456');
+  }
   
-  // Create a default subscription state if it doesn't exist
+  // Subscription is kept separate and NOT auto-activated on login
   if (!localStorage.getItem('subState')) {
     localStorage.setItem('subState', 'NOT_SUBSCRIBED');
   }
@@ -123,8 +145,12 @@ window.mockLogin = function(e) {
 };
 
 window.mockLogout = function(e) {
-  if(e) e.preventDefault();
+  if (e && e.preventDefault) e.preventDefault();
   localStorage.removeItem('isLoggedIn');
+  localStorage.removeItem('userEmail');
+  localStorage.removeItem('userId');
+  localStorage.removeItem('userName');
+  localStorage.removeItem('pendingUser');
   const rootPath = window.location.pathname.includes('/pages/') ? '../index.html' : 'index.html';
   window.location.href = rootPath;
 };
@@ -144,30 +170,30 @@ function updateFooter() {
           <div class="row align-items-center g-2">
             <div class="col-lg-8">
               <span class="fw-bold text-white fs-6 me-2"><i class="bi bi-bolt-fill text-gold me-1"></i>Ready to Bid?</span>
-              <span style="color:var(--blue-gray);font-size:0.85rem;">Subscribe to participate in live e-Auctions on BIDURS.</span>
+              <span class="text-white fw-medium" style="font-size:0.9rem;">Subscribe to participate in live e-Auctions on BIDURS.</span>
             </div>
             <div class="col-lg-4 text-lg-end">
-              <a href="${basePath}subscription.html" class="btn btn-premium btn-sm px-3 py-1">Subscribe Now</a>
+              <a href="${basePath}subscription.html" class="btn btn-premium btn-sm px-4 py-2 fw-bold">Subscribe Now</a>
             </div>
           </div>
         </div>
 
-        <div class="row g-3 py-2">
+        <div class="row g-4 py-2">
           <!-- Brand & Social -->
           <div class="col-12 col-md-4 col-lg-4">
-            <span class="footer-brand-name mb-2" style="font-size:1.4rem;">BIDURS</span>
-            <p class="mb-3 pe-lg-3" style="color:rgba(255,255,255,0.7);font-size:0.82rem;line-height:1.5;">India's premier live bidding platform. Win genuine products at unbeatable prices.</p>
+            <span class="footer-brand-name mb-2 d-block" style="font-size:1.5rem;font-weight:900;">BIDURS</span>
+            <p class="mb-3 pe-lg-3 text-white" style="font-size:0.88rem;line-height:1.6;opacity:0.92;">India's premier live bidding platform. Win genuine products at unbeatable prices.</p>
             <div class="footer-social d-flex gap-2">
-              <a href="#" title="Facebook"><i class="bi bi-facebook"></i></a>
+              <a href="https://www.facebook.com/share/1Bzmc5sf1V/" target="_blank" rel="noopener noreferrer" title="Facebook"><i class="bi bi-facebook"></i></a>
               <a href="#" title="Twitter X"><i class="bi bi-twitter-x"></i></a>
-              <a href="#" title="Instagram"><i class="bi bi-instagram"></i></a>
+              <a href="https://www.instagram.com/bidurs26?stkn=MWxodzJtbmQ3N2hjdQ==" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="bi bi-instagram"></i></a>
               <a href="#" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
             </div>
           </div>
 
           <!-- Quick Navigation -->
           <div class="col-6 col-md-4 col-lg-4">
-            <div class="footer-title mb-2" style="font-size:0.75rem;">Quick Navigation</div>
+            <div class="footer-title mb-3" style="font-size:0.88rem;color:#FFDF00!important;font-weight:700;">Quick Navigation</div>
             <div class="d-flex flex-wrap gap-x-4 gap-y-1">
               <ul class="footer-links me-4">
                 <li><a href="${rootPath}">Home</a></li>
@@ -186,24 +212,24 @@ function updateFooter() {
 
           <!-- Support & Info -->
           <div class="col-6 col-md-4 col-lg-4">
-            <div class="footer-title mb-2" style="font-size:0.75rem;">Support &amp; Contact</div>
+            <div class="footer-title mb-3" style="font-size:0.88rem;color:#FFDF00!important;font-weight:700;">Support &amp; Contact</div>
             <ul class="footer-links mb-3">
               <li><a href="${basePath}how-it-works.html">How It Works</a></li>
               <li><a href="${basePath}faq.html">FAQ</a></li>
               <li><a href="${basePath}terms.html">Terms &amp; Conditions</a></li>
               <li><a href="${basePath}contact.html">Contact Us</a></li>
             </ul>
-            <div class="small" style="color:var(--blue-gray);font-size:0.8rem;">
-              <span class="me-3"><i class="bi bi-envelope text-gold me-1"></i>support@bidurs.in</span>
-              <span><i class="bi bi-telephone text-gold me-1"></i>+91 XXXXX XXXXX</span>
+            <div class="small text-white" style="font-size:0.88rem;">
+              <span class="me-3 d-block d-sm-inline mb-1 mb-sm-0"><i class="bi bi-envelope text-gold me-1"></i>support@bidurs.in</span>
+              <span><a href="https://wa.me/919843344016" target="_blank" rel="noopener noreferrer" style="color:#86efac;text-decoration:none;font-weight:600;"><i class="bi bi-whatsapp me-1"></i>+91 98433 44016</a></span>
             </div>
           </div>
         </div>
 
         <div class="footer-bottom pt-3 mt-3">
           <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
-            <p class="mb-1 mb-md-0 small" style="color:var(--blue-gray);font-size:0.8rem;">&copy; 2026 BIDURS. All Rights Reserved.</p>
-            <div class="small fw-semibold" style="color:var(--gold);font-size:0.8rem;">India's Premier e-Auction Platform</div>
+            <p class="mb-1 mb-md-0 small text-white" style="font-size:0.85rem;opacity:0.9;">&copy; 2026 BIDURS. All Rights Reserved.</p>
+            <div class="small fw-bold" style="color:#FFDF00!important;font-size:0.85rem;">India's Premier e-Auction Platform</div>
           </div>
         </div>
       </div>

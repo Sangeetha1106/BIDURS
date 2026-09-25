@@ -2,7 +2,24 @@
  * Subscription Logic
  */
 
-const SUB_PRICE = 999;
+// Subscription price: Configurable via window.BIDURS_CONFIG or localStorage ('subPrice').
+// Defaults to null (To Be Confirmed) when not set by admin/config.
+function getSubscriptionPrice() {
+  if (typeof window.BIDURS_CONFIG !== 'undefined' && window.BIDURS_CONFIG.SUB_PRICE !== undefined) {
+    return window.BIDURS_CONFIG.SUB_PRICE;
+  }
+  const stored = localStorage.getItem('subPrice');
+  return stored !== null ? parseFloat(stored) : null;
+}
+
+function getFormattedPrice() {
+  const price = getSubscriptionPrice();
+  if (price === null || price === undefined || isNaN(price)) {
+    return 'To Be Confirmed';
+  }
+  return window.utils && window.utils.formatCurrency ? window.utils.formatCurrency(price) : `₹${price}`;
+}
+
 const SUB_VALIDITY_DAYS = 30;
 
 function getSubscriptionStatus() {
@@ -45,8 +62,10 @@ function calculateSubscriptionExpiry() {
 }
 
 window.subUtils = {
-  SUB_PRICE,
+  getSubscriptionPrice,
+  getFormattedPrice,
   getSubscriptionStatus,
   activateSubscription,
   calculateSubscriptionExpiry
 };
+

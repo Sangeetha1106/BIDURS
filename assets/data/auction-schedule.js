@@ -1,28 +1,51 @@
-// Fixed Auction Schedule (single source of truth for sequential auctions)
-// Times are defined using ISO strings or YYYY-MM-DD + HH:mm format.
+// Auction Schedule Engine Data (Single source of truth for sequential & live auctions)
+// Dynamic relative schedule helper to ensure valid LIVE, UPCOMING, and ENDED demo auctions at any clock time.
 
-const auctionSchedule = [
-  { productId: 1, date: '2026-09-23', startTime: '09:00', durationMinutes: 120 }, // iPhone 15 Pro Max (Currently Live for current time 10:43)
-  { productId: 2, date: '2026-09-23', startTime: '11:30', durationMinutes: 60 },  // Samsung Galaxy S24 Ultra (Next Auction)
-  { productId: 3, date: '2026-09-23', startTime: '13:00', durationMinutes: 60 },  // Apple MacBook Air M3
-  { productId: 4, date: '2026-09-23', startTime: '14:30', durationMinutes: 60 },  // Dell XPS 15 OLED
-  { productId: 5, date: '2026-09-23', startTime: '16:00', durationMinutes: 60 },  // Sony Alpha Camera
-  { productId: 6, date: '2026-09-23', startTime: '17:30', durationMinutes: 60 },  // Apple AirPods Pro
-  { productId: 7, date: '2026-09-23', startTime: '19:00', durationMinutes: 60 },  // Apple iPad Pro
-  { productId: 8, date: '2026-09-23', startTime: '20:30', durationMinutes: 60 },  // Samsung 55-inch Smart TV
-  { productId: 9, date: '2026-09-24', startTime: '10:00', durationMinutes: 60 },  // Lenovo Legion 5 Pro
-  { productId: 10, date: '2026-09-24', startTime: '11:30', durationMinutes: 60 }, // Apple Watch Series 9
-  { productId: 11, date: '2026-09-24', startTime: '13:00', durationMinutes: 60 }, // Sony WH-1000XM5
-  { productId: 12, date: '2026-09-24', startTime: '14:30', durationMinutes: 60 }, // DJI Mini 4 Pro
-  { productId: 13, date: '2026-09-23', startTime: '12:00', durationMinutes: 120 }, // Asus ROG Strix G16
-  { productId: 14, date: '2026-09-23', startTime: '12:15', durationMinutes: 120 }, // Bose QuietComfort Ultra
-  { productId: 15, date: '2026-09-23', startTime: '12:30', durationMinutes: 120 }, // LG OLED TV
-  { productId: 16, date: '2026-09-23', startTime: '12:45', durationMinutes: 120 }, // Canon EOS R6
-  { productId: 17, date: '2026-09-23', startTime: '13:00', durationMinutes: 120 }, // iPad Air M2
-  { productId: 18, date: '2026-09-23', startTime: '13:15', durationMinutes: 120 }, // Pixel 8 Pro
-  { productId: 19, date: '2026-09-23', startTime: '13:30', durationMinutes: 120 }, // PS5 Slim
-  { productId: 20, date: '2026-09-23', startTime: '13:45', durationMinutes: 120 }  // Marshall Stanmore III
-];
+(function() {
+  function createRelativeSlot(productId, minutesOffset, durationMinutes) {
+    const t = new Date(Date.now() + minutesOffset * 60 * 1000);
+    const year = t.getFullYear();
+    const month = String(t.getMonth() + 1).padStart(2, '0');
+    const day = String(t.getDate()).padStart(2, '0');
+    const hours = String(t.getHours()).padStart(2, '0');
+    const minutes = String(t.getMinutes()).padStart(2, '0');
 
-window.auctionSchedule = auctionSchedule;
+    return {
+      productId: productId,
+      date: `${year}-${month}-${day}`,
+      startTime: `${hours}:${minutes}`,
+      durationMinutes: durationMinutes
+    };
+  }
+
+  const auctionSchedule = [
+    // ── LIVE AUCTIONS (Currently running now) ──
+    createRelativeSlot(1, -30, 180),   // iPhone 15 Pro Max (LIVE, ~2.5 hours remaining)
+    createRelativeSlot(2, -45, 240),   // Sony PS5 Console (LIVE, ~3.25 hours remaining)
+    createRelativeSlot(3, -20, 150),   // MacBook Pro M3 (LIVE, ~2 hours remaining)
+    createRelativeSlot(4, -105, 120),  // Dell XPS 15 OLED (ENDING SOON, ~15 mins remaining)
+    createRelativeSlot(5, -15, 120),   // Sony Alpha Camera (LIVE, ~1.75 hours remaining)
+
+    // ── UPCOMING AUCTIONS (Scheduled for future) ──
+    createRelativeSlot(6, 60, 120),    // AirPods Pro 2 (Starts in 1 hour)
+    createRelativeSlot(7, 180, 120),   // iPad Pro M2 (Starts in 3 hours)
+    createRelativeSlot(8, 360, 120),   // Samsung 55" TV (Starts in 6 hours)
+    createRelativeSlot(9, 1440, 120),  // Lenovo Legion 5 Pro (Starts Tomorrow)
+    createRelativeSlot(10, 2880, 120), // Apple Watch Series 9 (Starts in 2 Days)
+
+    // ── ENDED AUCTIONS (Past completed auctions) ──
+    createRelativeSlot(11, -300, 120), // Sony WH-1000XM5 (Ended)
+    createRelativeSlot(12, -450, 120), // DJI Mini 4 Pro (Ended)
+    createRelativeSlot(13, -600, 120), // Asus ROG Strix G16 (Ended)
+    createRelativeSlot(14, -750, 120), // Bose QuietComfort Ultra (Ended)
+    createRelativeSlot(15, -900, 120), // LG OLED TV (Ended)
+    createRelativeSlot(16, -1050, 120),// Canon EOS R6 (Ended)
+    createRelativeSlot(17, -1200, 120),// iPad Air M2 (Ended)
+    createRelativeSlot(18, -1350, 120),// Pixel 8 Pro (Ended)
+    createRelativeSlot(19, -1500, 120),// PS5 Slim Digital (Ended)
+    createRelativeSlot(20, -1650, 120) // Marshall Stanmore III (Ended)
+  ];
+
+  window.auctionSchedule = auctionSchedule;
+})();
 

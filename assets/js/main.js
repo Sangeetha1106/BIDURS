@@ -215,7 +215,7 @@ function renderReviews() {
 
   const html = mockReviews.map(review => {
     const stars = Array(5).fill(0).map((_, i) =>
-      `<i class="bi bi-star-fill" style="color:${i < review.rating ? 'var(--yellow)' : 'rgba(255,255,255,0.15)'}"></i>`
+      `<i class="bi bi-star-fill" style="color:${i < review.rating ? 'var(--gold-dark)' : '#CBD5E1'}"></i>`
     ).join('');
 
     return `
@@ -224,14 +224,14 @@ function renderReviews() {
           <div class="d-flex align-items-center mb-3 position-relative z-1">
             <img src="${review.avatar}" class="review-avatar me-3" width="48" height="48" alt="${review.user}">
             <div>
-              <h5 class="mb-0 text-white fw-bold" style="font-size:0.95rem;font-family:var(--font-heading);">${review.user}</h5>
+              <h5 class="mb-0 text-navy fw-bold" style="font-size:1.05rem;font-family:var(--font-heading);">${review.user}</h5>
               <div class="mt-1">${stars}</div>
             </div>
           </div>
-          <p class="fst-italic mb-3 position-relative z-1" style="color:var(--blue-gray-lt);font-size:0.9rem;">"${review.comment}"</p>
-          <div class="d-flex justify-content-between align-items-center small position-relative z-1" style="border-top:1px solid var(--glass-border);padding-top:0.75rem;">
-            <span class="fw-semibold text-white">Won: ${review.product}</span>
-            <span class="fw-bold" style="color:var(--success);">${review.winPrice}</span>
+          <p class="fst-italic mb-3 position-relative z-1 fw-medium" style="color:#334155;font-size:0.95rem;line-height:1.6;">"${review.comment}"</p>
+          <div class="d-flex justify-content-between align-items-center small position-relative z-1" style="border-top:1px solid var(--border-light);padding-top:0.75rem;">
+            <span class="fw-bold text-navy">Won: ${review.product}</span>
+            <span class="fw-bold fs-6" style="color:var(--royal-blue);">${review.winPrice}</span>
           </div>
         </div>
       </div>

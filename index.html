@@ -19,7 +19,7 @@
   <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
       <a class="navbar-brand fw-bold" href="index.html">
-        <img src="assets/images/favicon.png" alt="BIDURS Logo">
+        <img src="images/logo1.png" alt="BIDURS Logo">
         BIDURS
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
@@ -34,32 +34,30 @@
           <li class="nav-item"><a class="nav-link" href="#how-it-works">How It Works</a></li>
         </ul>
         <div class="d-flex gap-2" id="main-auth-buttons">
-          <button class="btn btn-outline-premium">Login</button>
-          <button class="btn btn-premium">Register</button>
+          <a href="pages/login.html" class="btn btn-outline-premium">Login</a>
+          <a href="pages/register.html" class="btn btn-premium">Register</a>
+          <a href="pages/subscription.html" class="btn btn-outline-premium"><i class="bi bi-star-fill text-gold me-1"></i>Subscription</a>
         </div>
       </div>
     </div>
   </nav>
 
-  <!-- ══ HERO SECTION ══ -->
+  <!-- ══ 1. HERO SECTION ══ -->
   <section class="hero-banner-section p-0 position-relative">
-    <img src="images/image copy.png" alt="BIDURS Home Banner" class="hero-banner-img">
+    <img src="images/image copy 4.png" alt="BIDURS Home Banner" class="hero-banner-img">
   </section>
 
-  <!-- ══ BROWSE CATEGORIES ══ -->
-  <section class="section-padding">
+  <!-- ══ 2. BROWSE CATEGORIES ══ -->
+  <section class="section-padding py-4">
     <div class="container">
-      <div class="d-flex justify-content-between align-items-end mb-5">
+      <div class="d-flex justify-content-between align-items-center">
         <h2 class="section-title mb-0 text-start">Browse <span style="background:var(--grad-orange);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Categories</span></h2>
         <a href="pages/products.html" class="btn btn-outline-royal btn-sm">View All <i class="bi bi-arrow-right ms-1"></i></a>
-      </div>
-      <div class="row g-4" id="categories-container">
-        <!-- Rendered via JS -->
       </div>
     </div>
   </section>
 
-  <!-- ══ LIVE AUCTIONS ══ -->
+  <!-- ══ 3. LIVE AUCTIONS ══ -->
   <section id="live" class="section-padding" style="background:rgba(0,0,0,0.2);">
     <div class="container">
       <div class="text-center mb-5">
@@ -79,43 +77,7 @@
     </div>
   </section>
 
-  <!-- ══ HOW IT WORKS ══ -->
-  <section id="how-it-works" class="section-padding">
-    <div class="container">
-      <h2 class="section-title">How To Play &amp; Win</h2>
-      <div class="row g-4 mt-2">
-        <div class="col-md-4">
-          <div class="how-step animate-fade-up">
-            <div class="step-icon mx-auto">
-              <i class="bi bi-person-plus-fill" style="color:var(--orange);"></i>
-            </div>
-            <h3 class="h4 text-white mb-3">1. Register &amp; Subscribe</h3>
-            <p style="color:var(--blue-gray);">Create your free account and purchase a membership to participate in live auctions with genuine products.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="how-step animate-fade-up delay-1">
-            <div class="step-icon mx-auto">
-              <i class="bi bi-gavel" style="color:var(--bright-blue);"></i>
-            </div>
-            <h3 class="h4 text-white mb-3">2. Place Your Bids</h3>
-            <p style="color:var(--blue-gray);">Find your desired product and bid in real-time. The highest bidder when the timer ends wins the auction.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="how-step animate-fade-up delay-2">
-            <div class="step-icon mx-auto">
-              <i class="bi bi-trophy-fill" style="color:var(--yellow);"></i>
-            </div>
-            <h3 class="h4 text-white mb-3">3. Win &amp; Pay</h3>
-            <p style="color:var(--blue-gray);">If you are the last bidder when the timer hits zero, you win! Pay the final bid price and receive your premium product.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ UPCOMING AUCTIONS ══ -->
+  <!-- ══ 4. UPCOMING AUCTIONS ══ -->
   <section id="upcoming" class="section-padding" style="background:rgba(0,0,0,0.15);">
     <div class="container">
       <div class="text-center mb-5">
@@ -130,7 +92,7 @@
     </div>
   </section>
 
-  <!-- ══ WANTED PRODUCTS CTA ══ -->
+  <!-- ══ 5. WANTED PRODUCTS ══ -->
   <section class="section-padding">
     <div class="container">
       <div class="cta-banner p-5">
@@ -154,7 +116,43 @@
     </div>
   </section>
 
-  <!-- ══ WINNER REVIEWS ══ -->
+  <!-- ══ 6. HOW TO PLAY & WIN ══ -->
+  <section id="how-it-works" class="section-padding">
+    <div class="container">
+      <h2 class="section-title">How To Play &amp; Win</h2>
+      <div class="row g-4 mt-2">
+        <div class="col-md-4">
+          <div class="how-step animate-fade-up">
+            <div class="step-icon mx-auto" style="background:rgba(212,175,55,0.15);border:1.5px solid var(--gold-dark);">
+              <i class="bi bi-person-plus-fill" style="color:var(--gold-dark);font-size:2.2rem;"></i>
+            </div>
+            <h3 class="h4 text-navy fw-bold mb-3">1. Register &amp; Subscribe</h3>
+            <p style="color:var(--text-body);font-weight:450;">Create your free account and purchase a membership to participate in live auctions with genuine products.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="how-step animate-fade-up delay-1">
+            <div class="step-icon mx-auto" style="background:rgba(0,82,204,0.12);border:1.5px solid var(--royal-blue);">
+              <i class="bi bi-gavel" style="color:var(--royal-blue);font-size:2.2rem;"></i>
+            </div>
+            <h3 class="h4 text-navy fw-bold mb-3">2. Place Your Bids</h3>
+            <p style="color:var(--text-body);font-weight:450;">Find your desired product and bid in real-time. The highest bidder when the timer ends wins the auction.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="how-step animate-fade-up delay-2">
+            <div class="step-icon mx-auto" style="background:rgba(212,175,55,0.15);border:1.5px solid var(--gold-dark);">
+              <i class="bi bi-trophy-fill" style="color:var(--gold-dark);font-size:2.2rem;"></i>
+            </div>
+            <h3 class="h4 text-navy fw-bold mb-3">3. Win &amp; Pay</h3>
+            <p style="color:var(--text-body);font-weight:450;">If you are the last bidder when the timer hits zero, you win! Pay the final bid price and receive your premium product.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 7. HEAR FROM OUR WINNERS ══ -->
   <section class="section-padding" style="background:rgba(0,0,0,0.15);">
     <div class="container">
       <h2 class="section-title">Hear From Our <gold>Winners</gold></h2>

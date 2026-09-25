@@ -18,7 +18,7 @@
   <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
       <a class="navbar-brand fw-bold" href="../index.html">
-        <img src="../assets/images/favicon.png" alt="BIDURS Logo">
+        <img src="../images/logo1.png" alt="BIDURS Logo">
         BIDURS
       </a>
       <div class="d-flex gap-2 ms-auto">
@@ -117,13 +117,14 @@
   <script>
     function handleRegister(e) {
       e.preventDefault();
-      const name = document.getElementById('nameInput').value;
-      const email = document.getElementById('emailInput').value;
-      const mobile = document.getElementById('mobileInput').value;
+      const name = document.getElementById('nameInput').value.trim();
+      const email = document.getElementById('emailInput').value.trim();
+      const mobile = document.getElementById('mobileInput').value.trim();
       const pass = document.getElementById('passwordInput').value;
       const confirmPass = document.getElementById('confirmPasswordInput').value;
       const terms = document.getElementById('termsCheck').checked;
       const errorDiv = document.getElementById('registerError');
+
       if (!name || !email || !mobile || !pass || !confirmPass) {
         errorDiv.textContent = 'Please fill out all required fields.';
         errorDiv.classList.remove('d-none'); return;
@@ -140,7 +141,18 @@
         errorDiv.textContent = 'You must accept the Terms & Conditions.';
         errorDiv.classList.remove('d-none'); return;
       }
+
       errorDiv.classList.add('d-none');
+
+      // Generate a unique Login ID for new customer
+      const generatedUserId = 'CUST-' + Math.floor(1000 + Math.random() * 9000);
+      const pendingUser = {
+        name: name,
+        email: email,
+        mobile: mobile,
+        userId: generatedUserId
+      };
+      localStorage.setItem('pendingUser', JSON.stringify(pendingUser));
       window.location.href = 'otp-verification.html';
     }
   </script>

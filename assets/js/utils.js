@@ -43,8 +43,20 @@ function getQueryParam(name) {
   return urlParams.get(name);
 }
 
+/**
+ * Safely finds a product by ID regardless of string/number type
+ * @param {number|string} id 
+ * @returns {Object|null}
+ */
+function findProductById(id) {
+  if (!window.mockProductsData || id === null || id === undefined) return null;
+  const numId = parseInt(id, 10);
+  return window.mockProductsData.find(p => p.id === numId || String(p.id) === String(id)) || null;
+}
+
 window.utils = {
   formatCurrency,
   getStatusBadge,
-  getQueryParam
+  getQueryParam,
+  findProductById
 };

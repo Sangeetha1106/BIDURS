@@ -33,7 +33,7 @@
   <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
       <a class="navbar-brand fw-bold" href="../index.html">
-        <img src="../assets/images/favicon.png" alt="BIDURS Logo">
+        <img src="../images/logo1.png" alt="BIDURS Logo">
         BIDURS
       </a>
     </div>
@@ -95,8 +95,15 @@
       const errorDiv = document.getElementById('otpError');
       const successDiv = document.getElementById('otpSuccess');
       
+      if (!code || code.length < 6) {
+        errorDiv.textContent = "Please enter the complete 6-digit OTP code.";
+        errorDiv.classList.remove('d-none');
+        successDiv.classList.add('d-none');
+        return;
+      }
+
       if (code !== '123456') {
-        errorDiv.textContent = "Invalid OTP. Please try again.";
+        errorDiv.textContent = "Invalid OTP code. Please use demo OTP: 123456.";
         errorDiv.classList.remove('d-none');
         successDiv.classList.add('d-none');
         return;
@@ -105,9 +112,20 @@
       errorDiv.classList.add('d-none');
       successDiv.classList.remove('d-none');
       
+      // Read pending user registration info
+      const pendingStr = localStorage.getItem('pendingUser');
+      let userData = {
+        name: 'New Customer',
+        email: 'customer@bidurs.in',
+        userId: 'CUST-' + Math.floor(1000 + Math.random() * 9000)
+      };
+      if (pendingStr) {
+        try { userData = JSON.parse(pendingStr); } catch(err){}
+      }
+
       setTimeout(() => {
-        window.mockLogin();
-      }, 1500);
+        window.mockLogin(null, userData);
+      }, 1200);
     }
   </script>
   <div id="global-footer"></div>

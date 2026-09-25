@@ -18,7 +18,7 @@
   <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
       <a class="navbar-brand fw-bold" href="../index.html">
-        <img src="../assets/images/favicon.png" alt="BIDURS Logo">
+        <img src="../images/logo1.png" alt="BIDURS Logo">
         BIDURS
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -37,8 +37,8 @@
 
       <div class="col-lg-9">
         <div class="mb-5">
-          <h2 class="fw-bold text-white mb-1" style="font-family:var(--font-heading);">Choose Your Auction <span style="background:var(--grad-orange);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Subscription</span></h2>
-          <p style="color:var(--blue-gray);">Unlock full access to live bidding on premium products.</p>
+          <h2 class="fw-bold text-navy mb-1" style="font-family:var(--font-heading);">Choose Your Auction <span style="background:var(--grad-orange);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Subscription</span></h2>
+          <p class="text-secondary fw-medium">Unlock full access to live bidding on premium products.</p>
         </div>
 
         <!-- Dynamic Subscription Status -->
@@ -50,30 +50,45 @@
             <div class="sub-plan-card">
               <div class="sub-plan-header position-relative">
                 <i class="bi bi-star-fill position-absolute opacity-10" style="font-size:7rem;right:-15px;top:-15px;color:var(--yellow);"></i>
-                <div class="position-relative z-1">
-                  <span class="badge rounded-pill mb-3 px-3 py-2" style="background:rgba(249,115,22,0.3);border:1px solid rgba(249,115,22,0.5);color:var(--orange-light);font-size:0.82rem;">
-                    <i class="bi bi-fire me-1"></i> Most Popular
+                <div class="position-relative z-1 p-4 pb-0">
+                  <span class="badge rounded-pill mb-3 px-3 py-2" style="background:rgba(249,115,22,0.3);border:1px solid rgba(249,115,22,0.5);color:#FFE082;font-size:0.82rem;font-weight:700;">
+                    <i class="bi bi-fire me-1"></i> Auction Access Plan
                   </span>
-                  <h4 class="fw-bold text-white mb-0" style="font-family:var(--font-heading);">BIDURS Membership</h4>
+                  <h4 class="fw-bold text-white mb-0" style="font-family:var(--font-heading);">BIDURS 1-Month Membership</h4>
                 </div>
               </div>
-              <div class="p-5">
-                <div class="text-center pb-4 mb-4" style="border-bottom:1px solid var(--glass-border);">
-                  <div style="color:var(--blue-gray);font-size:0.8rem;text-transform:uppercase;font-weight:600;letter-spacing:0.08em;margin-bottom:0.5rem;">Validity: 1 Month</div>
-                  <div class="sub-price" id="sub-price-display">₹999</div>
+              <div class="p-4 p-md-5">
+                <div class="text-center pb-4 mb-4" style="border-bottom:1px solid rgba(255,255,255,0.2);">
+                  <div style="color:#FFE082;font-size:0.85rem;text-transform:uppercase;font-weight:700;letter-spacing:0.08em;margin-bottom:0.5rem;">
+                    <i class="bi bi-calendar3 me-1 text-gold"></i> Validity: 1 Month (30 Days)
+                  </div>
+                  <div class="sub-price" id="sub-price-display">To Be Confirmed</div>
+                  <small class="d-block mt-1 fs-7" style="color:rgba(255,255,255,0.85)!important;">*Subscription amount subject to final client confirmation</small>
                 </div>
-                <ul class="sub-feature-list list-unstyled mb-5">
-                  <li><i class="bi bi-check-circle-fill"></i> Participate in eligible auctions</li>
-                  <li><i class="bi bi-check-circle-fill"></i> Place bids in real-time</li>
-                  <li><i class="bi bi-check-circle-fill"></i> Track active bids &amp; history</li>
-                  <li><i class="bi bi-check-circle-fill"></i> View auction results</li>
-                  <li><i class="bi bi-check-circle-fill"></i> Access Won Auctions dashboard</li>
+
+                <ul class="sub-feature-list list-unstyled mb-4">
+                  <li><i class="bi bi-check-circle-fill text-gold"></i> Access &amp; participate in eligible live product auctions</li>
+                  <li><i class="bi bi-check-circle-fill text-gold"></i> Place bids in real-time on live items</li>
+                  <li><i class="bi bi-check-circle-fill text-gold"></i> Track active bids, watchlist &amp; won auctions</li>
+                  <li><i class="bi bi-check-circle-fill text-gold"></i> View live auction results &amp; payment status</li>
                 </ul>
-                <button class="btn btn-premium w-100 py-3 fw-bold fs-5" id="btn-subscribe" onclick="triggerSubscriptionModal()">
+
+                <!-- Rules & Notices Summary Box -->
+                <div class="p-3 mb-4 rounded-3 text-start small" style="background:rgba(255,255,255,0.08);border:1px solid rgba(212,175,55,0.4);">
+                  <div class="fw-bold text-white mb-2"><i class="bi bi-shield-exclamation text-warning me-1"></i> Subscription Rules &amp; Terms:</div>
+                  <ul class="mb-0 ps-3 lh-sm" style="font-size:0.85rem;color:rgba(255,255,255,0.92)!important;">
+                    <li class="mb-1"><strong>Validity:</strong> 30 Days from activation date.</li>
+                    <li class="mb-1"><strong>Non-Refundable:</strong> Subscription charges are non-refundable.</li>
+                    <li class="mb-1"><strong>1 User Only:</strong> Valid for a single customer account.</li>
+                    <li><strong>Suspension Rule:</strong> Subject to account suspension for payment failures or terms violation.</li>
+                  </ul>
+                </div>
+
+                <button class="btn btn-premium w-100 py-3 fw-bold fs-5 shadow" id="btn-subscribe" onclick="triggerSubscriptionModal()">
                   <i class="bi bi-bolt-fill me-2"></i>SUBSCRIBE NOW
                 </button>
-                <div class="text-center mt-3 small" style="color:var(--blue-gray);">
-                  <i class="bi bi-shield-check me-1" style="color:var(--success);"></i> Secure &amp; encrypted payment
+                <div class="text-center mt-3 small" style="color:rgba(255,255,255,0.85);">
+                  <i class="bi bi-shield-check me-1" style="color:var(--success);"></i> Safe &amp; Encrypted Gateway (Demo / Mock Flow)
                 </div>
               </div>
             </div>
@@ -83,48 +98,90 @@
     </div>
   </div>
 
-  <!-- ══ CONFIRMATION MODAL ══ -->
+  <!-- ══ CONFIRMATION & PAYMENT MODAL ══ -->
   <div class="modal fade" id="subModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title fw-bold" style="font-family:var(--font-heading);">
-            <i class="bi bi-bolt-fill me-2" style="color:var(--orange);"></i>Confirm Subscription
+      <div class="modal-content border-0 shadow-lg">
+        <div class="modal-header bg-navy text-white">
+          <h5 class="modal-title fw-bold text-white" style="font-family:var(--font-heading);" id="modal-title-text">
+            <i class="bi bi-bolt-fill me-2 text-gold"></i>Confirm Subscription
           </h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body p-4 text-center">
-          <div id="sub-loading" class="d-none py-4">
-            <div class="spinner-border text-gold mb-3" role="status"></div>
-            <h5 class="fw-bold text-white" style="font-family:var(--font-heading);">Processing Activation...</h5>
+
+          <!-- STEP 1: CONFIRMATION & TERMS -->
+          <div id="sub-confirm">
+            <p class="text-navy fw-medium mb-3">Please review your plan details and accept the terms before proceeding to payment.</p>
+            
+            <div class="p-3 mb-3 rounded-3 text-start" style="background:#F1F7FE;border:1.5px solid #CBD5E1;">
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-secondary fw-semibold">Plan:</span>
+                <span class="fw-bold text-navy">BIDURS 1-Month Membership</span>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-secondary fw-semibold">Validity:</span>
+                <span class="fw-bold text-navy">1 Month (30 Days)</span>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-secondary fw-semibold">Amount:</span>
+                <span class="fw-bold fs-5 text-primary" id="modal-price-display">To Be Confirmed</span>
+              </div>
+              <div class="d-flex justify-content-between border-top border-secondary border-opacity-25 pt-2 mt-2">
+                <span class="text-secondary fw-semibold">Policy:</span>
+                <span class="badge bg-danger text-white px-2 py-1">Non-Refundable</span>
+              </div>
+            </div>
+
+            <!-- Mandatory Terms & Conditions Checkbox -->
+            <div class="form-check text-start mb-4">
+              <input class="form-check-input" type="checkbox" id="sub-terms-check" onchange="togglePayButton()">
+              <label class="form-check-label text-navy fw-bold small" for="sub-terms-check">
+                I agree to the <a href="terms.html" target="_blank" class="text-primary text-decoration-underline fw-bold">Terms &amp; Conditions</a>. I understand that the subscription is non-refundable, valid for 1 user, and subject to account suspension per company rules.
+              </label>
+            </div>
+
+            <div class="alert alert-info border-info border-opacity-25 py-2 px-3 small text-start mb-4">
+              <i class="bi bi-info-circle-fill me-1"></i> Note: Real Razorpay payment gateway integration will be connected during backend implementation.
+            </div>
+
+            <div class="d-flex gap-3">
+              <button class="btn btn-outline-secondary w-50 fw-bold" data-bs-dismiss="modal">CANCEL</button>
+              <button class="btn btn-premium w-50 fw-bold" id="btn-modal-confirm" onclick="proceedToPaymentFlow()" disabled>Continue to Payment</button>
+            </div>
           </div>
 
-          <div id="sub-confirm">
-            <p style="color:var(--blue-gray-lt);" class="mb-4">Please confirm your subscription details before proceeding.</p>
-            <div class="p-4 mb-4 rounded-3 text-start" style="background:rgba(255,255,255,0.05);border:1px solid var(--glass-border-blue);">
-              <div class="d-flex justify-content-between mb-3">
-                <span style="color:var(--blue-gray);">Plan:</span>
-                <span class="fw-bold text-white">BIDURS 1 Month Membership</span>
+          <!-- STEP 2: DEMO PAYMENT GATEWAY PROCESSING -->
+          <div id="sub-payment-demo" class="d-none py-4">
+            <div class="spinner-border text-primary mb-3" role="status" style="width:3rem;height:3rem;"></div>
+            <h5 class="fw-bold text-navy mb-2" style="font-family:var(--font-heading);">Connecting Demo Payment Gateway...</h5>
+            <p class="text-muted small mb-4">Simulating payment processing and validity verification...</p>
+            <div class="p-3 mb-3 rounded-3 text-start small" style="background:#F1F7FE;border:1.5px solid #CBD5E1;">
+              <div class="d-flex justify-content-between mb-1">
+                <span class="text-secondary fw-semibold">Gateway Status:</span>
+                <span class="text-primary fw-bold"><i class="bi bi-clock-history me-1"></i>Processing Payment</span>
               </div>
               <div class="d-flex justify-content-between">
-                <span style="color:var(--blue-gray);">Amount:</span>
-                <span class="fw-bold fs-5" style="color:var(--orange);" id="modal-price-display">₹999</span>
+                <span class="text-secondary fw-semibold">Requested Plan:</span>
+                <span class="text-navy font-monospace fw-bold">30 Days Auction Access</span>
               </div>
-            </div>
-            <div class="d-flex gap-3">
-              <button class="btn btn-glass w-50" data-bs-dismiss="modal">CANCEL</button>
-              <button class="btn btn-premium w-50 fw-bold" onclick="processMockSubscription()">CONFIRM &amp; PAY</button>
             </div>
           </div>
 
+          <!-- STEP 3: SUBSCRIPTION ACTIVATED SUCCESS -->
           <div id="sub-success" class="d-none py-3">
-            <div class="payment-success-icon mx-auto">
+            <div class="payment-success-icon mx-auto mb-3">
               <i class="bi bi-check-lg"></i>
             </div>
-            <h4 class="fw-bold text-white mb-2" style="font-family:var(--font-heading);">Subscription Activated!</h4>
-            <p style="color:var(--blue-gray-lt);" class="mb-3">Validity: 30 days &nbsp;|&nbsp; Status: <span class="badge bg-success">ACTIVE</span></p>
-            <button class="btn btn-outline-royal px-4" onclick="window.location.reload()">Return to Dashboard</button>
+            <h4 class="fw-bold text-navy mb-2" style="font-family:var(--font-heading);">Subscription Activated!</h4>
+            <p class="text-navy fw-semibold mb-3">Validity: 30 Days &nbsp;|&nbsp; Status: <span class="badge bg-success">ACTIVE</span></p>
+            <p class="small text-secondary mb-4"><i class="bi bi-unlock-fill text-gold me-1"></i> Auction access is now enabled. You can participate and place bids in all live auctions.</p>
+            <div class="d-flex gap-2 justify-content-center">
+              <a href="live-auctions.html" class="btn btn-premium px-4">Browse Live Auctions</a>
+              <button class="btn btn-outline-royal px-4" data-bs-dismiss="modal" onclick="window.location.reload()">Return to Dashboard</button>
+            </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -140,7 +197,7 @@
   <script>
     let modalInstance;
     document.addEventListener('DOMContentLoaded', () => {
-      const priceStr = window.utils.formatCurrency(window.subUtils.SUB_PRICE);
+      const priceStr = window.subUtils.getFormattedPrice();
       document.getElementById('sub-price-display').textContent = priceStr;
       document.getElementById('modal-price-display').textContent = priceStr;
       renderSubscriptionStatus();
@@ -153,34 +210,56 @@
       let html = '';
       if (status === 'ACTIVE') {
         const exp = window.subUtils.calculateSubscriptionExpiry();
-        if (exp.status === 'EXPIRING SOON') {
-          html = `<div class="alert alert-warning fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Your subscription is <span class="badge bg-warning text-dark">EXPIRING SOON</span>. ${exp.days} Days Remaining.</div>`;
+        if (exp && exp.status === 'EXPIRING SOON') {
+          html = `<div class="alert alert-warning fw-bold border-0 shadow-sm"><i class="bi bi-exclamation-triangle-fill me-2"></i>Your subscription is <span class="badge bg-warning text-dark">EXPIRING SOON</span>. ${exp.days} Days Remaining. Auction access remains active.</div>`;
         } else {
-          html = `<div class="alert alert-success fw-bold"><i class="bi bi-check-circle-fill me-2"></i>Your subscription is <span class="badge bg-success">ACTIVE</span>. ${exp.days} Days Remaining.</div>`;
+          const daysLeft = exp ? exp.days : 30;
+          html = `<div class="alert alert-success fw-bold border-0 shadow-sm"><i class="bi bi-check-circle-fill me-2"></i>Your subscription is <span class="badge bg-success">ACTIVE</span>. ${daysLeft} Days Remaining. Full auction bidding access unlocked.</div>`;
         }
         btn.innerHTML = '<i class="bi bi-arrow-repeat me-2"></i>EXTEND SUBSCRIPTION';
       } else if (status === 'EXPIRED') {
-        html = `<div class="alert alert-secondary fw-bold"><i class="bi bi-x-circle-fill me-2"></i>Your subscription has <span class="badge bg-secondary">EXPIRED</span>. Please renew.</div>`;
+        html = `<div class="alert alert-secondary fw-bold border-0 shadow-sm"><i class="bi bi-x-circle-fill me-2"></i>Your subscription has <span class="badge bg-secondary">EXPIRED</span>. Please renew to participate in live auctions.</div>`;
       } else if (status === 'SUSPENDED') {
-        html = `<div class="alert alert-danger fw-bold"><i class="bi bi-slash-circle-fill me-2"></i>SUBSCRIPTION <span class="badge bg-danger">SUSPENDED</span> — Contact support for assistance.</div>`;
+        html = `<div class="alert alert-danger fw-bold border-0 shadow-sm"><i class="bi bi-slash-circle-fill me-2"></i>SUBSCRIPTION <span class="badge bg-danger">SUSPENDED</span> — Restricted from bidding due to company rules or payment defaults. Contact support for assistance.</div>`;
         btn.disabled = true;
       }
       container.innerHTML = html;
     }
 
     function triggerSubscriptionModal() {
+      // Always reset modal to Step 1 (Confirmation)
+      document.getElementById('sub-confirm').classList.remove('d-none');
+      document.getElementById('sub-payment-demo').classList.add('d-none');
+      document.getElementById('sub-success').classList.add('d-none');
+      const check = document.getElementById('sub-terms-check');
+      if (check) {
+        check.checked = false;
+        togglePayButton();
+      }
       modalInstance = new bootstrap.Modal(document.getElementById('subModal'));
       modalInstance.show();
     }
 
-    function processMockSubscription() {
+    function togglePayButton() {
+      const check = document.getElementById('sub-terms-check');
+      const confirmBtn = document.getElementById('btn-modal-confirm');
+      if (confirmBtn) {
+        confirmBtn.disabled = !check.checked;
+      }
+    }
+
+    function proceedToPaymentFlow() {
+      // Step 1 -> Step 2: Show Demo Payment Processing Gateway
       document.getElementById('sub-confirm').classList.add('d-none');
-      document.getElementById('sub-loading').classList.remove('d-none');
+      document.getElementById('sub-payment-demo').classList.remove('d-none');
+      
+      // Step 2 -> Step 3: Complete demo payment and activate subscription
       setTimeout(() => {
         window.subUtils.activateSubscription();
-        document.getElementById('sub-loading').classList.add('d-none');
+        document.getElementById('sub-payment-demo').classList.add('d-none');
         document.getElementById('sub-success').classList.remove('d-none');
-      }, 1500);
+        renderSubscriptionStatus();
+      }, 1600);
     }
   </script>
 </body>
