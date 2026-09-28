@@ -1652,33 +1652,18 @@ body > .container .text-white:not(.bg-navy *):not(.bg-dark *):not(.hero-banner-s
 }
 
 /* 6. Card Height & Complete Text Visibility Rules */
-.product-card, .review-card, .how-step, .category-card, .auth-card, .card {
+.product-card, .review-card, .how-step, .category-card, .auth-card {
   height: auto !important;
   min-height: 100% !important;
-  overflow: visible !important;
 }
 
-.product-title, .product-meta, .card-title, .card-text, .hero-title, .section-title, .footer-title, p, h1, h2, h3, h4, h5, h6, span, label, div {
+.product-title, .product-meta, .card-title, .card-text, .hero-title, .section-title, .footer-title {
   white-space: normal !important;
   word-break: break-word !important;
   overflow-wrap: break-word !important;
-  overflow: visible !important;
 }
 
-.text-truncate {
-  overflow: visible !important;
-  text-overflow: clip !important;
-  white-space: normal !important;
-  word-break: break-word !important;
-}
 
-.line-clamp-1, .line-clamp-2, .line-clamp-3, [style*="-webkit-line-clamp"] {
-  display: block !important;
-  -webkit-line-clamp: none !important;
-  -webkit-box-orient: unset !important;
-  overflow: visible !important;
-  max-height: none !important;
-}
 
 /* 7. Button Text Wrapping & Clipping Prevention */
 .btn {
