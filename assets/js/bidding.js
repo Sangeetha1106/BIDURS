@@ -170,23 +170,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     <!-- Detailed Timer -->
                     <div class="d-flex justify-content-md-center gap-3 text-center" id="detailed-timer">
                       <div>
-                        <div class="fs-2 fw-bold font-monospace bg-white bg-opacity-10 rounded px-2" id="timer-d">00</div>
+                        <div class="fs-2 fw-bold font-monospace bg-white text-navy rounded px-3 py-1 shadow-sm" id="timer-d">00</div>
                         <div class="small text-white-50 mt-1">Days</div>
                       </div>
-                      <div class="fs-3 fw-bold">:</div>
+                      <div class="fs-3 fw-bold text-white">:</div>
                       <div>
-                        <div class="fs-2 fw-bold font-monospace bg-white bg-opacity-10 rounded px-2" id="timer-h">00</div>
+                        <div class="fs-2 fw-bold font-monospace bg-white text-navy rounded px-3 py-1 shadow-sm" id="timer-h">00</div>
                         <div class="small text-white-50 mt-1">Hours</div>
                       </div>
-                      <div class="fs-3 fw-bold">:</div>
+                      <div class="fs-3 fw-bold text-white">:</div>
                       <div>
-                        <div class="fs-2 fw-bold font-monospace bg-white bg-opacity-10 rounded px-2" id="timer-m">00</div>
+                        <div class="fs-2 fw-bold font-monospace bg-white text-navy rounded px-3 py-1 shadow-sm" id="timer-m">00</div>
                         <div class="small text-white-50 mt-1">Mins</div>
                       </div>
-                      <div class="fs-3 fw-bold text-gold">:</div>
+                      <div class="fs-3 fw-bold text-white">:</div>
                       <div>
-                        <div class="fs-2 fw-bold font-monospace bg-white bg-opacity-10 rounded px-2 text-gold" id="timer-s">00</div>
-                        <div class="small text-gold mt-1">Secs</div>
+                        <div class="fs-2 fw-bold font-monospace bg-white text-navy rounded px-3 py-1 shadow-sm" id="timer-s">00</div>
+                        <div class="small text-white-50 mt-1">Secs</div>
                       </div>
                     </div>
                   </div>
