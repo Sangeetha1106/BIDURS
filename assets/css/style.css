@@ -1904,4 +1904,174 @@ i.bi {
   }
 }
 
+/* ============================================================
+   8. Comprehensive Mobile Responsiveness & Neat Alignment
+   ============================================================ */
+
+/* Global Overflow Safeguard */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw;
+}
+
+img, video, iframe, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Scrollable Nav Tabs on Mobile Touch */
+.nav-tabs, .nav-pills {
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  white-space: nowrap !important;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 4px;
+}
+.nav-tabs::-webkit-scrollbar, .nav-pills::-webkit-scrollbar {
+  display: none;
+}
+.nav-tabs .nav-item, .nav-pills .nav-item {
+  flex: 0 0 auto;
+}
+
+/* Tablet & Mobile Navigation (< 992px) */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 1.25rem;
+    margin-top: 0.75rem;
+    box-shadow: 0 12px 35px rgba(11, 27, 61, 0.15);
+    border: 1px solid rgba(0, 102, 204, 0.12);
+  }
+  
+  .navbar-nav .nav-link {
+    padding: 0.6rem 1rem !important;
+    border-radius: 8px;
+  }
+  
+  .navbar-nav .nav-link:hover,
+  .navbar-nav .nav-link.active {
+    background-color: var(--bg-secondary);
+  }
+
+  .navbar-brand img {
+    max-height: 34px !important;
+  }
+}
+
+/* Small Tablets & Mobile (< 768px) */
+@media (max-width: 767.98px) {
+  /* Container Padding */
+  .container, .container-fluid {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Typography Scales */
+  h1, .h1 { font-size: 1.65rem !important; }
+  h2, .h2 { font-size: 1.45rem !important; }
+  h3, .h3 { font-size: 1.25rem !important; }
+  .display-1 { font-size: 2.2rem !important; }
+  .display-2 { font-size: 2.0rem !important; }
+  .display-3 { font-size: 1.8rem !important; }
+  .display-4 { font-size: 1.6rem !important; }
+
+  /* Hero & Section Spacing */
+  .py-5 { padding-top: 2rem !important; padding-bottom: 2rem !important; }
+  .py-4 { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
+  .p-5 { padding: 1.5rem !important; }
+  .p-4 { padding: 1.2rem !important; }
+  .mb-5 { margin-bottom: 2rem !important; }
+  .g-5 { --bs-gutter-x: 1.5rem; --bs-gutter-y: 1.5rem; }
+
+  /* Product Details & Images */
+  #main-product-image {
+    max-height: 260px !important;
+    object-fit: contain !important;
+  }
+
+  /* Table Responsiveness & Compact Padding */
+  .table-responsive {
+    border-radius: 12px;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .table th, .table td {
+    padding: 0.6rem 0.75rem !important;
+    font-size: 0.88rem !important;
+    white-space: nowrap;
+  }
+
+  /* Modal Adjustments */
+  .modal-dialog {
+    margin: 0.75rem !important;
+    max-width: calc(100% - 1.5rem) !important;
+  }
+  .modal-body {
+    padding: 1.25rem !important;
+  }
+}
+
+/* Extra Small Mobile / Phones (< 576px) */
+@media (max-width: 575.98px) {
+  /* Detailed Live Auction Timer Boxes */
+  #detailed-timer {
+    gap: 0.35rem !important;
+    justify-content: center !important;
+  }
+  #detailed-timer > div {
+    flex: 0 0 auto;
+  }
+  #timer-d, #timer-h, #timer-m, #timer-s {
+    font-size: 1.1rem !important;
+    padding: 0.35rem 0.5rem !important;
+    min-width: 44px;
+    text-align: center;
+  }
+  #detailed-timer .fs-3 {
+    font-size: 1rem !important;
+    line-height: 2.2;
+  }
+  #detailed-timer .small {
+    font-size: 0.7rem !important;
+  }
+
+  /* Current Highest Bid Display in Bidding Room */
+  #current-highest-bid {
+    font-size: 1.85rem !important;
+  }
+
+  /* Quick Bid Buttons on Phone */
+  .btn-quick-bid {
+    flex: 1 1 45% !important;
+    font-size: 0.85rem !important;
+    padding: 0.5rem 0.25rem !important;
+  }
+
+  /* General Buttons */
+  .btn-lg {
+    padding: 0.75rem 1rem !important;
+    font-size: 0.95rem !important;
+  }
+
+  /* Cards Grid 1-Col Fix */
+  .product-card {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Ultra Small Screens (< 380px) */
+@media (max-width: 380px) {
+  #timer-d, #timer-h, #timer-m, #timer-s {
+    font-size: 0.95rem !important;
+    padding: 0.25rem 0.4rem !important;
+    min-width: 38px;
+  }
+  .navbar-brand {
+    font-size: 1.1rem !important;
+  }
+}
+
 
