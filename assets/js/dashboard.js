@@ -291,7 +291,7 @@ function renderWonAuctions() {
             <div class="col-6 col-md-3">
               <div class="small text-muted mb-1">Payment Status</div>
               <span class="badge bg-${payClass} mb-1">${payStatus}</span>
-              ${payStatus === 'PENDING' ? '<div class="small text-danger fw-bold"><i class="bi bi-clock"></i> 24h Window Active</div>' : ''}
+              ${payStatus === 'PENDING' ? '<div class="small text-danger fw-bold"><i class="bi bi-clock"></i> 1hr Window Active</div>' : ''}
             </div>
             <div class="col-12 col-md-3 text-md-end mt-3 mt-md-0 d-flex flex-column gap-2">
               <a href="payment-status.html?id=${p.productId || p.id}" class="btn ${payStatus === 'PENDING' ? 'btn-premium' : 'btn-outline-secondary'} btn-sm w-100">${payStatus === 'PENDING' ? 'Complete Payment' : 'Payment Receipt'}</a>

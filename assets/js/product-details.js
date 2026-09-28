@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     actionButton = `
       <div class="alert alert-warning border-0 rounded-3 mb-3 text-navy">
         <i class="bi bi-trophy-fill me-2 text-warning fs-5"></i> Auction Completed on ${new Date(product.endTime).toLocaleDateString()}
-        <div class="mt-2 small text-muted"><strong>Payment Deadline:</strong> Winner has 24 hours to complete payment. If unpaid, item goes to runner-up bidder.</div>
+        <div class="mt-2 small text-muted"><strong>Payment Deadline:</strong> Winner has 1 hour to complete payment. If unpaid, item goes to runner-up bidder.</div>
       </div>
       <button class="btn btn-secondary btn-lg w-100 mb-3 disabled" disabled>Auction Ended (Winning Bid: ${window.utils.formatCurrency(product.currentBid)})</button>
     `;
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ${actionButton}
         
         <div class="alert alert-secondary border-0 small mt-3 text-navy">
-          <i class="bi bi-shield-check text-success me-2 fs-6"></i> <strong>BIDURS Guarantee:</strong> Verified authentic products with manufacturer warranty and 24h winner payment window.
+          <i class="bi bi-shield-check text-success me-2 fs-6"></i> <strong>BIDURS Guarantee:</strong> Verified authentic products with manufacturer warranty and 1hr winner payment window.
         </div>
       </div>
     </div>
@@ -192,8 +192,8 @@ document.addEventListener('DOMContentLoaded', () => {
               <ol class="ps-3 mb-0 text-body">
                 <li class="mb-2"><strong>Binding Bids:</strong> All live bids placed are final and binding.</li>
                 <li class="mb-2"><strong>Winner Determination:</strong> The highest eligible bid recorded when countdown reaches zero wins.</li>
-                <li class="mb-2"><strong>Payment Deadline:</strong> The winner must complete payment within 24 hours after auction conclusion.</li>
-                <li class="mb-2"><strong>Fallback Policy:</strong> If the primary winner fails to pay within 24 hours, the offer automatically extends to the next highest bidder.</li>
+                <li class="mb-2"><strong>Payment Deadline:</strong> The winner must complete payment within 1 hour after auction conclusion.</li>
+                <li class="mb-2"><strong>Fallback Policy:</strong> If the primary winner fails to pay within 1 hour, the offer automatically extends to the next highest bidder.</li>
               </ol>
             </div>
           </div>

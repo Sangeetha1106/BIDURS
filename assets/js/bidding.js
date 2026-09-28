@@ -584,7 +584,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('fallback-amount').textContent = window.utils.formatCurrency(bidHistory[1].amount);
       }
 
-      // Start 24h Payment Deadline Countdown Timer
+      // Start 1h Payment Deadline Countdown Timer
       startPaymentDeadlineTimer();
     }
   }
@@ -593,8 +593,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const deadlineEl = document.getElementById('payment-deadline-timer');
     if (!deadlineEl) return;
     
-    // Set 24 hours deadline from now for demo
-    const deadlineTime = new Date().getTime() + (24 * 60 * 60 * 1000);
+    // Set 1 hour deadline from now for demo
+    const deadlineTime = new Date().getTime() + (1 * 60 * 60 * 1000);
     
     const pInterval = setInterval(() => {
       const now = new Date().getTime();

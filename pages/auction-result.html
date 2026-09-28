@@ -88,7 +88,7 @@
             <div class="card border-warning border-opacity-50 bg-light rounded-4 p-4 mb-4 shadow-sm">
               <h6 class="fw-bold text-navy mb-2"><i class="bi bi-clock-history text-warning me-2"></i>Payment Deadline &amp; Fallback Rules</h6>
               <p class="small text-muted mb-3">
-                The primary winner must complete payment within 24 hours. If the winner fails to complete payment, the opportunity will automatically transfer to the next highest eligible bidder.
+                The primary winner must complete payment within 1 hour. If the winner fails to complete payment, the opportunity will automatically transfer to the next highest eligible bidder.
               </p>
               
               <div class="row g-3 text-center small">
@@ -96,7 +96,7 @@
                   <div class="p-3 bg-white rounded border">
                     <span class="badge bg-gold text-navy mb-1">1st Opportunity</span>
                     <strong class="d-block text-navy" id="fb-step1-name">Bidder #2456</strong>
-                    <span class="text-muted" id="fb-step1-status">24h Deadline Active</span>
+                    <span class="text-muted" id="fb-step1-status">1hr Deadline Active</span>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -160,7 +160,7 @@
         
         // Generate Top 3 Bidders list based on product bid
         const topBidders = [
-          { rank: '🥇 1st', name: product.highestBidder || 'Bidder #2456 (Winner)', bid: product.currentBid, status: '<span class="badge bg-warning text-dark">Primary Winner (24h Payment Active)</span>' },
+          { rank: '🥇 1st', name: product.highestBidder || 'Bidder #2456 (Winner)', bid: product.currentBid, status: '<span class="badge bg-warning text-dark">Primary Winner (1hr Payment Active)</span>' },
           { rank: '🥈 2nd', name: 'Bidder #7821 (Runner-up)', bid: Math.max(product.startingBid, product.currentBid - 2000), status: '<span class="badge bg-secondary">Next Eligible Fallback</span>' },
           { rank: '🥉 3rd', name: 'Bidder #1098 (Third)', bid: Math.max(product.startingBid, product.currentBid - 5000), status: '<span class="badge bg-light text-dark border">3rd Eligible Fallback</span>' }
         ];
