@@ -54,9 +54,59 @@ function findProductById(id) {
   return window.mockProductsData.find(p => p.id === numId || String(p.id) === String(id)) || null;
 }
 
+function isProductSaved(productId) {
+  const currentUserId = localStorage.getItem('userId') || 'CUST-2456';
+  let userWatchlist = [];
+  try {
+    userWatchlist = JSON.parse(localStorage.getItem(`watchlist_${currentUserId}`)) || [];
+  } catch (e) {
+    userWatchlist = [];
+  }
+  return userWatchlist.includes(productId);
+}
+
+window.toggleWatchlist = function(e, productId) {
+  if (e) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+  const currentUserId = localStorage.getItem('userId') || 'CUST-2456';
+  const key = `watchlist_${currentUserId}`;
+  let userWatchlist = [];
+  try {
+    userWatchlist = JSON.parse(localStorage.getItem(key)) || [];
+  } catch (err) {
+    userWatchlist = [];
+  }
+
+  const index = userWatchlist.indexOf(productId);
+  if (index > -1) {
+    userWatchlist.splice(index, 1);
+  } else {
+    userWatchlist.push(productId);
+  }
+  localStorage.setItem(key, JSON.stringify(userWatchlist));
+
+  // Re-render UI based on available functions
+  if (typeof initProductsPage === 'function') {
+    const gridContainer = document.getElementById('products-grid');
+    if (gridContainer) initProductsPage();
+  }
+  if (typeof renderLiveAuctions === 'function') {
+    renderLiveAuctions();
+  }
+  if (typeof renderUpcomingAuctions === 'function') {
+    renderUpcomingAuctions();
+  }
+  if (typeof renderWatchlist === 'function') {
+    renderWatchlist();
+  }
+};
+
 window.utils = {
   formatCurrency,
   getStatusBadge,
   getQueryParam,
-  findProductById
+  findProductById,
+  isProductSaved
 };

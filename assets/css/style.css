@@ -531,7 +531,7 @@ gold, .text-gold {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-.nav-link {
+.navbar .nav-link {
   color: rgba(255, 255, 255, 0.88) !important;
   font-weight: 500;
   font-size: 0.92rem;
@@ -540,17 +540,89 @@ gold, .text-gold {
   transition: var(--t-fast);
   position: relative;
 }
-.nav-link:hover {
+.navbar .nav-link:hover {
   color: var(--gold-light) !important;
   background: rgba(255, 255, 255, 0.08);
 }
-.nav-link.active {
+.navbar .nav-link.active {
   background: var(--gold-gradient) !important;
   color: var(--navy-deep) !important;
   font-weight: 700;
   box-shadow: var(--gold-glow);
 }
-.nav-link.active::after { display: none; }
+.navbar .nav-link.active::after { display: none; }
+
+/* ── UPWARD-ORIENTED TAB DESIGN SYSTEM (Product Overview & Content Tabs) ── */
+.nav-tabs {
+  border-bottom: 2px solid rgba(0, 82, 204, 0.18) !important;
+  gap: 0.6rem !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.nav-tabs .nav-item {
+  margin-bottom: -2px !important;
+}
+
+.nav-tabs .nav-link {
+  color: var(--navy) !important;
+  background: rgba(255, 255, 255, 0.75) !important;
+  border: 1.5px solid rgba(0, 82, 204, 0.2) !important;
+  border-bottom: none !important;
+  border-radius: 20px 20px 0 0 !important; /* Top rounded curves facing UPWARD, flat bottom */
+  padding: 0.65rem 1.4rem !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, box-shadow 0.2s ease !important;
+  position: relative !important;
+  box-shadow: 0 -3px 10px rgba(11, 27, 61, 0.05) !important;
+  outline: none !important;
+}
+
+.nav-tabs .nav-link:hover {
+  color: var(--royal-blue) !important;
+  background: #FFFFFF !important;
+  border-color: rgba(0, 82, 204, 0.35) rgba(0, 82, 204, 0.35) transparent !important;
+  border-radius: 20px 20px 0 0 !important;
+  transform: translateY(-3px) !important; /* Uplifts UPWARD */
+  box-shadow: 0 -6px 16px rgba(0, 82, 204, 0.14) !important;
+}
+
+.nav-tabs .nav-link.active {
+  background: var(--gold-gradient) !important;
+  color: var(--navy-deep) !important;
+  font-weight: 800 !important;
+  border: 2px solid var(--gold-dark) !important;
+  border-bottom: 2px solid #FFFFFF !important; /* Flush bottom connection to tab pane content */
+  border-radius: 22px 22px 0 0 !important; /* Explicit upward dome / cap shape */
+  box-shadow: 0 -8px 24px rgba(212, 175, 55, 0.45), 0 -2px 10px rgba(212, 175, 55, 0.25) !important; /* Upward glow */
+  transform: translateY(-3px) !important;
+  z-index: 2 !important;
+}
+
+/* White accent highlight arc on the top curve of active tab facing UPWARDS */
+.nav-tabs .nav-link.active::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 12% !important;
+  right: 12% !important;
+  height: 3px !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-radius: 999px 999px 0 0 !important;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.9) !important;
+}
+
+.tab-content {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: var(--radius-lg) !important;
+  border-bottom-left-radius: var(--radius-lg) !important;
+  border-bottom-right-radius: var(--radius-lg) !important;
+  border: 1.5px solid rgba(0, 82, 204, 0.18) !important;
+  box-shadow: 0 10px 30px rgba(11, 27, 61, 0.06) !important;
+}
 
 .navbar .btn-outline-premium {
   background: rgba(255, 255, 255, 0.08);
@@ -817,8 +889,9 @@ gold, .text-gold {
 .bid-price {
   font-size: 1.35rem;
   font-weight: 800;
-  color: var(--royal-blue);
+  color: #0052CC !important;
   font-family: var(--font-heading);
+  letter-spacing: -0.2px;
 }
 
 /* ── AUCTION STATUS BADGES ── */
@@ -862,36 +935,40 @@ gold, .text-gold {
 /* ── CATEGORY CARDS ── */
 .category-card {
   text-align: center;
-  padding: 2rem 1.5rem;
-  background: #FFFFFF;
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  transition: var(--t-normal);
+  padding: 1.8rem 1rem 1.4rem;
+  background: #FFFFFF !important;
+  border: 1.5px solid rgba(0, 82, 204, 0.12) !important;
+  border-radius: 16px !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   cursor: pointer;
   height: 100%;
   position: relative;
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 18px rgba(11, 27, 61, 0.05) !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .category-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-md), 0 0 20px rgba(0, 102, 204, 0.15);
-  border-color: var(--royal-blue);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0, 82, 204, 0.16), 0 0 15px rgba(212, 175, 55, 0.25) !important;
+  border-color: #0052CC !important;
 }
 .category-icon {
-  font-size: 2.5rem;
-  color: var(--royal-blue);
-  margin-bottom: 1rem;
-  display: block;
-  transition: var(--t-normal);
+  font-size: 2.3rem;
+  color: #0052CC;
+  margin-bottom: 0.75rem;
+  display: inline-block;
+  transition: transform 0.25s ease, color 0.25s ease;
 }
 .category-card:hover .category-icon {
-  color: var(--gold-dark);
-  transform: scale(1.1);
+  color: #D4AF37;
+  transform: scale(1.12);
 }
 .category-title {
   font-weight: 700;
-  color: var(--navy);
+  color: #0B1B3D;
   font-size: 0.95rem;
   margin: 0;
   font-family: var(--font-heading);
@@ -1574,16 +1651,33 @@ body > .container .text-white:not(.bg-navy *):not(.bg-dark *):not(.hero-banner-s
   margin-top: 0.5rem;
 }
 
-/* 6. Card Height & Text Overflow Fixes */
-.product-card, .review-card, .how-step, .category-card, .auth-card {
+/* 6. Card Height & Complete Text Visibility Rules */
+.product-card, .review-card, .how-step, .category-card, .auth-card, .card {
   height: auto !important;
   min-height: 100% !important;
   overflow: visible !important;
 }
-.product-title, .product-meta, .card-title, .card-text {
+
+.product-title, .product-meta, .card-title, .card-text, .hero-title, .section-title, .footer-title, p, h1, h2, h3, h4, h5, h6, span, label, div {
   white-space: normal !important;
   word-break: break-word !important;
+  overflow-wrap: break-word !important;
   overflow: visible !important;
+}
+
+.text-truncate {
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+}
+
+.line-clamp-1, .line-clamp-2, .line-clamp-3, [style*="-webkit-line-clamp"] {
+  display: block !important;
+  -webkit-line-clamp: none !important;
+  -webkit-box-orient: unset !important;
+  overflow: visible !important;
+  max-height: none !important;
 }
 
 /* 7. Button Text Wrapping & Clipping Prevention */
@@ -1593,6 +1687,8 @@ body > .container .text-white:not(.bg-navy *):not(.bg-dark *):not(.hero-banner-s
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
+  height: auto !important;
+  min-height: 38px;
 }
 .btn-glass {
   background: #0052CC !important;
@@ -1604,19 +1700,23 @@ body > .container .text-white:not(.bg-navy *):not(.bg-dark *):not(.hero-banner-s
   color: #FFFFFF !important;
 }
 
-/* 8. Table & Accordion Visibility */
+/* 8. Table & Accordion High Contrast Visibility */
 .table th {
   color: #0B1B3D !important;
   background-color: #EAF4FF !important;
   font-weight: 700 !important;
+  font-size: 0.85rem !important;
 }
 .table td {
   color: #1E293B !important;
   font-weight: 500 !important;
+  font-size: 0.9rem !important;
+  vertical-align: middle !important;
 }
 .accordion-button {
   color: #0B1B3D !important;
   font-weight: 700 !important;
+  font-size: 1.02rem !important;
 }
 .accordion-body {
   color: #1E293B !important;

@@ -15,8 +15,8 @@
   <nav class="navbar navbar-expand-lg sticky-top bg-white">
     <div class="container">
       <a class="navbar-brand fw-bold" href="../index.html">
-        <img src="../images/logo1.png" alt="BIDURS Logo">
-        BIDURS
+        <img src="../images/logo2.png" alt="BIDURS Logo">
+        BIDURS<span>.COM</span>
       </a>
       <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
@@ -43,6 +43,9 @@
   </div>
 
   <div class="container py-5">
+    <!-- Wanted Products 6 Category Cards -->
+    <div class="row g-3 mb-4" id="wp-category-cards-container"></div>
+
     <div class="filter-sidebar row mb-4 g-3 p-3 rounded-4 shadow-sm align-items-center">
       <div class="col-lg-3 col-md-6">
         <input type="text" id="wp-search-input" class="form-control" placeholder="Search wanted products...">
@@ -50,13 +53,12 @@
       <div class="col-lg-2 col-md-6">
         <select id="wp-category-filter" class="form-select">
           <option value="All Categories">All Categories</option>
-          <option value="Mobile Phones">Mobile Phones</option>
+          <option value="Mobiles">Mobiles</option>
           <option value="Laptops">Laptops</option>
-          <option value="Cameras">Cameras</option>
-          <option value="Tablets">Tablets</option>
           <option value="Electronics">Electronics</option>
+          <option value="Gaming">Gaming</option>
+          <option value="Wearables">Wearables</option>
           <option value="Accessories">Accessories</option>
-          <option value="Smart Devices">Smart Devices</option>
         </select>
       </div>
       <div class="col-lg-2 col-md-6">
@@ -81,7 +83,16 @@
       </div>
     </div>
 
-    <!-- Wanted Products List rendered by stage6.js -->
+    <!-- Active Category Filter Badge -->
+    <div id="active-category-badge" class="mb-4 d-none">
+      <div class="d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill" style="background:rgba(11,27,61,0.9); border: 1px solid var(--gold);">
+        <span class="text-white small fw-semibold"><i class="bi bi-funnel-fill text-gold me-1"></i> Active Category:</span>
+        <span id="selected-category-name" class="badge bg-warning text-dark fw-bold px-3 py-1 fs-6"></span>
+        <button id="clear-category-badge-btn" class="btn-close btn-close-white ms-2" style="font-size:0.65rem;" title="Show All Categories"></button>
+      </div>
+    </div>
+
+    <!-- Wanted Products List rendered by stage6.js / wanted-products.js -->
     <div class="row g-4" id="wanted-list-container"></div>
   </div>
 
@@ -103,10 +114,12 @@
               <div class="col-md-4">
                 <label class="form-label text-muted small fw-bold">CATEGORY</label>
                 <select class="form-select" id="wp-category" required>
-                  <option>Mobile Phones</option>
-                  <option>Laptops</option>
-                  <option>Cameras</option>
-                  <option>Electronics</option>
+                  <option value="Mobiles">Mobiles</option>
+                  <option value="Laptops">Laptops</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Gaming">Gaming</option>
+                  <option value="Wearables">Wearables</option>
+                  <option value="Accessories">Accessories</option>
                 </select>
               </div>
               <div class="col-md-6">
@@ -152,9 +165,9 @@
   <div id="global-footer"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/js/auth.js"></script>
-  <script src="../assets/data/wanted-products.js"></script>
-  <script src="../assets/js/stage6.js"></script>
-  <script src="../assets/js/wanted-products.js"></script>
+  <script src="../assets/js/auth.js?v=2"></script>
+  <script src="../assets/data/wanted-products.js?v=2"></script>
+  <script src="../assets/js/stage6.js?v=2"></script>
+  <script src="../assets/js/wanted-products.js?v=2"></script>
 </body>
 </html>

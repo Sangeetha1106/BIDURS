@@ -133,13 +133,13 @@ function initProductsPage() {
                 <span class="fw-semibold text-royal small"><i class="bi bi-tag-fill me-1"></i> ${p.category}</span>
               </div>
 
-              <h5 class="product-title text-navy text-truncate fw-bold mb-1" title="${p.name}">${p.name}</h5>
-              <p class="text-muted small text-truncate mb-2" style="font-size:0.82rem;">${p.shortDescription || ''}</p>
+              <h5 class="product-title text-navy fw-bold mb-1" title="${p.name}">${p.name}</h5>
+              <p class="text-muted small mb-2" style="font-size:0.85rem; line-height:1.5;">${p.shortDescription || ''}</p>
               
               <!-- Bidder Information Bar -->
-              <div class="d-flex justify-content-between align-items-center mb-2 px-2 py-1 rounded bg-light border border-subtle small">
+              <div class="d-flex justify-content-between align-items-center mb-2 px-2 py-1 rounded bg-light border border-subtle small flex-wrap gap-1">
                 <span class="text-navy fw-bold"><i class="bi bi-people-fill text-warning me-1"></i> ${p.bidders || 0} Bidders</span>
-                <span class="text-muted text-truncate" style="max-width:130px;">Highest: <strong class="text-navy">${topBidderName}</strong></span>
+                <span class="text-muted">Highest: <strong class="text-navy">${topBidderName}</strong></span>
               </div>
               
               <!-- Dynamic Timer -->
@@ -156,12 +156,12 @@ function initProductsPage() {
               <!-- Price Section -->
               <div class="d-flex justify-content-between align-items-end mt-auto pt-2 border-top mb-3">
                 <div>
-                  <div class="small text-muted mb-0 fw-semibold">${priceLabel}</div>
+                  <div class="small fw-semibold text-navy mb-0">${priceLabel}</div>
                   <div class="bid-price fs-4 fw-bold text-royal">₹${priceValue.toLocaleString('en-IN')}</div>
                 </div>
                 <div class="text-end">
-                  <div class="small text-muted mb-0">Market Price</div>
-                  <div class="text-muted text-decoration-line-through small">₹${p.marketPrice.toLocaleString('en-IN')}</div>
+                  <div class="small fw-semibold text-navy mb-0">MRP</div>
+                  <div class="fw-bold text-navy small">₹${p.marketPrice.toLocaleString('en-IN')}</div>
                 </div>
               </div>
               
@@ -269,34 +269,6 @@ function initProductsPage() {
   }
 }
 
-window.toggleWatchlist = function(e, productId) {
-  if (e) {
-    e.stopPropagation();
-    e.preventDefault();
-  }
-  const currentUserId = localStorage.getItem('userId') || 'CUST-2456';
-  const key = `watchlist_${currentUserId}`;
-  let userWatchlist = [];
-  try {
-    userWatchlist = JSON.parse(localStorage.getItem(key)) || [];
-  } catch (err) {
-    userWatchlist = [];
-  }
-
-  const index = userWatchlist.indexOf(productId);
-  if (index > -1) {
-    userWatchlist.splice(index, 1);
-  } else {
-    userWatchlist.push(productId);
-  }
-  localStorage.setItem(key, JSON.stringify(userWatchlist));
-
-  // Re-render grid if products page
-  if (typeof initProductsPage === 'function') {
-    const gridContainer = document.getElementById('products-grid');
-    if (gridContainer) initProductsPage();
-  }
-};
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initProductsPage);

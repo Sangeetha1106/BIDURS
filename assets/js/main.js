@@ -26,7 +26,7 @@ function renderLiveAuctions() {
           <div class="col-md-5">
             <div class="product-img-wrapper h-100" style="min-height: 220px;">
               ${window.utils.getStatusBadge(p.status)}
-              <button class="wishlist-icon" aria-label="Add to watchlist"><i class="bi bi-heart"></i></button>
+              <button class="wishlist-icon ${window.utils.isProductSaved(p.id) ? 'text-danger' : ''}" aria-label="Add to watchlist" onclick="window.toggleWatchlist(event, ${p.id})"><i class="bi ${window.utils.isProductSaved(p.id) ? 'bi-heart-fill' : 'bi-heart'}"></i></button>
               <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='assets/images/image.png';" style="object-fit: contain; width: 100%; height: 100%; max-height: 250px;">
             </div>
           </div>
@@ -39,11 +39,11 @@ function renderLiveAuctions() {
                 </span>
               </div>
               <h3 class="product-title fs-5 fw-bold text-navy mb-2" title="${p.name}">${p.name}</h3>
-              <p class="small text-muted mb-3 line-clamp-2">${p.shortDescription || p.description}</p>
+              <p class="small text-muted mb-3">${p.shortDescription || p.description}</p>
               
               <div class="d-flex justify-content-between align-items-end mb-3 pb-2" style="border-bottom:1px solid var(--border-subtle);">
                 <div>
-                  <div class="small text-muted text-decoration-line-through">Retail: ${window.utils.formatCurrency(p.marketPrice)}</div>
+                  <div class="small fw-semibold text-navy">MRP: ${window.utils.formatCurrency(p.marketPrice)}</div>
                   <div class="bid-price fs-3 fw-bold" style="color:var(--royal-blue);">${window.utils.formatCurrency(p.currentBid)}</div>
                 </div>
                 <div class="text-end small fw-bold text-navy">
@@ -96,7 +96,7 @@ function renderLiveAuctions() {
           <img src="${np.image}" alt="${np.name}" loading="lazy" onerror="this.onerror=null;this.src='assets/images/image.png';" style="max-height: 140px; object-fit: contain;">
         </div>
         <div class="product-details pt-2">
-          <h4 class="product-title fs-6 fw-bold text-navy text-truncate mb-1" title="${np.name}">${np.name}</h4>
+          <h4 class="product-title fs-6 fw-bold text-navy mb-1" title="${np.name}">${np.name}</h4>
           <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
               <span class="small text-muted d-block">Starting Bid</span>
@@ -154,7 +154,7 @@ function renderUpcomingAuctions() {
       <div class="product-card">
         <div class="product-img-wrapper">
           ${window.utils.getStatusBadge('UPCOMING')}
-          <button class="wishlist-icon" aria-label="Add to watchlist"><i class="bi bi-heart"></i></button>
+          <button class="wishlist-icon ${window.utils.isProductSaved(p.id) ? 'text-danger' : ''}" aria-label="Add to watchlist" onclick="window.toggleWatchlist(event, ${p.id})"><i class="bi ${window.utils.isProductSaved(p.id) ? 'bi-heart-fill' : 'bi-heart'}"></i></button>
           <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='assets/images/image.png';">
         </div>
         <div class="product-details">
@@ -164,7 +164,7 @@ function renderUpcomingAuctions() {
               <i class="bi bi-calendar-event"></i> ${timeDisplay}
             </span>
           </div>
-          <h3 class="product-title text-truncate" title="${p.name}">${p.name}</h3>
+          <h3 class="product-title" title="${p.name}">${p.name}</h3>
           <div class="d-flex justify-content-between align-items-end mt-auto pb-3" style="border-bottom:1px solid var(--glass-border);">
             <div>
               <div class="small" style="color:var(--blue-gray);">Starting Bid</div>
@@ -191,21 +191,44 @@ function renderUpcomingAuctions() {
 
 // ── Render Categories ──
 function renderCategories() {
-  const container = document.getElementById('categories-container');
-  if (!container) return;
+  const wantedContainer = document.getElementById('wanted-home-categories-container');
+  if (!wantedContainer) return;
 
-  const html = mockCategories.map(category => `
-    <div class="col-6 col-md-4 col-lg-2">
-      <a href="pages/products.html?category=${encodeURIComponent(category.name)}" class="text-decoration-none">
-        <div class="category-card">
-          <i class="bi ${category.icon} category-icon"></i>
-          <h4 class="category-title">${category.name}</h4>
-        </div>
-      </a>
-    </div>
-  `).join('');
+  const custom = JSON.parse(localStorage.getItem('customWantedProducts') || '[]');
+  const allWanted = [...custom, ...(window.wantedProductsData || [])];
+  
+  function getCategoryCount(catName) {
+    const c = catName.toLowerCase();
+    return allWanted.filter(p => {
+      const pCat = p.category ? p.category.toLowerCase() : '';
+      if (c === 'mobiles') return pCat.includes('mobile');
+      if (c === 'laptops') return pCat.includes('laptop');
+      if (c === 'electronics') return pCat.includes('electronic') || pCat.includes('camera') || pCat.includes('tablet');
+      if (c === 'gaming') return pCat.includes('gaming') || pCat.includes('game');
+      if (c === 'wearables') return pCat.includes('wearable') || pCat.includes('smart') || pCat.includes('watch');
+      if (c === 'accessories') return pCat.includes('accessory') || pCat.includes('accessories');
+      return pCat === c;
+    }).length;
+  }
 
-  container.innerHTML = html;
+  const html = mockCategories.map(category => {
+    const count = getCategoryCount(category.name);
+    return `
+      <div class="col-6 col-md-4 col-lg-2">
+        <a href="pages/wanted-products.html?category=${encodeURIComponent(category.name.toLowerCase())}" class="text-decoration-none">
+          <div class="category-card">
+            <i class="bi ${category.icon} category-icon"></i>
+            <h4 class="category-title mb-1">${category.name}</h4>
+            <span class="badge bg-light text-navy border font-monospace mt-1" style="font-size:0.7rem; font-weight:600;">
+              <i class="bi bi-box-seam me-1 text-primary"></i>${count} Request${count !== 1 ? 's' : ''}
+            </span>
+          </div>
+        </a>
+      </div>
+    `;
+  }).join('');
+
+  wantedContainer.innerHTML = html;
 }
 
 // ── Render Reviews ──

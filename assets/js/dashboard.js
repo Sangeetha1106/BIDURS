@@ -42,7 +42,7 @@ function renderDashboardSidebar() {
     <div class="dashboard-sidebar-card shadow-sm sticky-top" style="top:90px;border-radius:var(--radius-lg);background:#FFFFFF;overflow:hidden;">
       <div class="dash-sidebar-header">
         <div class="dash-avatar">${initials}</div>
-        <h5 class="mb-0 fw-bold text-white text-truncate" style="font-family:var(--font-heading);" title="${userName}">${userName}</h5>
+        <h5 class="mb-0 fw-bold text-white" style="font-family:var(--font-heading); word-break:break-word;" title="${userName}">${userName}</h5>
         <p class="small mb-1 font-monospace" style="color:#FFDF00!important;font-weight:700;">ID: ${userId}</p>
         <span class="badge" style="background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.4);color:#86efac;font-size:0.72rem;">Customer Account</span>
       </div>
@@ -341,7 +341,7 @@ function renderWatchlist() {
           <img src="${p.image}" alt="${p.name}" class="img-fluid rounded-3" style="max-height:160px; object-fit:contain;">
         </div>
         <div class="product-details">
-          <h5 class="product-title text-navy fw-bold fs-6 text-truncate mb-2" title="${p.name}">${p.name}</h5>
+          <h5 class="product-title text-navy fw-bold fs-6 mb-2" title="${p.name}">${p.name}</h5>
           <div class="d-flex justify-content-between align-items-end mt-auto pt-2 border-top">
             <div>
               <div class="text-muted small">${p.status === 'UPCOMING' ? 'Starting Bid' : 'Current Bid'}</div>

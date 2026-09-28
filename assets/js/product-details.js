@@ -95,8 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="card border-0 bg-white shadow-sm rounded-4 p-4 mb-4">
           <div class="row g-4">
             <div class="col-6 col-md-4 border-end">
-              <div class="text-muted small mb-1 fw-semibold">Market Price</div>
-              <div class="fs-5 text-decoration-line-through text-secondary">${window.utils.formatCurrency(product.marketPrice)}</div>
+              <div class="text-navy small mb-1 fw-bold">MRP</div>
+              <div class="fs-5 fw-bold text-navy">${window.utils.formatCurrency(product.marketPrice)}</div>
             </div>
             <div class="col-6 col-md-4 ${!isUpcoming ? 'border-end' : ''}">
               <div class="text-muted small mb-1 fw-semibold">Starting Bid</div>

@@ -18,8 +18,8 @@
   <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
       <a class="navbar-brand fw-bold" href="../index.html">
-        <img src="../images/logo1.png" alt="BIDURS Logo">
-        BIDURS
+        <img src="../images/logo2.png" alt="BIDURS Logo">
+        BIDURS<span>.COM</span>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
@@ -71,6 +71,14 @@
                 <label class="form-label">Mobile Number</label>
                 <input type="tel" class="form-control" id="prof-input-mobile" value="9876543210">
               </div>
+              <div class="col-md-6">
+                <label class="form-label">Date of Birth (18+ Mandatory)</label>
+                <input type="date" class="form-control" id="prof-input-dob" value="1995-05-15" disabled style="opacity:0.8;background:rgba(255,255,255,0.05);">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">ID / Age Proof Status</label>
+                <input type="text" class="form-control" id="prof-input-idproof" value="Aadhaar Card (Verified 18+)" disabled style="opacity:0.8;background:rgba(34,197,94,0.1);color:#86efac;border-color:rgba(34,197,94,0.3);">
+              </div>
             </div>
 
             <div class="profile-section-title">Change Password</div>
@@ -108,6 +116,9 @@
       const name = localStorage.getItem('userName') || 'Customer';
       const id = localStorage.getItem('userId') || 'CUST-2456';
       const email = localStorage.getItem('userEmail') || 'customer@bidurs.in';
+      const dob = localStorage.getItem('userDob') || '1995-05-15';
+      const idType = localStorage.getItem('userIdType') || 'Aadhaar Card';
+      const idNumber = localStorage.getItem('userIdNumber') || 'XXXX-XXXX-1234';
       const initials = name.split(' ').filter(Boolean).map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'CU';
 
       document.getElementById('prof-avatar').textContent = initials;
@@ -116,6 +127,8 @@
       document.getElementById('prof-input-name').value = name;
       document.getElementById('prof-input-id').value = id;
       document.getElementById('prof-input-email').value = email;
+      document.getElementById('prof-input-dob').value = dob;
+      document.getElementById('prof-input-idproof').value = `${idType} (${idNumber}) - Verified 18+`;
     });
   </script>
 </body>

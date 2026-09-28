@@ -62,11 +62,22 @@ document.addEventListener('DOMContentLoaded', () => {
   let bidderState = 'NOT_PARTICIPATING'; // 'LEADING', 'OUTBID', 'NOT_PARTICIPATING'
   let isEnded = product.status === 'ENDED';
   
-  // Mock Bid History
+  function formatExactTimestamp(date) {
+    const d = date || new Date();
+    return d.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    });
+  }
+
+  // Mock Bid History with exact time (Hours, Minutes, Seconds)
+  const initNow = new Date();
   let bidHistory = [
-    { bidderId: '2456', amount: currentBid, timeStr: 'Just now' },
-    { bidderId: '7821', amount: currentBid - getIncrementAmount(currentBid), timeStr: '10 sec ago' },
-    { bidderId: '1098', amount: currentBid - getIncrementAmount(currentBid) * 2, timeStr: '25 sec ago' }
+    { bidderId: '2456', amount: currentBid, timeStr: formatExactTimestamp(new Date(initNow.getTime() - 5000)) },
+    { bidderId: '7821', amount: currentBid - getIncrementAmount(currentBid), timeStr: formatExactTimestamp(new Date(initNow.getTime() - 45000)) },
+    { bidderId: '1098', amount: currentBid - getIncrementAmount(currentBid) * 2, timeStr: formatExactTimestamp(new Date(initNow.getTime() - 120000)) }
   ];
 
   function getIncrementAmount(amount) {
@@ -132,8 +143,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="row g-3 mb-4">
             <div class="col-6 col-md-4">
-              <div class="text-muted small fw-bold">Market Price</div>
-              <div class="fs-5 text-decoration-line-through">${window.utils.formatCurrency(product.marketPrice)}</div>
+              <div class="text-navy small fw-bold">MRP</div>
+              <div class="fs-5 fw-bold text-navy">${window.utils.formatCurrency(product.marketPrice)}</div>
             </div>
             <div class="col-6 col-md-4">
               <div class="text-muted small fw-bold">Starting Bid</div>
@@ -183,13 +194,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 <div id="bidding-action-area" class="bg-white bg-opacity-10 rounded-3 p-3">
                   <div class="text-white-50 small mb-2 d-flex justify-content-between">
-                    <span>Your Bid Amount</span>
+                    <span>Your Bid Amount (₹)</span>
                     <span>Min next bid: <strong class="text-white" id="min-next-bid-label">${window.utils.formatCurrency(minimumNextBid)}</strong></span>
                   </div>
-                  <div class="input-group input-group-lg mb-3">
-                    <button class="btn btn-light text-navy fw-bold px-4" type="button" id="btn-decrease-bid"><i class="bi bi-dash-lg"></i></button>
-                    <input type="number" class="form-control text-center fw-bold fs-4 bg-white text-navy" id="bid-input-val" value="${userBidInput}" min="${minimumNextBid}" readonly>
-                    <button class="btn btn-light text-navy fw-bold px-4" type="button" id="btn-increase-bid"><i class="bi bi-plus-lg"></i></button>
+                  <div class="mb-3">
+                    <div class="input-group input-group-lg">
+                      <span class="input-group-text bg-white text-navy fw-bold fs-4 border-end-0">₹</span>
+                      <input type="number" class="form-control text-center fw-bold fs-3 bg-white text-navy border-start-0" id="bid-input-val" value="${userBidInput}" min="${minimumNextBid}">
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <div class="text-white-50 small mb-2"><i class="bi bi-lightning-charge-fill text-gold me-1"></i> Quick Increase Bidding:</div>
+                    <div class="d-flex flex-wrap gap-2">
+                      <button type="button" class="btn btn-sm fw-bold flex-grow-1 py-2 btn-quick-bid" data-add="500" style="background:#FFDF00;color:#0a192f;border:none;">+ ₹500</button>
+                      <button type="button" class="btn btn-sm fw-bold flex-grow-1 py-2 btn-quick-bid" data-add="1000" style="background:#FFDF00;color:#0a192f;border:none;">+ ₹1,000</button>
+                      <button type="button" class="btn btn-sm fw-bold flex-grow-1 py-2 btn-quick-bid" data-add="2000" style="background:#FFDF00;color:#0a192f;border:none;">+ ₹2,000</button>
+                      <button type="button" class="btn btn-sm fw-bold flex-grow-1 py-2 btn-quick-bid" data-add="4000" style="background:#FFDF00;color:#0a192f;border:none;">+ ₹4,000</button>
+                      <button type="button" class="btn btn-outline-light btn-sm fw-bold py-2 px-3" id="btn-reset-bid" title="Reset to Minimum Bid"><i class="bi bi-arrow-counterclockwise me-1"></i> Reset</button>
+                    </div>
                   </div>
                   <button id="btn-place-bid" class="btn btn-premium w-100 btn-lg fw-bold fs-5 shadow">PLACE BID</button>
                 </div>
@@ -362,30 +384,37 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function attachEventListeners() {
-    const btnInc = document.getElementById('btn-increase-bid');
-    const btnDec = document.getElementById('btn-decrease-bid');
     const btnPlace = document.getElementById('btn-place-bid');
     const inputVal = document.getElementById('bid-input-val');
     const errorMsg = document.getElementById('bid-error-msg');
+    const btnReset = document.getElementById('btn-reset-bid');
+    const quickButtons = document.querySelectorAll('.btn-quick-bid');
 
-    if (btnInc) {
-      btnInc.addEventListener('click', () => {
-        userBidInput += getIncrementAmount(currentBid);
+    quickButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const addVal = parseInt(btn.getAttribute('data-add')) || 0;
+        const currentInputValue = parseInt(inputVal.value) || userBidInput || minimumNextBid;
+        userBidInput = currentInputValue + addVal;
         inputVal.value = userBidInput;
-        errorMsg.classList.add('d-none');
+        if (errorMsg) errorMsg.classList.add('d-none');
+      });
+    });
+
+    if (btnReset) {
+      btnReset.addEventListener('click', () => {
+        userBidInput = minimumNextBid;
+        inputVal.value = userBidInput;
+        if (errorMsg) errorMsg.classList.add('d-none');
       });
     }
 
-    if (btnDec) {
-      btnDec.addEventListener('click', () => {
-        if (userBidInput - getIncrementAmount(currentBid) >= minimumNextBid) {
-          userBidInput -= getIncrementAmount(currentBid);
-          inputVal.value = userBidInput;
-          errorMsg.classList.add('d-none');
-        } else {
-           errorMsg.textContent = "Your bid must be higher than the current highest bid.";
-           errorMsg.classList.remove('d-none');
+    if (inputVal) {
+      inputVal.addEventListener('input', () => {
+        const val = parseInt(inputVal.value);
+        if (!isNaN(val)) {
+          userBidInput = val;
         }
+        if (errorMsg) errorMsg.classList.add('d-none');
       });
     }
 
@@ -398,6 +427,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function validateAndPlaceBid() {
     const errorMsg = document.getElementById('bid-error-msg');
+    const inputVal = document.getElementById('bid-input-val');
+    if (inputVal) {
+      const parsedVal = parseInt(inputVal.value);
+      if (!isNaN(parsedVal)) {
+        userBidInput = parsedVal;
+      }
+    }
     
     const subStatus = window.subUtils ? window.subUtils.getSubscriptionStatus() : (localStorage.getItem('subState') || 'NOT_SUBSCRIBED');
     if (subStatus === 'SUSPENDED') {
@@ -449,16 +485,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function addBidHistory(amount) {
     const currentUserId = localStorage.getItem('userId') || 'CUST-2456';
+    const currentTimeFormatted = formatExactTimestamp(new Date());
     
     bidHistory.unshift({
       bidderId: currentUserId + ' (You)',
       amount: amount,
-      timeStr: 'Just now'
+      timeStr: currentTimeFormatted
     });
-
-    if (bidHistory.length > 1 && bidHistory[1].timeStr === 'Just now') {
-      bidHistory[1].timeStr = 'Few seconds ago';
-    }
 
     // Save bid to customer-specific localStorage storage
     const customerBidsKey = `bids_${currentUserId}`;
@@ -476,7 +509,7 @@ document.addEventListener('DOMContentLoaded', () => {
       productImage: product.image,
       bidAmount: amount,
       bidTime: new Date().toISOString(),
-      timeStr: 'Just now',
+      timeStr: currentTimeFormatted,
       status: 'LEADING',
       currentBid: amount
     };

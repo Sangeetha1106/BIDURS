@@ -72,7 +72,7 @@ function updateNavbar() {
     authButtonsContainer.innerHTML = `
       <a href="${basePath}chat.html" class="btn btn-outline-premium" title="Customer Chat"><i class="bi bi-chat-dots-fill me-1" style="color:var(--bright-blue);"></i> Chat</a>
       <div class="dropdown">
-        <button class="btn btn-outline-premium dropdown-toggle text-truncate" type="button" data-bs-toggle="dropdown" style="max-width: 190px;">
+        <button class="btn btn-outline-premium dropdown-toggle" type="button" data-bs-toggle="dropdown">
           <i class="bi bi-person-circle me-1 text-gold"></i> ${userIdDisplay}
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
@@ -128,6 +128,9 @@ window.mockLogin = function(e, userData) {
     if (userData.email) localStorage.setItem('userEmail', userData.email);
     if (userData.userId) localStorage.setItem('userId', userData.userId);
     if (userData.name) localStorage.setItem('userName', userData.name);
+    if (userData.dob) localStorage.setItem('userDob', userData.dob);
+    if (userData.idType) localStorage.setItem('userIdType', userData.idType);
+    if (userData.idNumber) localStorage.setItem('userIdNumber', userData.idNumber);
   } else if (!localStorage.getItem('userId')) {
     localStorage.setItem('userId', 'CUST-2456');
     localStorage.setItem('userEmail', 'customer2456@bidurs.in');
@@ -185,9 +188,7 @@ function updateFooter() {
             <p class="mb-3 pe-lg-3 text-white" style="font-size:0.88rem;line-height:1.6;opacity:0.92;">India's premier live bidding platform. Win genuine products at unbeatable prices.</p>
             <div class="footer-social d-flex gap-2">
               <a href="https://www.facebook.com/share/1Bzmc5sf1V/" target="_blank" rel="noopener noreferrer" title="Facebook"><i class="bi bi-facebook"></i></a>
-              <a href="#" title="Twitter X"><i class="bi bi-twitter-x"></i></a>
               <a href="https://www.instagram.com/bidurs26?stkn=MWxodzJtbmQ3N2hjdQ==" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="bi bi-instagram"></i></a>
-              <a href="#" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
             </div>
           </div>
 
