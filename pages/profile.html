@@ -118,7 +118,9 @@
       const email = localStorage.getItem('userEmail') || 'customer@bidurs.in';
       const dob = localStorage.getItem('userDob') || '1995-05-15';
       const idType = localStorage.getItem('userIdType') || 'Aadhaar Card';
+      const idFileName = localStorage.getItem('userIdFileName');
       const idNumber = localStorage.getItem('userIdNumber') || 'XXXX-XXXX-1234';
+      const proofDetail = idFileName ? `Uploaded: ${idFileName}` : idNumber;
       const initials = name.split(' ').filter(Boolean).map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'CU';
 
       document.getElementById('prof-avatar').textContent = initials;
@@ -128,7 +130,7 @@
       document.getElementById('prof-input-id').value = id;
       document.getElementById('prof-input-email').value = email;
       document.getElementById('prof-input-dob').value = dob;
-      document.getElementById('prof-input-idproof').value = `${idType} (${idNumber}) - Verified 18+`;
+      document.getElementById('prof-input-idproof').value = `${idType} (${proofDetail}) - Verified 18+`;
     });
   </script>
 </body>

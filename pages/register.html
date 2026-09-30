@@ -81,7 +81,7 @@
 
                 <div class="row g-3 mb-3">
                   <div class="col-md-5">
-                    <label class="form-label">Age Proof Type</label>
+                    <label class="form-label">Age / ID Proof Type</label>
                     <div class="input-group">
                       <span class="input-group-text"><i class="bi bi-card-heading"></i></span>
                       <select class="form-select" id="idTypeSelect">
@@ -95,28 +95,37 @@
                     </div>
                   </div>
                   <div class="col-md-7">
-                    <label class="form-label">ID Proof Number</label>
+                    <label class="form-label">Upload Proof Document</label>
                     <div class="input-group">
-                      <span class="input-group-text"><i class="bi bi-shield-check"></i></span>
-                      <input type="text" class="form-control" id="idNumberInput" placeholder="Enter ID Proof Number">
+                      <span class="input-group-text"><i class="bi bi-file-earmark-arrow-up text-primary"></i></span>
+                      <input type="file" class="form-control" id="idProofFileInput" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" onchange="checkFileUploadFeedback(this)">
                     </div>
+                    <div id="fileUploadFeedback" class="form-text small mt-1 text-white-50">Upload PDF, DOC, DOCX, JPG or PNG (Max 10MB)</div>
                   </div>
                 </div>
 
                 <div class="mb-3">
-                  <label class="form-label">Password (Min 8 characters)</label>
+                  <label class="form-label">Password</label>
                   <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                    <input type="password" class="form-control" id="passwordInput" placeholder="Create a strong password">
+                    <input type="password" class="form-control" id="passwordInput" placeholder="Enter your password" oninput="validatePasswordInput(this.value)">
+                    <span class="input-group-text" onclick="togglePasswordVisibility('passwordInput', this)" style="cursor:pointer;" title="Toggle Password Visibility">
+                      <i class="bi bi-eye"></i>
+                    </span>
                   </div>
+                  <div id="passwordFeedback" class="form-text small mt-1"></div>
                 </div>
 
                 <div class="mb-4">
                   <label class="form-label">Confirm Password</label>
                   <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                    <input type="password" class="form-control" id="confirmPasswordInput" placeholder="Repeat your password">
+                    <input type="password" class="form-control" id="confirmPasswordInput" placeholder="Repeat your password" oninput="validateConfirmPassword(this.value)">
+                    <span class="input-group-text" onclick="togglePasswordVisibility('confirmPasswordInput', this)" style="cursor:pointer;" title="Toggle Password Visibility">
+                      <i class="bi bi-eye"></i>
+                    </span>
                   </div>
+                  <div id="confirmPasswordFeedback" class="form-text small mt-1"></div>
                 </div>
 
                 <div class="form-check mb-4">
@@ -185,6 +194,95 @@
       }
     }
 
+    function checkFileUploadFeedback(input) {
+      const feedback = document.getElementById('fileUploadFeedback');
+      if (!feedback) return;
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
+        if (file.size > 10 * 1024 * 1024) {
+          feedback.className = 'form-text small mt-1 text-danger fw-bold';
+          feedback.innerHTML = `<i class="bi bi-exclamation-triangle-fill me-1"></i> File exceeds 10MB limit (${sizeMB} MB). Please select a smaller file.`;
+          input.value = '';
+        } else {
+          feedback.className = 'form-text small mt-1 text-success fw-bold';
+          feedback.innerHTML = `<i class="bi bi-check-circle-fill me-1"></i> Selected Document: <strong>${file.name}</strong> (${sizeMB} MB)`;
+        }
+      } else {
+        feedback.className = 'form-text small mt-1 text-white-50';
+        feedback.textContent = 'Upload PDF, DOC, DOCX, JPG or PNG (Max 10MB)';
+      }
+    }
+
+    function validatePasswordInput(val) {
+      const feedback = document.getElementById('passwordFeedback');
+      if (!feedback) return;
+
+      if (!val) {
+        feedback.innerHTML = '';
+        return;
+      }
+
+      const missing = [];
+      if (val.length < 8) {
+        missing.push('Minimum 8 characters compulsory');
+      }
+      if (!/[A-Z]/.test(val)) {
+        missing.push('1 Capital letter (A-Z) compulsory');
+      }
+      if (!/[0-9]/.test(val)) {
+        missing.push('1 Number (0-9) compulsory');
+      }
+      if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(val)) {
+        missing.push('1 Symbol (@, #, $, etc.) compulsory');
+      }
+
+      if (missing.length > 0) {
+        feedback.className = 'form-text small mt-1 text-danger fw-bold';
+        feedback.innerHTML = `<i class="bi bi-x-circle-fill me-1"></i> ${missing.join(' | ')}`;
+      } else {
+        feedback.className = 'form-text small mt-1 text-success fw-bold';
+        feedback.innerHTML = `<i class="bi bi-check-circle-fill me-1"></i> Strong & valid password!`;
+      }
+
+      const confirmVal = document.getElementById('confirmPasswordInput')?.value;
+      if (confirmVal) {
+        validateConfirmPassword(confirmVal);
+      }
+    }
+
+    function validateConfirmPassword(val) {
+      const feedback = document.getElementById('confirmPasswordFeedback');
+      const pass = document.getElementById('passwordInput')?.value;
+      if (!feedback) return;
+
+      if (!val) {
+        feedback.innerHTML = '';
+        return;
+      }
+
+      if (pass && val === pass) {
+        feedback.className = 'form-text small mt-1 text-success fw-bold';
+        feedback.innerHTML = `<i class="bi bi-check-circle-fill me-1"></i> Passwords match!`;
+      } else {
+        feedback.className = 'form-text small mt-1 text-danger fw-bold';
+        feedback.innerHTML = `<i class="bi bi-x-circle-fill me-1"></i> Passwords do not match!`;
+      }
+    }
+
+    function togglePasswordVisibility(inputId, triggerEl) {
+      const input = document.getElementById(inputId);
+      const icon = triggerEl.querySelector ? (triggerEl.querySelector('i') || triggerEl) : triggerEl;
+      if (!input || !icon) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'bi bi-eye-slash text-primary';
+      } else {
+        input.type = 'password';
+        icon.className = 'bi bi-eye text-navy';
+      }
+    }
+
     function handleRegister(e) {
       e.preventDefault();
       const name = document.getElementById('nameInput').value.trim();
@@ -192,14 +290,15 @@
       const mobile = document.getElementById('mobileInput').value.trim();
       const dob = document.getElementById('dobInput').value;
       const idType = document.getElementById('idTypeSelect').value;
-      const idNumber = document.getElementById('idNumberInput').value.trim();
+      const fileInput = document.getElementById('idProofFileInput');
+      const uploadedFile = fileInput.files && fileInput.files[0];
       const pass = document.getElementById('passwordInput').value;
       const confirmPass = document.getElementById('confirmPasswordInput').value;
       const terms = document.getElementById('termsCheck').checked;
       const errorDiv = document.getElementById('registerError');
 
-      if (!name || !email || !mobile || !dob || !idType || !idNumber || !pass || !confirmPass) {
-        errorDiv.textContent = 'Please fill out all required fields, including Date of Birth and ID Proof details.';
+      if (!name || !email || !mobile || !dob || !idType || !uploadedFile || !pass || !confirmPass) {
+        errorDiv.textContent = 'Please fill out all required fields, select Proof Type, and upload your ID proof document.';
         errorDiv.classList.remove('d-none'); return;
       }
 
@@ -209,10 +308,23 @@
         errorDiv.classList.remove('d-none'); return;
       }
 
-      if (pass.length < 8) {
-        errorDiv.textContent = 'Password must be at least 8 characters long.';
+      // Strict Password Validation: Min 8 chars, 1 Capital Letter, 1 Number, 1 Symbol
+      const hasLength = pass.length >= 8;
+      const hasCapital = /[A-Z]/.test(pass);
+      const hasNumber = /[0-9]/.test(pass);
+      const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pass);
+
+      if (!hasLength || !hasCapital || !hasNumber || !hasSymbol) {
+        let missing = [];
+        if (!hasLength) missing.push('min 8 characters');
+        if (!hasCapital) missing.push('at least 1 capital letter (A-Z)');
+        if (!hasNumber) missing.push('at least 1 number (0-9)');
+        if (!hasSymbol) missing.push('at least 1 special symbol (@, #, $, etc.)');
+
+        errorDiv.textContent = `Password Requirement Failed: Password must contain ${missing.join(', ')}.`;
         errorDiv.classList.remove('d-none'); return;
       }
+
       if (pass !== confirmPass) {
         errorDiv.textContent = 'Passwords do not match.';
         errorDiv.classList.remove('d-none'); return;
@@ -233,7 +345,8 @@
         dob: dob,
         age: age,
         idType: idType,
-        idNumber: idNumber,
+        idFileName: uploadedFile.name,
+        idFileSize: (uploadedFile.size / 1024).toFixed(1) + ' KB',
         userId: generatedUserId
       };
       localStorage.setItem('pendingUser', JSON.stringify(pendingUser));

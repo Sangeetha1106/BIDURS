@@ -192,43 +192,46 @@ function renderUpcomingAuctions() {
 // ── Render Categories ──
 function renderCategories() {
   const wantedContainer = document.getElementById('wanted-home-categories-container');
-  if (!wantedContainer) return;
+  const categoriesList = window.mockCategories || (typeof mockCategories !== 'undefined' ? mockCategories : []);
 
-  const custom = JSON.parse(localStorage.getItem('customWantedProducts') || '[]');
-  const allWanted = [...custom, ...(window.wantedProductsData || [])];
-  
-  function getCategoryCount(catName) {
-    const c = catName.toLowerCase();
-    return allWanted.filter(p => {
-      const pCat = p.category ? p.category.toLowerCase() : '';
-      if (c === 'mobiles') return pCat.includes('mobile');
-      if (c === 'laptops') return pCat.includes('laptop');
-      if (c === 'electronics') return pCat.includes('electronic') || pCat.includes('camera') || pCat.includes('tablet');
-      if (c === 'gaming') return pCat.includes('gaming') || pCat.includes('game');
-      if (c === 'wearables') return pCat.includes('wearable') || pCat.includes('smart') || pCat.includes('watch');
-      if (c === 'accessories') return pCat.includes('accessory') || pCat.includes('accessories');
-      return pCat === c;
-    }).length;
+  // Render Wanted Products Categories
+  if (wantedContainer && categoriesList.length > 0) {
+    const custom = JSON.parse(localStorage.getItem('customWantedProducts') || '[]');
+    const allWanted = [...custom, ...(window.wantedProductsData || [])];
+    
+    function getCategoryCount(catName) {
+      const c = catName.toLowerCase();
+      return allWanted.filter(p => {
+        const pCat = p.category ? p.category.toLowerCase() : '';
+        if (c === 'mobiles') return pCat.includes('mobile');
+        if (c === 'laptops') return pCat.includes('laptop');
+        if (c === 'electronics') return pCat.includes('electronic') || pCat.includes('camera') || pCat.includes('tablet');
+        if (c === 'gaming') return pCat.includes('gaming') || pCat.includes('game');
+        if (c === 'wearables') return pCat.includes('wearable') || pCat.includes('smart') || pCat.includes('watch');
+        if (c === 'accessories') return pCat.includes('accessory') || pCat.includes('accessories');
+        return pCat === c;
+      }).length;
+    }
+
+    const html = categoriesList.map(category => {
+      const count = getCategoryCount(category.name);
+      return `
+        <div class="col-6 col-md-4 col-lg-2">
+          <a href="pages/wanted-products.html?category=${encodeURIComponent(category.name.toLowerCase())}" class="text-decoration-none">
+            <div class="category-card">
+              <i class="bi ${category.icon} category-icon"></i>
+              <h4 class="category-title mb-1">${category.name}</h4>
+              <span class="badge bg-light text-navy border font-monospace mt-1" style="font-size:0.7rem; font-weight:600;">
+                <i class="bi bi-box-seam me-1 text-primary"></i>${count} Request${count !== 1 ? 's' : ''}
+              </span>
+            </div>
+          </a>
+        </div>
+      `;
+    }).join('');
+
+    wantedContainer.innerHTML = html;
   }
-
-  const html = mockCategories.map(category => {
-    const count = getCategoryCount(category.name);
-    return `
-      <div class="col-6 col-md-4 col-lg-2">
-        <a href="pages/wanted-products.html?category=${encodeURIComponent(category.name.toLowerCase())}" class="text-decoration-none">
-          <div class="category-card">
-            <i class="bi ${category.icon} category-icon"></i>
-            <h4 class="category-title mb-1">${category.name}</h4>
-            <span class="badge bg-light text-navy border font-monospace mt-1" style="font-size:0.7rem; font-weight:600;">
-              <i class="bi bi-box-seam me-1 text-primary"></i>${count} Request${count !== 1 ? 's' : ''}
-            </span>
-          </div>
-        </a>
-      </div>
-    `;
-  }).join('');
-
-  wantedContainer.innerHTML = html;
 }
 
 // ── Render Reviews ──

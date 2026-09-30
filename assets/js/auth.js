@@ -19,13 +19,22 @@ document.addEventListener('DOMContentLoaded', () => {
   updateFooter();
 });
 
+function getPathContext() {
+  const normPath = window.location.pathname.toLowerCase().replace(/\\/g, '/');
+  const inPagesDir = normPath.includes('/pages/') || normPath.endsWith('/pages');
+  return {
+    basePath: inPagesDir ? '' : 'pages/',
+    rootPath: inPagesDir ? '../index.html' : 'index.html'
+  };
+}
+
 function initAuth() {
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-  const currentPage = window.location.pathname.split('/').pop();
+  const currentPage = window.location.pathname.split('/').pop().split('\\').pop();
 
   if (!isLoggedIn && PROTECTED_PAGES.includes(currentPage)) {
     const fullPathWithQuery = currentPage + window.location.search;
-    window.location.href = 'login.html?redirect=' + encodeURIComponent(fullPathWithQuery);
+    window.location.href = getPathContext().basePath + 'login.html?redirect=' + encodeURIComponent(fullPathWithQuery);
   }
 }
 
@@ -36,8 +45,7 @@ function updateNavbar() {
   
   if (!navLinksContainer || !authButtonsContainer) return;
 
-  const basePath = window.location.pathname.includes('/pages/') ? '' : 'pages/';
-  const rootPath = window.location.pathname.includes('/pages/') ? '../index.html' : 'index.html';
+  const { basePath, rootPath } = getPathContext();
 
   if (isLoggedIn) {
     const userId = localStorage.getItem('userId') || 'CUST-2456';
@@ -131,6 +139,7 @@ window.mockLogin = function(e, userData) {
     if (userData.dob) localStorage.setItem('userDob', userData.dob);
     if (userData.idType) localStorage.setItem('userIdType', userData.idType);
     if (userData.idNumber) localStorage.setItem('userIdNumber', userData.idNumber);
+    if (userData.idFileName) localStorage.setItem('userIdFileName', userData.idFileName);
   } else if (!localStorage.getItem('userId')) {
     localStorage.setItem('userId', 'CUST-2456');
     localStorage.setItem('userEmail', 'customer2456@bidurs.in');
@@ -154,7 +163,7 @@ window.mockLogout = function(e) {
   localStorage.removeItem('userId');
   localStorage.removeItem('userName');
   localStorage.removeItem('pendingUser');
-  const rootPath = window.location.pathname.includes('/pages/') ? '../index.html' : 'index.html';
+  const { rootPath } = getPathContext();
   window.location.href = rootPath;
 };
 
@@ -162,8 +171,7 @@ function updateFooter() {
   const footerContainer = document.getElementById('global-footer');
   if (!footerContainer) return;
   
-  const basePath = window.location.pathname.includes('/pages/') ? '' : 'pages/';
-  const rootPath = window.location.pathname.includes('/pages/') ? '../index.html' : 'index.html';
+  const { basePath, rootPath } = getPathContext();
 
   footerContainer.innerHTML = `
     <footer class="footer mt-auto">

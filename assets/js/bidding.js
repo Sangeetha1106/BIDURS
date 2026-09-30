@@ -55,12 +55,25 @@ document.addEventListener('DOMContentLoaded', () => {
   // Set document title
   document.title = `Live: ${product.name} | BIDURS`;
 
-  // State
-  let currentBid = product.currentBid;
-  let minimumNextBid = currentBid + getIncrementAmount(currentBid);
-  let userBidInput = minimumNextBid;
+  // State initialization
+  const currentUserId = localStorage.getItem('userId') || 'CUST-2456';
+  let initialBid = (product.currentBid && product.currentBid > 0) ? product.currentBid : (product.startingBid || 85000);
   let bidderState = 'NOT_PARTICIPATING'; // 'LEADING', 'OUTBID', 'NOT_PARTICIPATING'
+  
+  // Check if user has already placed a bid for this product
+  try {
+    const userBids = JSON.parse(localStorage.getItem(`bids_${currentUserId}`)) || [];
+    const existingBid = userBids.find(b => String(b.productId) === String(product.id));
+    if (existingBid && existingBid.bidAmount >= initialBid) {
+      initialBid = existingBid.bidAmount;
+      bidderState = 'LEADING';
+    }
+  } catch (e) {}
+
+  let currentBid = initialBid;
   let isEnded = product.status === 'ENDED';
+  let isSubmittingBid = false;
+  let isBidHistoryExpanded = false;
   
   function formatExactTimestamp(date) {
     const d = date || new Date();
@@ -163,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="row align-items-center mb-4">
                   <div class="col-12 col-md-6 border-md-end border-light border-opacity-25">
                     <div class="text-gold text-uppercase fw-bold small mb-1">Current Highest Bid</div>
-                    <div class="display-4 fw-bold mb-0" id="current-highest-bid">${window.utils.formatCurrency(currentBid)}</div>
+                    <div class="display-4 fw-bold mb-0 text-white" id="current-highest-bid">${window.utils ? window.utils.formatCurrency(currentBid) : '₹' + currentBid.toLocaleString('en-IN')}</div>
                   </div>
                   <div class="col-12 col-md-6 text-md-center mt-4 mt-md-0">
                     <div class="text-white-50 text-uppercase fw-bold small mb-2">Auction Ends In</div>
@@ -192,28 +205,37 @@ document.addEventListener('DOMContentLoaded', () => {
                   </div>
                 </div>
 
-                <div id="bidding-action-area" class="bg-white bg-opacity-10 rounded-3 p-3">
-                  <div class="text-white-50 small mb-2 d-flex justify-content-between">
-                    <span>Your Bid Amount (₹)</span>
-                    <span>Min next bid: <strong class="text-white" id="min-next-bid-label">${window.utils.formatCurrency(minimumNextBid)}</strong></span>
-                  </div>
-                  <div class="mb-3">
-                    <div class="input-group input-group-lg">
-                      <span class="input-group-text bg-white text-navy fw-bold fs-4 border-end-0">₹</span>
-                      <input type="number" class="form-control text-center fw-bold fs-3 bg-white text-navy border-start-0" id="bid-input-val" value="${userBidInput}" min="${minimumNextBid}">
+                <div id="bidding-action-area" class="bg-white bg-opacity-10 rounded-4 p-3 border border-white border-opacity-10">
+                  <!-- Prominent Current Bid Box Above Buttons -->
+                  <div class="bg-navy bg-opacity-75 border border-warning border-opacity-50 rounded-3 p-3 mb-3 text-center shadow-sm">
+                    <div class="text-gold text-uppercase fw-bold small mb-1 tracking-wide">
+                      <i class="bi bi-award-fill me-1"></i> Current Bidding Amount
+                    </div>
+                    <div class="fs-2 fw-bold text-white mb-0" id="action-current-bid">
+                      ${window.utils ? window.utils.formatCurrency(currentBid) : '₹' + currentBid.toLocaleString('en-IN')}
+                    </div>
+                    <div class="small text-white-50 mt-1" id="action-bid-status">
+                      ${bidderState === 'LEADING' ? '<span class="text-success fw-bold"><i class="bi bi-star-fill me-1"></i>Your Bid is Highest</span>' : 'Tap ₹1,000 or ₹2,000 below to place your bid'}
                     </div>
                   </div>
-                  <div class="mb-3">
-                    <div class="text-white-50 small mb-2"><i class="bi bi-lightning-charge-fill text-gold me-1"></i> Quick Increase Bidding:</div>
-                    <div class="d-flex flex-wrap gap-2">
-                      <button type="button" class="btn btn-sm fw-bold flex-grow-1 py-2 btn-quick-bid" data-add="500" style="background:#FFDF00;color:#0a192f;border:none;">+ ₹500</button>
-                      <button type="button" class="btn btn-sm fw-bold flex-grow-1 py-2 btn-quick-bid" data-add="1000" style="background:#FFDF00;color:#0a192f;border:none;">+ ₹1,000</button>
-                      <button type="button" class="btn btn-sm fw-bold flex-grow-1 py-2 btn-quick-bid" data-add="2000" style="background:#FFDF00;color:#0a192f;border:none;">+ ₹2,000</button>
-                      <button type="button" class="btn btn-sm fw-bold flex-grow-1 py-2 btn-quick-bid" data-add="4000" style="background:#FFDF00;color:#0a192f;border:none;">+ ₹4,000</button>
-                      <button type="button" class="btn btn-outline-light btn-sm fw-bold py-2 px-3" id="btn-reset-bid" title="Reset to Minimum Bid"><i class="bi bi-arrow-counterclockwise me-1"></i> Reset</button>
+
+                  <div class="row g-3 mb-2">
+                    <div class="col-6">
+                      <button type="button" class="btn btn-direct-bid w-100 py-3 fw-bold fs-3 shadow-sm d-flex flex-column align-items-center justify-content-center" data-add="1000">
+                        <span>+ ₹1,000</span>
+                        <span class="direct-bid-sub">Instant Bid</span>
+                      </button>
+                    </div>
+                    <div class="col-6">
+                      <button type="button" class="btn btn-direct-bid w-100 py-3 fw-bold fs-3 shadow-sm d-flex flex-column align-items-center justify-content-center" data-add="2000">
+                        <span>+ ₹2,000</span>
+                        <span class="direct-bid-sub">Instant Bid</span>
+                      </button>
                     </div>
                   </div>
-                  <button id="btn-place-bid" class="btn btn-premium w-100 btn-lg fw-bold fs-5 shadow">PLACE BID</button>
+                  <div class="text-center text-white-50 small">
+                    Direct Bidding • Instant Placement
+                  </div>
                 </div>
               </div>
             </div>
@@ -227,13 +249,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <!-- Bid History Panel -->
             <div class="card border-0 shadow-sm rounded-4 mb-4">
-              <div class="card-header bg-white border-bottom-0 pt-4 pb-2">
-                <h6 class="mb-0 fw-bold text-navy"><i class="bi bi-clock-history me-2"></i>Live Bidding Activity</h6>
+              <div class="card-header bg-white border-bottom-0 pt-4 pb-2 d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold text-navy"><i class="bi bi-clock-history me-2 text-gold"></i>Live Bidding Activity</h6>
+                <span class="badge bg-light text-navy border fw-bold" id="total-bids-badge">0 Bids</span>
               </div>
               <div class="card-body p-0">
                 <ul class="list-group list-group-flush bid-history-list" id="bid-history-container">
                   <!-- Rendered dynamically -->
                 </ul>
+              </div>
+              <div class="card-footer bg-white border-top-0 text-center py-3" id="bid-history-footer">
+                <!-- Rendered dynamically -->
               </div>
             </div>
           </div>
@@ -370,117 +396,144 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderBidHistory() {
     const list = document.getElementById('bid-history-container');
+    const footer = document.getElementById('bid-history-footer');
+    const badge = document.getElementById('total-bids-badge');
     if (!list) return;
 
-    list.innerHTML = bidHistory.map((b, i) => `
+    if (badge) {
+      badge.textContent = `${bidHistory.length} Bids`;
+    }
+
+    const itemsToDisplay = isBidHistoryExpanded ? bidHistory : bidHistory.slice(0, 3);
+
+    list.innerHTML = itemsToDisplay.map((b, i) => `
       <li class="list-group-item d-flex justify-content-between align-items-center px-4 py-3 border-start-0 border-end-0 ${i === 0 ? 'bg-light bg-opacity-50' : ''}">
         <div>
           <span class="fw-bold text-navy d-block">Bidder #${b.bidderId} ${i === 0 ? '<span class="badge bg-gold text-navy ms-1 small">Highest</span>' : ''}</span>
           <small class="text-muted">${b.timeStr}</small>
         </div>
-        <div class="fw-bold fs-5 text-navy">${window.utils.formatCurrency(b.amount)}</div>
+        <div class="fw-bold fs-5 text-navy">${window.utils ? window.utils.formatCurrency(b.amount) : '₹' + b.amount.toLocaleString('en-IN')}</div>
       </li>
     `).join('');
+
+    if (footer) {
+      if (bidHistory.length > 3) {
+        if (!isBidHistoryExpanded) {
+          footer.innerHTML = `
+            <button type="button" class="btn btn-sm btn-outline-navy fw-bold px-4 py-2 text-navy" id="btn-toggle-bid-history" style="border-radius: 20px; border-color: #0a192f; transition: all 0.2s ease;">
+              View More (${bidHistory.length - 3} more bids) <i class="bi bi-chevron-down ms-1"></i>
+            </button>
+          `;
+        } else {
+          footer.innerHTML = `
+            <button type="button" class="btn btn-sm btn-outline-secondary fw-bold px-4 py-2" id="btn-toggle-bid-history" style="border-radius: 20px; transition: all 0.2s ease;">
+              Show Less <i class="bi bi-chevron-up ms-1"></i>
+            </button>
+          `;
+        }
+
+        const btnToggle = document.getElementById('btn-toggle-bid-history');
+        if (btnToggle) {
+          btnToggle.addEventListener('click', () => {
+            isBidHistoryExpanded = !isBidHistoryExpanded;
+            renderBidHistory();
+          });
+        }
+      } else {
+        footer.innerHTML = '';
+      }
+    }
   }
 
   function attachEventListeners() {
-    const btnPlace = document.getElementById('btn-place-bid');
-    const inputVal = document.getElementById('bid-input-val');
-    const errorMsg = document.getElementById('bid-error-msg');
-    const btnReset = document.getElementById('btn-reset-bid');
-    const quickButtons = document.querySelectorAll('.btn-quick-bid');
+    const directButtons = document.querySelectorAll('.btn-direct-bid');
 
-    quickButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const addVal = parseInt(btn.getAttribute('data-add')) || 0;
-        const currentInputValue = parseInt(inputVal.value) || userBidInput || minimumNextBid;
-        userBidInput = currentInputValue + addVal;
-        inputVal.value = userBidInput;
-        if (errorMsg) errorMsg.classList.add('d-none');
+    directButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const addVal = parseInt(btn.getAttribute('data-add'), 10);
+        if (addVal && (addVal === 1000 || addVal === 2000)) {
+          placeDirectBid(addVal);
+        }
       });
     });
-
-    if (btnReset) {
-      btnReset.addEventListener('click', () => {
-        userBidInput = minimumNextBid;
-        inputVal.value = userBidInput;
-        if (errorMsg) errorMsg.classList.add('d-none');
-      });
-    }
-
-    if (inputVal) {
-      inputVal.addEventListener('input', () => {
-        const val = parseInt(inputVal.value);
-        if (!isNaN(val)) {
-          userBidInput = val;
-        }
-        if (errorMsg) errorMsg.classList.add('d-none');
-      });
-    }
-
-    if (btnPlace) {
-      btnPlace.addEventListener('click', () => {
-        validateAndPlaceBid();
-      });
-    }
   }
 
-  function validateAndPlaceBid() {
+  function placeDirectBid(incrementAmount) {
+    if (isSubmittingBid) return;
+
     const errorMsg = document.getElementById('bid-error-msg');
-    const inputVal = document.getElementById('bid-input-val');
-    if (inputVal) {
-      const parsedVal = parseInt(inputVal.value);
-      if (!isNaN(parsedVal)) {
-        userBidInput = parsedVal;
-      }
-    }
     
+    // Validate subscription status
     const subStatus = window.subUtils ? window.subUtils.getSubscriptionStatus() : (localStorage.getItem('subState') || 'NOT_SUBSCRIBED');
     if (subStatus === 'SUSPENDED') {
-      errorMsg.textContent = "Your subscription is SUSPENDED due to company rules or payment failures. Bidding disabled.";
-      errorMsg.classList.remove('d-none');
+      if (errorMsg) {
+        errorMsg.textContent = "Your subscription is SUSPENDED due to company rules or payment failures. Bidding disabled.";
+        errorMsg.classList.remove('d-none');
+      }
       showToast("Subscription Suspended: Bidding Disabled.", 'danger');
       return;
     }
 
     if (subStatus === 'NOT_SUBSCRIBED') {
-      errorMsg.textContent = "An active subscription is required to participate in live auctions. Please subscribe.";
-      errorMsg.classList.remove('d-none');
+      if (errorMsg) {
+        errorMsg.textContent = "An active subscription is required to participate in live auctions. Please subscribe.";
+        errorMsg.classList.remove('d-none');
+      }
       showToast("Subscription required to place bids.", 'warning');
       return;
     }
 
-    if (userBidInput < minimumNextBid) {
-      errorMsg.textContent = "Your bid must be higher than the current highest bid.";
-      errorMsg.classList.remove('d-none');
-      showToast("Please enter a valid bid amount.", 'danger');
-      return;
+    if (errorMsg) errorMsg.classList.add('d-none');
+
+    // Prevent duplicate rapid-fire bids from a single tap/click event
+    isSubmittingBid = true;
+
+    // Calculate exact bid: current bid + increment amount (added EXACTLY ONCE)
+    const newBid = currentBid + incrementAmount;
+    currentBid = newBid;
+    product.currentBid = currentBid;
+
+    // Update UI immediately
+    const formattedVal = window.utils ? window.utils.formatCurrency(currentBid) : `₹${currentBid.toLocaleString('en-IN')}`;
+
+    const bidDisplay = document.getElementById('current-highest-bid');
+    if (bidDisplay) {
+      bidDisplay.textContent = formattedVal;
+      bidDisplay.classList.remove('animated-highlight');
+      void bidDisplay.offsetWidth; // trigger reflow for animation
+      bidDisplay.classList.add('animated-highlight');
     }
 
-    errorMsg.classList.add('d-none');
-    
-    // Success flow
-    updateCurrentBid(userBidInput);
-    addBidHistory(userBidInput);
+    const actionBidDisplay = document.getElementById('action-current-bid');
+    if (actionBidDisplay) {
+      actionBidDisplay.textContent = formattedVal;
+    }
+
+    const actionStatusDisplay = document.getElementById('action-bid-status');
+    if (actionStatusDisplay) {
+      actionStatusDisplay.innerHTML = '<span class="text-success fw-bold"><i class="bi bi-star-fill me-1"></i>Your Bid is Highest</span>';
+    }
+
+    // Record bid in history & local storage
+    addBidHistory(currentBid);
+
+    // Update bidder status to LEADING
     updateBidderStatus('LEADING');
-    
-    // Increment bidders artificially
+
+    // Increment bidders count
     const countEl = document.getElementById('bidders-count');
-    if (countEl) countEl.textContent = parseInt(countEl.textContent) + 1;
+    if (countEl) {
+      const currentCount = parseInt(countEl.textContent || '0', 10);
+      countEl.textContent = isNaN(currentCount) ? 1 : currentCount + 1;
+    }
 
-    showToast(`Bid placed successfully! Your bid: ${window.utils.formatCurrency(userBidInput)}`, 'success');
-  }
+    showToast(`Bid placed successfully! New bid: ${window.utils ? window.utils.formatCurrency(currentBid) : '₹' + currentBid.toLocaleString('en-IN')}`, 'success');
 
-  function updateCurrentBid(amount) {
-    currentBid = amount;
-    minimumNextBid = currentBid + getIncrementAmount(currentBid);
-    userBidInput = minimumNextBid;
-
-    // Update UI
-    document.getElementById('current-highest-bid').textContent = window.utils.formatCurrency(currentBid);
-    document.getElementById('min-next-bid-label').textContent = window.utils.formatCurrency(minimumNextBid);
-    document.getElementById('bid-input-val').value = userBidInput;
-    document.getElementById('bid-input-val').min = minimumNextBid;
+    // Release lock after short delay for fast responsive bidding while preventing double tap duplicate bids
+    setTimeout(() => {
+      isSubmittingBid = false;
+    }, 150);
   }
 
   function addBidHistory(amount) {

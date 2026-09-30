@@ -54,12 +54,12 @@
             
             <form id="otpForm" onsubmit="handleOtp(event)">
               <div class="d-flex justify-content-between mb-4">
-                <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 'otp2')" id="otp1">
-                <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 'otp3')" onkeydown="moveToPrev(event, this, 'otp1')" id="otp2">
-                <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 'otp4')" onkeydown="moveToPrev(event, this, 'otp2')" id="otp3">
-                <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 'otp5')" onkeydown="moveToPrev(event, this, 'otp3')" id="otp4">
-                <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 'otp6')" onkeydown="moveToPrev(event, this, 'otp4')" id="otp5">
-                <input type="text" class="otp-input" maxlength="1" onkeydown="moveToPrev(event, this, 'otp5')" id="otp6">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" class="otp-input" maxlength="1" oninput="handleOtpInput(this, 'otp2')" id="otp1">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" class="otp-input" maxlength="1" oninput="handleOtpInput(this, 'otp3')" onkeydown="moveToPrev(event, this, 'otp1')" id="otp2">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" class="otp-input" maxlength="1" oninput="handleOtpInput(this, 'otp4')" onkeydown="moveToPrev(event, this, 'otp2')" id="otp3">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" class="otp-input" maxlength="1" oninput="handleOtpInput(this, 'otp5')" onkeydown="moveToPrev(event, this, 'otp3')" id="otp4">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" class="otp-input" maxlength="1" oninput="handleOtpInput(this, 'otp6')" onkeydown="moveToPrev(event, this, 'otp4')" id="otp5">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" class="otp-input" maxlength="1" oninput="handleOtpInput(this, null)" onkeydown="moveToPrev(event, this, 'otp5')" id="otp6">
               </div>
 
               <button type="submit" class="btn btn-premium w-100 py-3 fw-bold fs-5 shadow-sm mb-3">VERIFY OTP</button>
@@ -77,15 +77,41 @@
 
   <script src="../assets/js/auth.js"></script>
   <script>
-    function moveToNext(current, nextFieldId) {
-      if (current.value.length === 1) {
-        document.getElementById(nextFieldId).focus();
+    function handleOtpInput(current, nextFieldId) {
+      // Ensure only numeric digits (0-9) are allowed
+      current.value = current.value.replace(/[^0-9]/g, '');
+
+      // Support paste of multiple digits into any OTP box
+      if (current.value.length > 1) {
+        const digits = current.value.split('');
+        current.value = digits[0] || '';
+        for (let i = 1; i <= 6; i++) {
+          const inputEl = document.getElementById(`otp${i}`);
+          if (inputEl && digits[i - 1]) {
+            inputEl.value = digits[i - 1];
+          }
+        }
+        document.getElementById('otp6').focus();
+        return;
+      }
+
+      // Move to next input box if valid digit entered
+      if (current.value.length === 1 && nextFieldId) {
+        const nextEl = document.getElementById(nextFieldId);
+        if (nextEl) {
+          nextEl.focus();
+        }
       }
     }
     
     function moveToPrev(e, current, prevFieldId) {
       if (e.key === 'Backspace' && current.value === '') {
-        document.getElementById(prevFieldId).focus();
+        if (prevFieldId) {
+          const prevEl = document.getElementById(prevFieldId);
+          if (prevEl) {
+            prevEl.focus();
+          }
+        }
       }
     }
 
